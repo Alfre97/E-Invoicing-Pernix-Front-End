@@ -1,0 +1,19 @@
+.center-panel {
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+.form-control {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+}
+
+.page-style {
+  width: 30%;
+  background-color: #F2F2F2;
+  border-radius: 25px;
+  margin: 0 auto;
+  text-align: center;
+}
