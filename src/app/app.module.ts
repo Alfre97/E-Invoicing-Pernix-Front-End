@@ -10,6 +10,7 @@ import { ReceiverComponent } from './receiver/receiver.component';
 import { EmitterComponent } from './emitter/emitter.component';
 import { ProductsComponent } from './products/products.component';
 import { ServicesComponent } from './services/services.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { ServicesComponent } from './services/services.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,67 @@
-<p>
-  receiver works!
-</p>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/menu">Menu</a></li>
+        <li><a routerLink="/invoice">Factura</a></li>
+        <li class="active"><a routerLink="/receiver">Receptor</a></li>
+        <li><a routerLink="/emitter">Emisor</a></li>
+        <li><a routerLink="/products">Resumen de Factura</a></li>
+        <li><a routerLink="/services">Servicios</a></li>
+      </ul>
+    </div>
+  </nav>
+<div>
+  <div class="col-sm-4">
+    <h3>Informacion básica</h3>
+    <label>Nombre:</label>
+    <input class="form-control">
+    <label>Correo</label>
+    <input class="form-control" type="email">
+    <label>Identificación</label>
+    <select class="form-control">
+        <option>Cédula física</option>
+        <option>Cédula jurídica</option>
+        <option>DIMEX</option>
+        <option>NITE</option>
+    </select>
+    <label>Numero</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Nombre Comercial</label>
+    <input class="form-control">
+    <label>Provincia</label>
+    <select class="form-control" (change)="onProvinceChange($event.target.value)">
+      <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
+    </select>
+    <label>Cantón</label>
+    <select class="form-control" (change)="onCantonChange($event.target.value)">
+        <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
+    </select>
+    <label>Distrito</label>
+    <select class="form-control">
+        <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
+    </select>
+    <label>Barrio</label>
+    <select class="form-control">
+        <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
+    </select>
+    <label>Otras Señas</label>
+    <textarea class="form-control"></textarea>
+  </div>
+  <div class="col-sm-4">
+    <H3>Telefóno</H3>
+    <label>Código de país</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Telefóno</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <H3>Fax</H3>
+      <label>Código de país</label>
+      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <label>Telefóno</label>
+      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <br>
+      <button class="btn btn-primary btn-lg button-at-bottom">Agregar Receptor</button>
+  </div>
+</div>

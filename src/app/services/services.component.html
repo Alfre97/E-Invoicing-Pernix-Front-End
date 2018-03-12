@@ -1,3 +1,51 @@
-<p>
-  services works!
-</p>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/menu">Menu</a></li>
+        <li><a routerLink="/invoice">Factura</a></li>
+        <li><a routerLink="/receiver">Receptor</a></li>
+        <li><a routerLink="/emitter">Emisor</a></li>
+        <li><a routerLink="/products">Resumen de Factura</a></li>
+        <li class="active"><a routerLink="/services">Servicios</a></li>
+      </ul>
+    </div>
+  </nav>
+<div>
+<div class="col-sm-4">
+    <label>Número de línea</label>
+    <input class="form-control">
+    <label>Tipo de Código</label>
+    <select class="form-control">
+      <option value="01">Código del producto del vendedor</option>
+      <option value="02">Código del producto del comprador</option>
+      <option value="03">Código del producto asignado por la industria</option>
+      <option value="04">Código de uso interno</option>
+      <option value="99">Otros</option>
+    </select>
+    <label>Cantidad</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Unidad de Medida</label>
+    <select class="form-control">
+      <option>Servicios Profesionales</option>
+    </select>
+    <label>Unidad de Medida Comercial</label>
+    <input class="form-control">
+    <label>Detalle</label>
+    <textarea class="form-control"></textarea>
+    <label>Precio Unitario</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Monto Total</label>
+    <input class="form-control">
+    <label>Naturaleza Descuento</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Subtotal</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Monto Total</label>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <br>
+    <button class="btn btn-primary btn-margin">Agregar Servicio</button>
+</div>
+

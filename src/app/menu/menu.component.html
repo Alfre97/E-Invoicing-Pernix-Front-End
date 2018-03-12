@@ -1,15 +1,54 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" routerLink="/menu">E-Invoicing</a>
+      <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a routerLink="/menu">Menu</a></li>
-      <li><a routerLink="/invoice">Invoice</a></li>
-      <li><a routerLink="/receiver">Receiver</a></li>
-      <li><a routerLink="/emitter">Emitter</a></li>
-      <li><a routerLink="/products">Products</a></li>
-      <li><a routerLink="/services">Services</a></li>
+      <li><a routerLink="/invoice">Factura</a></li>
+      <li><a routerLink="/receiver">Receptor</a></li>
+      <li><a routerLink="/emitter">Emisor</a></li>
+      <li><a routerLink="/products">Resumen de Factura</a></li>
+      <li><a routerLink="/services">Servicios</a></li>
     </ul>
   </div>
 </nav>
+<div class="center-panel">
+    <h1>Create Invoice</h1>
+    <div class="page-style">
+      <h3>Clave</h3>
+      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Ingrese la clave asignada">
+      <h3>Número Consecutivo</h3>
+      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Ingrese número consecutivo de factura">
+      <h3>Fecha de Emisión</h3>
+      <input [owlDateTime]="dt2" placeholder="Date Time">
+      <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></span>
+      <owl-date-time #dt2></owl-date-time>
+      <h3>Receptor</h3>
+      <select class="form-control">
+        <option disabled hidden>Seleccionar Receptor</option>
+        <option></option>
+      </select>
+      <h3>Emisor</h3>
+      <select class="form-control">
+        <option disabled hidden>Seleccionar un Emisor</option>
+        <option></option>
+      </select>
+      <h3>Terms of sale</h3>
+      <input class="form-control" placeholder="Enter period for sale in days">
+      <h3>Payment method</h3>
+      <select class="form-control">
+        <option disabled hidden>Select a payment method</option>
+        <option></option>
+      </select>
+      <h3>Servicio</h3>
+      <select class="form-control">
+        <option disabled hidden>Seleccionar Servicio</option>
+        <option></option>
+      </select>
+      <br>
+      <button class="form-control">Sign and Send</button>
+      <br>
+      </div>
+  </div>
+  
