@@ -21,9 +21,8 @@
       <h3>Número Consecutivo</h3>
       <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Ingrese número consecutivo de factura">
       <h3>Fecha de Emisión</h3>
-      <input [owlDateTime]="dt2" placeholder="Date Time">
-      <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></span>
-      <owl-date-time #dt2></owl-date-time>
+      <input class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+      <owl-date-time #dt1></owl-date-time>
       <h3>Receptor</h3>
       <select class="form-control">
         <option disabled hidden>Seleccionar Receptor</option>
@@ -34,20 +33,52 @@
         <option disabled hidden>Seleccionar un Emisor</option>
         <option></option>
       </select>
-      <h3>Terms of sale</h3>
-      <input class="form-control" placeholder="Enter period for sale in days">
-      <h3>Payment method</h3>
+      <h3>Condición de Venta</h3>
       <select class="form-control">
-        <option disabled hidden>Select a payment method</option>
-        <option></option>
+        <option *ngFor="let term of sellTerms">{{term}}</option>
       </select>
+      <h3>Medio de Pago</h3>
+      <select class="form-control">
+        <option *ngFor="let method of paymentMethods">{{method}}</option>
+      </select>
+      <h3>Resumen de Factura <span *ngIf="showChevronRight" (click)="displayInvoiceResume()" class="glyphicon glyphicon-chevron-right"></span><span *ngIf="showChevronDown" (click)="hideInvoiceResume()"  class="glyphicon glyphicon-chevron-down"></span></h3>
+      <div *ngIf="showResume">
+        <label>Código de Moneda</label>
+        <select class="form-control">
+          <option *ngFor="let currency of currencies">{{currency}}</option>
+        </select>
+        <label>Tipo de Cambio</label>
+        <input class="form-control">
+        <label>Total de Servicios Gravados</label>
+        <input class="form-control">
+        <label>Total de Servicios Exentos</label>
+        <input class="form-control">
+        <label>Total de Mercancias Gravadas</label>
+        <input class="form-control">
+        <label>Total de Mercancias Exentas</label>
+        <input class="form-control">
+        <label>Total  Gravado</label>
+        <input class="form-control">
+        <label>Total Exento</label>
+        <input class="form-control">
+        <label>Total Venta</label>
+        <input class="form-control">
+        <label>Total Descuento</label>
+        <input class="form-control">
+        <label>Total de Venta Neta</label>
+        <input class="form-control">
+        <label>Total de Impuesto</label>
+        <input class="form-control">
+        <label>Total Comprobante</label>
+        <input class="form-control">
+      </div>
       <h3>Servicio</h3>
       <select class="form-control">
         <option disabled hidden>Seleccionar Servicio</option>
         <option></option>
       </select>
       <br>
-      <button class="form-control">Sign and Send</button>
+      <button class="btn btn-primary btn-margin">Sign and Send</button>
       <br>
       </div>
   </div>
