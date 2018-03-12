@@ -28,42 +28,40 @@
         <option>NITE</option>
     </select>
     <label>Numero</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #emitterNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <label>Nombre Comercial</label>
-    <input class="form-control">
+    <input #emitterName class="form-control">
     <label>Provincia</label>
-    <select class="form-control" (change)="onProvinceChange($event.target.value)">
+    <select #emitterProvince class="form-control" (change)="onProvinceChange($event.target.value)">
       <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
     </select>
     <label>Cantón</label>
-    <select class="form-control" (change)="onCantonChange($event.target.value)">
+    <select #emitterCanton class="form-control" (change)="onCantonChange($event.target.value)">
         <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
     </select>
     <label>Distrito</label>
-    <select class="form-control">
+    <select #emitterDistrict class="form-control">
         <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
     </select>
     <label>Barrio</label>
-    <select class="form-control">
+    <select #emitterNeighborhood class="form-control">
         <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
     </select>
     <label>Otras Señas</label>
-    <textarea class="form-control"></textarea>
+    <textarea #emitterOtherSignals class="form-control"></textarea>
   </div>
   <div class="col-sm-4">
     <H3>Telefóno</H3>
     <label>Código de país</label>
     <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <label>Telefóno</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #emitterPhone class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <H3>Fax</H3>
       <label>Código de país</label>
-      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #emitterCoutryCode class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
       <label>Telefóno</label>
-      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #emitterFax class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
       <br>
-      <button class="btn btn-primary btn-lg button-at-bottom">Agregar Emisor</button>
+      <button  class="btn btn-primary btn-lg button-at-bottom">Agregar Emisor</button>
   </div>
 </div>
-
-
