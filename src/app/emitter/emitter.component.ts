@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
+import { UserService } from '../user.service';
+
 
 @Component({
   selector: 'app-emitter',
@@ -21,7 +24,7 @@ export class EmitterComponent implements OnInit {
   public cantonsOnSelectedProvince=this.SJCantons;
   public districtsOnSelectedCanton=this.cartagoDistricts;
   public tresRiosNeighborhoods=['Eulalia', 'Florencio del Castillo', 'Jirales', 'Mariana', 'Tacora'];
-  constructor() { }
+  constructor(private userservice: UserService) { }
 
   ngOnInit() {
   }
@@ -59,15 +62,26 @@ export class EmitterComponent implements OnInit {
     }
   }
 
-   /**
-    * 'Tres Ríos'
-'San Diego'
-'San Juan'
-'San Rafael', 
-'Concepción',
-'Dulce Nombre', 
-'San Ramón',
-'Río Azul',
-    */
+  addEmitter(name: String,identificationType: String,identificationNumber: String,comercialName: String,locationProvinceName: String,locationCantonName: String,
+    locationDistrictName: String,locationNeighborhoodName: String,otherSignals: String,phoneCountryCode: String,phoneNumber:String,faxCountryCode: String,
+    faxNumber: String, email: String){
+    let emitter: UserEmitterReceiver= new UserEmitterReceiver();
+    emitter.name=name;
+    emitter.identificationType=identificationType;
+    emitter.identificationNumber=identificationNumber;
+    emitter.comercialName=comercialName;
+    emitter.locationProvinceName=locationProvinceName;
+    emitter.locationCantonName=locationCantonName;
+    emitter.locationDistrictName=locationDistrictName;
+    emitter.locationNeighborhoodName=locationNeighborhoodName;
+    emitter.otherSignals=otherSignals;
+    emitter.phoneCountryCode=phoneCountryCode;
+    emitter.phoneNumber=phoneNumber;
+    emitter.faxCountryCode=faxCountryCode;
+    emitter.faxNumber=faxNumber;
+    emitter.email=email;
+    emitter.userType='Emitter';
+    this.userservice.addUser(emitter).subscribe();    
+  }
 
 }
