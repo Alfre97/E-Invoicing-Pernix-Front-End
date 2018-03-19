@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-emitter',
@@ -25,7 +26,7 @@ export class EmitterComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   onProvinceChange(province){
     if(province==='San Jose'){
       this.cantonsOnSelectedProvince=this.SJCantons;
@@ -49,7 +50,7 @@ export class EmitterComponent implements OnInit {
       this.cantonsOnSelectedProvince=this.limonCantons;
     }
   }
-  
+
   onCantonChange(canton){
     if(canton==='Cartago'){
       this.districtsOnSelectedCanton=this.cartagoDistricts;
@@ -63,11 +64,31 @@ export class EmitterComponent implements OnInit {
     * 'Tres Ríos'
 'San Diego'
 'San Juan'
-'San Rafael', 
+'San Rafael',
 'Concepción',
-'Dulce Nombre', 
+'Dulce Nombre',
 'San Ramón',
 'Río Azul',
     */
+    addEmitter(){
+        if(driverName!=''){
+          let emitter = new Emitter();
+          
+          this.UserService.addEmitter(emitter).subscribe();
+          this.showSuccess();
 
+        }
+        else{
+          this.showError();
+        }
+
+      }
+
+    showSuccess() {
+      this.toastr.success('Emisor agregado exitosamente!', 'Exito');
+    }
+
+    showError() {
+      this.toastr.error('Por favor llenar todos los espacios', 'Error');
+    }
 }
