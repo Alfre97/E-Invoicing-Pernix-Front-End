@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
+import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
 
 @Component({
   selector: 'app-receiver',
@@ -21,7 +23,7 @@ export class ReceiverComponent implements OnInit {
   public districtsOnSelectedCanton=this.cartagoDistricts;
   public tresRiosNeighborhoods=['Eulalia', 'Florencio del Castillo', 'Jirales', 'Mariana', 'Tacora'];
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -56,5 +58,27 @@ export class ReceiverComponent implements OnInit {
     else{
        this.districtsOnSelectedCanton=[];
     }
+  }
+
+  addReceiver(name: String,identificationType: String,identificationNumber: String,comercialName: String,locationProvinceName: String,locationCantonName: String,
+    locationDistrictName: String,locationNeighborhoodName: String,otherSignals: String,phoneCountryCode: String,phoneNumber:String,faxCountryCode: String,
+    faxNumber: String, email: String){
+    let receiver: UserEmitterReceiver= new UserEmitterReceiver();
+    receiver.name=name;
+    receiver.identificationType=identificationType;
+    receiver.identificationNumber=identificationNumber;
+    receiver.comercialName=comercialName;
+    receiver.locationProvinceName=locationProvinceName;
+    receiver.locationCantonName=locationCantonName;
+    receiver.locationDistrictName=locationDistrictName;
+    receiver.locationNeighborhoodName=locationNeighborhoodName;
+    receiver.otherSignals=otherSignals;
+    receiver.phoneCountryCode=phoneCountryCode;
+    receiver.phoneNumber=phoneNumber;
+    receiver.faxCountryCode=faxCountryCode;
+    receiver.faxNumber=faxNumber;
+    receiver.email=email;
+    receiver.userType='Receiver';
+    this.userService.addUser(receiver).subscribe();    
   }
 }

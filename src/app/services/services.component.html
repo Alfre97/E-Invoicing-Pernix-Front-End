@@ -16,9 +16,9 @@
 <div>
 <div class="col-sm-4">
     <label>Número de línea</label>
-    <input class="form-control">
+    <input #lineNumber class="form-control">
     <label>Tipo de Código</label>
-    <select class="form-control">
+    <select #selectedCodeType class="form-control">
       <option value="01">Código del producto del vendedor</option>
       <option value="02">Código del producto del comprador</option>
       <option value="03">Código del producto asignado por la industria</option>
@@ -26,28 +26,29 @@
       <option value="99">Otros</option>
     </select>
     <label>Código</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #code class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <label>Cantidad</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #amount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <label>Unidad de Medida</label>
-    <select class="form-control">
-      <option>Servicios Profesionales</option>
+    <select #measureUnit class="form-control">
+      <option value="sp">Servicios Profesionales</option>
     </select>
     <label>Unidad de Medida Comercial</label>
-    <input class="form-control">
+    <input #businessMeasure class="form-control">
     <label>Detalle</label>
-    <textarea class="form-control"></textarea>
+    <textarea #detail class="form-control"></textarea>
     <label>Precio Unitario</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #unitPrice class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <label>Monto Total</label>
-    <input class="form-control">
+    <input #totalAmount class="form-control">
     <label>Naturaleza Descuento</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #discount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <label>Subtotal</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <label>Monto Total</label>
-    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <input #subtotal class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <label>Monto Total Línea</label>
+    <input #lineTotalAmount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     <br>
-    <button class="btn btn-primary btn-margin">Agregar Servicio</button>
+    <button (click)="addService(lineNumber.value, selectedCodeType.value, code.value, amount.value, measureUnit.value, businessMeasure.value, detail.value, unitPrice.value
+    , totalAmount.value, discount.value, subtotal.value, lineTotalAmount.value);" class="btn btn-primary btn-margin">Agregar Servicio</button>
 </div>
 

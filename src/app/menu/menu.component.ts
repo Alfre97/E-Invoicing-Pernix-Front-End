@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
+import { UserService } from '../user.service';
+import { Service } from '../Models/Service';
 
 @Component({
   selector: 'app-menu',
@@ -7,8 +9,8 @@ import { Router,ActivatedRoute } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
-  constructor() { }
+  private services: Service[];
+  constructor(private userService: UserService) { }
 
   private currencies=['AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN','BAM','BBD','BDT','BGN','BHD','BIF','BMD','BND','BOB','BOV','BRL','BSD','BWP','BYR','BZD','CAD',
   'CDF','CHE','CHF','CHW','CLF','CNY','COP','COU','CRC','CUC','CUP','CVE','CZK','DJF','DKK','DOP','DZD','EGP','ERN','ETB','EUR','FJD','FKP','GBP','GEL','GHS','GIP','GMD','GNF',
@@ -24,6 +26,7 @@ export class MenuComponent implements OnInit {
   private showChevronDown=false;
 
   ngOnInit() {
+    let services=this.getServices();
   }
   displayInvoiceResume(){
     this.showResume=true;
@@ -35,5 +38,9 @@ export class MenuComponent implements OnInit {
     this.showResume=false;
     this.showChevronDown=false;
     this.showChevronRight=true;
+  }
+
+  getServices(){
+    this.userService.getServices().subscribe(data => this.services = data);
   }
 }
