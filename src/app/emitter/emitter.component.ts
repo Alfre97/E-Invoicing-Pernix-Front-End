@@ -83,12 +83,4 @@ export class EmitterComponent implements OnInit {
     emitter.userType='Emitter';
     this.userservice.addUser(emitter).subscribe();
   }
-
-    showSuccess() {
-      this.toastr.success('Emisor agregado exitosamente!', 'Exito');
-    }
-
-    showError() {
-      this.toastr.error('Por favor llenar todos los espacios', 'Error');
-    }
 }

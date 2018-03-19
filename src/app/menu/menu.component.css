@@ -1,11 +1,8 @@
-body {
-  background-image: url('../../assets/Wallpaper.png');
-}
-
 .center-panel {
   text-align: center;
   width: auto;
   height: auto;
+  color: #424242;
 }
 
 .form-control {
@@ -15,9 +12,23 @@ body {
 }
 
 .page-style {
-  width: 30%;
-  background-color: #F2F2F2;
+  width: 50vh;
+  background-color: #424242;
   border-radius: 25px;
   margin: 0 auto;
   text-align: center;
+  color: white;
+}
+
+.navbar {
+  background-color: #424242;
+  height: auto;
+}
+
+.navbar-default {
+  margin-bottom: 0;
+}
+
+.navbar a {
+  color: white;
 }
