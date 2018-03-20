@@ -17,6 +17,8 @@ export class UserService {
   private addServiceURL='/addService';
   private getServicesURL='/getServices';
   private addEmitterUrl='/addUser'
+  private getEmitterUrl='/getEmitters';
+  private getReceiverUrl='/getReceivers';
   constructor(private http: HttpClient) {
   }
 
@@ -37,6 +39,13 @@ export class UserService {
     +'&locationDistrictName='+emitter.locationDistrictName+'&locationNeighborhoodName='+emitter.locationNeighborhoodName+'&locationSignals='+emitter.otherSignals
     +'&phoneCountryCode='+ emitter.phoneCountryCode+'&phoneNumber='+emitter.phoneNumber+ '&faxCountryCode='+emitter.faxCountryCode+'&faxNumber='+emitter.faxNumber
     +'&email='+emitter.email + '&userType='+emitter.userType,  JSON.stringify(emitter), httpOptions);
+  }
+
+  getEmitters(): Observable<UserEmitterReceiver[]> {
+    return this.http.get<UserEmitterReceiver[]>(rootUrl+ this.getEmitterUrl);
+  }
+  getReceivers(){
+    return this.http.get<UserEmitterReceiver[]>(rootUrl+this.getReceiverUrl);
   }
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { Service } from '../Models/Service';
+import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +11,8 @@ import { Service } from '../Models/Service';
 })
 export class MenuComponent implements OnInit {
   private services: Service[];
+  private emitters: UserEmitterReceiver[];
+  private receivers: UserEmitterReceiver[];
   constructor(private userService: UserService) { }
 
   private currencies=['AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN','BAM','BBD','BDT','BGN','BHD','BIF','BMD','BND','BOB','BOV','BRL','BSD','BWP','BYR','BZD','CAD',
@@ -27,6 +30,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     let services=this.getServices();
+    let emitters=this.getEmitters();
+    let receivers=this.getReceivers();
   }
   displayInvoiceResume(){
     this.showResume=true;
@@ -42,5 +47,12 @@ export class MenuComponent implements OnInit {
 
   getServices(){
     this.userService.getServices().subscribe(data => this.services = data);
+  }
+
+  getEmitters(){
+    this.userService.getEmitters().subscribe(data => this.emitters=data);
+  }
+  getReceivers(){
+    this.userService.getReceivers().subscribe(data => this.receivers=data);
   }
 }

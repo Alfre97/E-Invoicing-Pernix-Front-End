@@ -25,13 +25,11 @@
       <owl-date-time #dt1></owl-date-time>
       <h3>Receptor</h3>
       <select class="form-control">
-        <option disabled hidden>Seleccionar Receptor</option>
-        <option></option>
+        <option *ngFor="let receiver of receivers"> {{receiver.comercialName}}  </option>
       </select>
       <h3>Emisor</h3>
       <select class="form-control">
-        <option disabled hidden>Seleccionar un Emisor</option>
-        <option></option>
+        <option *ngFor="let emitter of emitters"> {{emitter.comercialName}}</option>
       </select>
       <h3>Condición de Venta</h3>
       <select class="form-control">
