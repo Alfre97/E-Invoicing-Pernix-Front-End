@@ -1,69 +1,70 @@
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li><a routerLink="/menu">Menu</a></li>
-        <li><a routerLink="/invoice">Factura</a></li>
-        <li class="active"><a routerLink="/receiver">Receptor</a></li>
-        <li><a routerLink="/emitter">Emisor</a></li>
-        <li><a routerLink="/products">Resumen de Factura</a></li>
-        <li><a routerLink="/services">Servicios</a></li>
-      </ul>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
     </div>
-  </nav>
-<div>
-  <div class="col-sm-4">
-    <h3>Informacion básica</h3>
-    <label>Nombre:</label>
+    <ul class="nav navbar-nav">
+      <li><a routerLink="/menu">Menu</a></li>
+      <li><a routerLink="/invoice">Factura</a></li>
+      <li class="active"><a routerLink="/receiver">Receptor</a></li>
+      <li><a routerLink="/emitter">Emisor</a></li>
+      <li><a routerLink="/services">Servicios</a></li>
+      <li><a routerLink="/products">Productos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="center-panel">
+  <h1>Agregar Receptor</h1>
+  <div class="page-style"> <br>
+    <h3>Nombre:</h3>
     <input #receiverName class="form-control">
-    <label>Correo</label>
+    <h3>Correo</h3>
     <input #receiverEmail class="form-control" type="email">
-    <label>Identificación</label>
+    <h3>Identificación</h3>
     <select #idType class="form-control">
         <option>Cédula física</option>
         <option>Cédula jurídica</option>
         <option>DIMEX</option>
         <option>NITE</option>
     </select>
-    <label>Numero</label>
+    <h3>Numero</h3>
     <input #receiverNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <label>Nombre Comercial</label>
+    <h3>Nombre Comercial</h3>
     <input #receiverBusinessName class="form-control">
-    <label>Provincia</label>
+    <h3>Provincia</h3>
     <select #receiverProvince class="form-control" (change)="onProvinceChange($event.target.value)">
       <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
     </select>
-    <label>Cantón</label>
+    <h3>Cantón</h3>
     <select #receiverCanton class="form-control" (change)="onCantonChange($event.target.value)">
         <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
     </select>
-    <label>Distrito</label>
+    <h3>Distrito</h3>
     <select #receiverDistrict class="form-control">
         <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
     </select>
-    <label>Barrio</label>
+    <h3>Barrio</h3>
     <select #receiverNeighborhood class="form-control">
         <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
     </select>
-    <label>Otras Señas</label>
+    <h3>Otras Señas</h3>
     <textarea #otherSignals class="form-control"></textarea>
-  </div>
-  <div class="col-sm-4">
-    <H3>Telefóno</H3>
-    <label>Código de país</label>
+    <h2>Telefóno</h2>
+    <h3>Código de país</h3>
     <input #phoneCountryCode class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <label>Telefóno</label>
+    <h3>Telefóno</h3>
     <input #receiverPhone class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <H3>Fax</H3>
-      <label>Código de país</label>
-      <input #faxCountryCode class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-      <label>Telefóno</label>
-      <input #faxNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-      <br>
-      <button (click)="addReceiver(receiverName.value, idType.value, receiverNumber.value, receiverBusinessName.value, receiverProvince.value, 
-      receiverCanton.value, receiverDistrict.value, receiverNeighborhood.value, otherSignals.value, phoneCountryCode.value, receiverPhone.value, 
+    <h2>Fax</h2>
+    <h3>Código de país</h3>
+    <input #faxCountryCode class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <h3>Telefóno</h3>
+    <input #faxNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    <br>
+    <button (click)="addReceiver(receiverName.value, idType.value, receiverNumber.value, receiverBusinessName.value, receiverProvince.value,
+      receiverCanton.value, receiverDistrict.value, receiverNeighborhood.value, otherSignals.value, phoneCountryCode.value, receiverPhone.value,
       faxCountryCode.value, faxNumber.value, receiverEmail)" class="btn btn-primary btn-lg button-at-bottom">Agregar Receptor</button>
+    <br>
+    <br>
   </div>
 </div>

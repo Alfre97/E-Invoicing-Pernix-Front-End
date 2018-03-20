@@ -28,7 +28,7 @@ export class EmitterComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   onProvinceChange(province){
     if(province==='San Jose'){
       this.cantonsOnSelectedProvince=this.SJCantons;
@@ -52,7 +52,7 @@ export class EmitterComponent implements OnInit {
       this.cantonsOnSelectedProvince=this.limonCantons;
     }
   }
-  
+
   onCantonChange(canton){
     if(canton==='Cartago'){
       this.districtsOnSelectedCanton=this.cartagoDistricts;
@@ -81,7 +81,6 @@ export class EmitterComponent implements OnInit {
     emitter.faxNumber=faxNumber;
     emitter.email=email;
     emitter.userType='Emitter';
-    this.userservice.addUser(emitter).subscribe();    
+    this.userservice.addUser(emitter).subscribe();
   }
-
 }
