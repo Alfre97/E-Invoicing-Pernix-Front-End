@@ -10,8 +10,8 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const rootUrl='http://localhost:5000';
-@Injectable()
+const rootUrl='https://dry-harbor-97946.herokuapp.com';
+@Injectable() 
 export class UserService {
 
   private addServiceURL='/addService';
@@ -23,7 +23,7 @@ export class UserService {
   }
 
   addService(service: Service): Observable <Service>{
-    return this.http.post<Service>(rootUrl + this.addServiceURL+'?' + 'amount=' + service.amount+ '&code='+ service.code+ '&codeType='+service.selectedCodeType
+    return this.http.post<Service>(rootUrl + this.addServiceURL+'?' + 'amount=' + service.amount+ '&code='+ service.code+ '&codeType='+service.codeType
     +'&comercialUnitOfMeasurement='+ service.businessMeasure +'&detail=' + service.detail + '&discount='+ service.discount + '&lineNumber='+ service.lineNumber
     + '&priceByUnit='+service.unitPrice + '&subTotal=' + service.subtotal + '&total='+service.totalAmount + '&totalAmount='+ service.lineTotalAmount
     + '&unitOfMeasurementName='+ service.meisureUnit +'&unitOfMeasurementType=' + service.meisureUnit,  JSON.stringify(service), httpOptions);

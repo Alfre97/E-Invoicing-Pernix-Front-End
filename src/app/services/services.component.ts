@@ -18,7 +18,7 @@ export class ServicesComponent implements OnInit {
      totalAmount: string, discount: string, subtotal:string, lineTotalAmount: string ){
       let service: Service= new Service();
       service.lineNumber=lineNumber;
-      service.selectedCodeType=selectedCodeType;
+      service.codeType=selectedCodeType;
       service.code=code;
       service.amount=amount;
       service.meisureUnit;

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 import { MenuComponent } from './menu/menu.component';
 import { AppRoutingModule } from './app-routing.module';
 import { InvoiceComponent } from './invoice/invoice.component';
@@ -15,13 +14,13 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { HttpClientModule }  from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddInvoiceComponent,
     MenuComponent,
     InvoiceComponent,
     ReceiverComponent,
@@ -35,7 +34,9 @@ import { UserService } from './user.service';
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
+    
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

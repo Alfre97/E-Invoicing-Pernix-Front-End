@@ -3,6 +3,8 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { Service } from '../Models/Service';
 import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
+import { Invoice } from '../models/Invoice';
+
 
 @Component({
   selector: 'app-menu',
@@ -13,6 +15,13 @@ export class MenuComponent implements OnInit {
   private services: Service[];
   private emitters: UserEmitterReceiver[];
   private receivers: UserEmitterReceiver[];
+  selectedEmitter: UserEmitterReceiver;
+  selectedReceiver: UserEmitterReceiver;
+  selectedService: Service;
+  selectUndefinedOptionValue: any;
+ 
+
+
   constructor(private userService: UserService) { }
 
   private currencies=['AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN','BAM','BBD','BDT','BGN','BHD','BIF','BMD','BND','BOB','BOV','BRL','BSD','BWP','BYR','BZD','CAD',
@@ -54,5 +63,37 @@ export class MenuComponent implements OnInit {
   }
   getReceivers(){
     this.userService.getReceivers().subscribe(data => this.receivers=data);
+  }
+
+  processInvoice(key:String, consecutiveNumber: String, dateCreated: String, sellTerm: String, paymentLapse:String, paymentMethod: String,selectedCurrency: String, exchangeRate: String,
+    recordedServices: String, exemptServices: String, recordedCommodity: String, exemptCommodity: String, recordedTotal:String, exemptTotal:String, totalSell:String,
+    totalDiscount:String, netSell:String, totalTax:String, totalVoucher:String, resolutionNumber:String, resolutionDate:String, otherText:String ){
+      let invoice: Invoice = new Invoice();
+      invoice.key=key;
+      invoice.consecutiveNumber=consecutiveNumber;
+      invoice.dateCreated=dateCreated;
+      invoice.sellTerm=sellTerm;
+      invoice.paymentLapse=paymentLapse;
+      invoice.paymentMethod=paymentMethod;
+      invoice.selectedCurrency=selectedCurrency;
+      invoice.exchangeRate=exchangeRate;
+      invoice.recordedServices=recordedServices;
+      invoice.exemptServices=exemptServices;
+      invoice.recordedCommodity=recordedCommodity;
+      invoice.exemptCommodity=exemptCommodity;
+      invoice.recordedTotal=recordedTotal;
+      invoice.exemptTotal=exemptTotal;
+      invoice.totalSell=totalSell;
+      invoice.totalDiscount=totalDiscount;
+      invoice.netSell=netSell;
+      invoice.totalTax=totalTax;
+      invoice.totalVoucher=totalVoucher;
+      invoice.resolutionNumber=resolutionNumber;
+      invoice.resolutionDate=resolutionDate;
+      invoice.otherText=otherText;
+      invoice.idEmitter=this.selectedEmitter.id;
+      invoice.idReceiver=this.selectedReceiver.id;
+      invoice.idService=this.selectedService.id;
+      console.log(invoice);
   }
 }

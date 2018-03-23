@@ -1,6 +1,7 @@
 export class Service{
+    id: Number
     lineNumber: string
-    selectedCodeType: string
+    codeType: string
     code: string
     amount: string
     meisureUnit: string
