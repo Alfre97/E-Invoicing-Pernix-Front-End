@@ -14,9 +14,10 @@
   </div>
 </nav>
 <div class="center-panel">
-    <h1>Crear Factura</h1>
-    <div class="page-style">
-      <br>
+  <h1>Crear Factura</h1>
+  <div class="page-style">
+    <br>
+    <div class="col-sm-4">
       <h3>Clave</h3>
       <input #key class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Ingrese la clave asignada">
       <h3>Número Consecutivo</h3>
@@ -24,13 +25,17 @@
       <h3>Fecha de Emisión</h3>
       <input #dateCreated class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
       <owl-date-time #dt1></owl-date-time>
+      <br>
+      <br>
+    </div>
+    <div class="col-sm-4">
       <h3>Emisor</h3>
       <select [(ngModel)]="selectedEmitter" class="form-control">
         <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Emisor</option>
         <option *ngFor="let emitter of emitters" [ngValue]="emitter"> {{emitter.comercialName}}</option>
       </select>
       <h3>Receptor</h3>
-      <select [(ngModel)]="selectedReceiver"class="form-control">
+      <select [(ngModel)]="selectedReceiver" class="form-control">
         <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Receptor</option>
         <option *ngFor="let receiver of receivers" [ngValue]="receiver"> {{receiver.comercialName}}  </option>
       </select>
@@ -39,6 +44,10 @@
         <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Servicio</option>
         <option *ngFor="let service of services" [ngValue]="service">{{service.lineNumber}}-{{service.codeType}}</option>
       </select>
+      <br>
+      <br>
+    </div>
+    <div class="col-sm-4">
       <h3>Condición de Venta</h3>
       <select #sellTerm class="form-control">
         <option *ngFor="let term of sellTerms">{{term}}</option>
@@ -49,50 +58,75 @@
       <select #paymentMethod class="form-control">
         <option *ngFor="let method of paymentMethods">{{method}}</option>
       </select>
-      <h3>Resumen de Factura <span *ngIf="showChevronRight" (click)="displayInvoiceResume()" class="glyphicon glyphicon-chevron-right"></span><span *ngIf="showChevronDown" (click)="hideInvoiceResume()"  class="glyphicon glyphicon-chevron-down"></span></h3>
-      <div *ngIf="showResume">
-        <label>Código de Moneda</label>
-        <select [(ngModel)]="selectedCurrency" class="form-control">
+      <br>
+      <br>
+    </div>
+  </div>
+  <br><br>
+  <div class="page-style">
+    <h3>Resumen de Factura</h3>
+    <div class="col-sm-4">
+      <label>Código de Moneda</label>
+      <select [(ngModel)]="selectedCurrency" class="form-control">
           <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Moneda</option>
           <option *ngFor="let currency of currencies" (ngValue)="currency">{{currency}}</option>
         </select>
-        <label>Tipo de Cambio</label>
-        <input [(ngModel)]="exchangeRate" class="form-control">
-        <label>Total de Servicios Gravados</label>
-        <input [(ngModel)]="recordedServices" class="form-control">
-        <label>Total de Servicios Exentos</label>
-        <input [(ngModel)]="exemptServices" class="form-control">
-        <label>Total de Mercancias Gravadas</label>
-        <input [(ngModel)]="recordedCommodity" class="form-control">
-        <label >Total de Mercancias Exentas</label>
-        <input [(ngModel)]="exemptCommodity" class="form-control">
-        <label>Total  Gravado</label>
-        <input [(ngModel)]="recordedTotal" class="form-control">
-        <label>Total Exento</label>
-        <input [(ngModel)]="exemptTotal" class="form-control">
-        <label>Total Venta</label>
-        <input [(ngModel)]="totalSell" class="form-control">
-        <label>Total Descuento</label>
-        <input [(ngModel)]="totalDiscount" class="form-control">
-        <label>Total de Venta Neta</label>
-        <input [(ngModel)]="netSell" class="form-control">
-        <label>Total de Impuesto</label>
-        <input [(ngModel)]="totalTax" class="form-control">
-        <label>Total Comprobante</label>
-        <input [(ngModel)]="totalVoucher" class="form-control">
-      </div>
+      <label>Tipo de Cambio</label>
+      <input [(ngModel)]="exchangeRate" class="form-control" placeholder="Tipo de Cambio">
+      <label>Total de Servicios Gravados</label>
+      <input [(ngModel)]="recordedServices" class="form-control" placeholder="Total de Servicios Gravados">
+
+      <label>Total de Servicios Exentos</label>
+      <input [(ngModel)]="exemptServices" class="form-control" placeholder="Total de Servicios Exentos">
+    </div>
+    <div class="col-sm-4">
+      <label>Total de Mercancias Gravadas</label>
+      <input [(ngModel)]="recordedCommodity" class="form-control" placeholder="Total de Mercancias Gravadas">
+      <label>Total de Mercancias Exentas</label>
+      <input [(ngModel)]="exemptCommodity" class="form-control" placeholder="Total de Mercancias Exentas">
+      <label>Total  Gravado</label>
+      <input [(ngModel)]="recordedTotal" class="form-control" placeholder="Total  Gravado">
+      <label>Total Exento</label>
+      <input [(ngModel)]="exemptTotal" class="form-control" placeholder="Total Exento">
+    </div>
+    <div class="col-sm-4">
+      <label>Total Venta</label>
+      <input [(ngModel)]="totalSell" class="form-control" placeholder="Total Venta">
+      <label>Total Descuento</label>
+      <input [(ngModel)]="totalDiscount" class="form-control" placeholder="Total Descuento">
+      <label>Total de Venta Neta</label>
+      <input [(ngModel)]="netSell" class="form-control" placeholder="Total de Venta Neta">
+      <label>Total de Impuesto</label>
+      <input [(ngModel)]="totalTax" class="form-control" placeholder="Total de Impuesto">
+      <label>Total Comprobante</label>
+      <input [(ngModel)]="totalVoucher" class="form-control" placeholder="Total Comprobante">
+      <br>
+      <br>
+    </div>
+    <br>
+    <br>
+  </div>
+  <br><br>
+  <div class="page-style">
+    <div class="col-sm-6">
       <h3>Número de Resolución</h3>
       <input #resolutionNumber class="form-control" placeholder="Número de resolución DGT XXXX">
       <h3>Fecha de Resolución</h3>
       <input #resolutionDate class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Fecha y hora de Resolución">
       <owl-date-time #dt2></owl-date-time>
       <h3>Otro Texto</h3>
-      <textarea  #otherText class="form-control" placeholder="Elemento opcional"></textarea>
+      <textarea #otherText class="form-control" placeholder="Elemento opcional"></textarea>
       <br>
-      <button class="btn btn-primary btn-margin" (click)="processInvoice(key.value, consecutiveNumber.value, dateCreated.value, sellTerm.value, paymentLapse.value, 
+      <br>
+    </div>
+    <div class="col-sm-6 colBtn">
+      <button class="btn btn-primary btn-margin" (click)="processInvoice(key.value, consecutiveNumber.value, dateCreated.value, sellTerm.value, paymentLapse.value,
       paymentMethod.value, selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal,
       exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher, resolutionNumber.value, resolutionDate.value, otherText.value)">Crear Factura</button>
       <br>
       <br>
-      </div>
+    </div>
   </div>
+  <br>
+  <br>
+</div>

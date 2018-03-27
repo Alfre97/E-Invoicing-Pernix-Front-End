@@ -17,54 +17,64 @@
 <div class="center-panel">
   <h1>Agregar Receptor</h1>
   <div class="page-style"> <br>
-    <h3>Nombre:</h3>
-    <input #receiverName class="form-control">
-    <h3>Correo</h3>
-    <input #receiverEmail class="form-control" type="email">
-    <h3>Identificación</h3>
-    <select #idType class="form-control">
+    <div class="col-sm-6">
+      <h3>Nombre</h3>
+      <input #receiverName class="form-control" placeholder="Nombre">
+      <h3>Correo</h3>
+      <input #receiverEmail class="form-control" type="email" placeholder="Correo">
+      <h3>Identificación</h3>
+      <select #idType class="form-control">
         <option>Cédula física</option>
         <option>Cédula jurídica</option>
         <option>DIMEX</option>
         <option>NITE</option>
     </select>
-    <h3>Numero</h3>
-    <input #receiverNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <h3>Nombre Comercial</h3>
-    <input #receiverBusinessName class="form-control">
-    <h3>Provincia</h3>
-    <select #receiverProvince class="form-control" (change)="onProvinceChange($event.target.value)">
+      <h3>Numero</h3>
+      <input #receiverNumber class="form-control" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <h3>Nombre Comercial</h3>
+      <input #receiverBusinessName class="form-control" placeholder="Nombre Comercial">
+    </div>
+    <div class="col-sm-6">
+      <h3>Provincia</h3>
+      <select #receiverProvince class="form-control" (change)="onProvinceChange($event.target.value)">
       <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
     </select>
-    <h3>Cantón</h3>
-    <select #receiverCanton class="form-control" (change)="onCantonChange($event.target.value)">
+      <h3>Cantón</h3>
+      <select #receiverCanton class="form-control" (change)="onCantonChange($event.target.value)">
         <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
     </select>
-    <h3>Distrito</h3>
-    <select #receiverDistrict class="form-control">
+      <h3>Distrito</h3>
+      <select #receiverDistrict class="form-control">
         <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
     </select>
-    <h3>Barrio</h3>
-    <select #receiverNeighborhood class="form-control">
+      <h3>Barrio</h3>
+      <select #receiverNeighborhood class="form-control">
         <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
     </select>
-    <h3>Otras Señas</h3>
-    <textarea #otherSignals class="form-control"></textarea>
-    <h2>Telefóno</h2>
-    <h3>Código de país</h3>
-    <input #phoneCountryCode class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <h3>Telefóno</h3>
-    <input #receiverPhone class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <h2>Fax</h2>
-    <h3>Código de país</h3>
-    <input #faxCountryCode class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <h3>Telefóno</h3>
-    <input #faxNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    <br>
-    <button (click)="addReceiver(receiverName.value, idType.value, receiverNumber.value, receiverBusinessName.value, receiverProvince.value,
+      <h3>Otras Señas</h3>
+      <textarea #otherSignals class="form-control" placeholder="Señas destacables del lugar"></textarea>
+    </div>
+    <div class="col-sm-6">
+      <h2>Telefóno</h2>
+      <h3>Código de país</h3>
+      <input #phoneCountryCode placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <h3>Telefóno</h3>
+      <input #receiverPhone placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+    </div>
+    <div class="col-sm-6">
+      <h2>Fax</h2>
+      <h3>Código de país</h3>
+      <input #faxCountryCode placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <h3>Fax</h3>
+      <input #faxNumber placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <br>
+    </div>
+    <div class="col-sm-12">
+      <button (click)="addReceiver(receiverName.value, idType.value, receiverNumber.value, receiverBusinessName.value, receiverProvince.value,
       receiverCanton.value, receiverDistrict.value, receiverNeighborhood.value, otherSignals.value, phoneCountryCode.value, receiverPhone.value,
       faxCountryCode.value, faxNumber.value, receiverEmail.value)" class="btn btn-primary btn-lg button-at-bottom">Agregar Receptor</button>
-    <br>
-    <br>
+      <br>
+      <br>
+    </div>
   </div>
 </div>

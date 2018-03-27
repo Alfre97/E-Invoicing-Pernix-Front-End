@@ -5,13 +5,15 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Service } from './Models/Service';
 import { UserEmitterReceiver } from './models/UserEmitterReceiver';
+import { Invoice } from './models/Invoice';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 const rootUrl='https://dry-harbor-97946.herokuapp.com';
-@Injectable() 
+@Injectable()
 export class UserService {
 
   private addServiceURL='/addService';
@@ -19,6 +21,7 @@ export class UserService {
   private addEmitterUrl='/addUser'
   private getEmitterUrl='/getEmitters';
   private getReceiverUrl='/getReceivers';
+  private sendInvoiceURL='/uploadInvoice';
   constructor(private http: HttpClient) {
   }
 
@@ -39,6 +42,15 @@ export class UserService {
     +'&locationDistrictName='+emitter.locationDistrictName+'&locationNeighborhoodName='+emitter.locationNeighborhoodName+'&locationSignals='+emitter.otherSignals
     +'&phoneCountryCode='+ emitter.phoneCountryCode+'&phoneNumber='+emitter.phoneNumber+ '&faxCountryCode='+emitter.faxCountryCode+'&faxNumber='+emitter.faxNumber
     +'&email='+emitter.email + '&userType='+emitter.userType,  JSON.stringify(emitter), httpOptions);
+  }
+
+  sendInvoice(invoice: Invoice): Observable<Invoice>{
+    return this.http.post<Invoice>(rootUrl + this.sendInvoice+'?'+ 'key='+ invoice.key + '&consecutiveNumber=' + invoice.consecutiveNumber + '&dateCreated='+ invoice.dateCreated
+    +'&sellTerm='+invoice.sellTerm+ '&paymentLapse='+invoice.paymentLapse +'&paymentMethod='+invoice.paymentMethod
+    +'&selectedCurrency='+invoice.selectedCurrency+'&exchangeRate='+invoice.exchangeRate+'&recordedServices='+invoice.recordedServices
+    +'&recordedCommodity='+ invoice.recordedCommodity+'&exemptCommodity='+invoice.exemptCommodity+ '&recordedTotal='+invoice.recordedTotal+'&exemptTotal='+invoice.totalSell
+    +'&totalDiscount='+invoice.totalDiscount + '&netSell='+invoice.netSell + '&totalTax='+invoice.totalTax + '&totalVoucher='+invoice.totalVoucher + '&resolutionNumber='+invoice.resolutionNumber
+    + '&resolutionDate='+invoice.resolutionDate + '&otherText='+invoice.otherText,  JSON.stringify(invoice), httpOptions);
   }
 
   getEmitters(): Observable<UserEmitterReceiver[]> {

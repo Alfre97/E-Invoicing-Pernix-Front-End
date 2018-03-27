@@ -2,7 +2,7 @@
   text-align: center;
   width: auto;
   height: auto;
-  color: #424242;
+  color: white;
 }
 
 .form-control {
@@ -12,8 +12,10 @@
 }
 
 .page-style {
-  width: 50vh;
-  background-color: #424242;
+  display: inline-block;
+  width: 98%;
+  height: auto;
+  background-color: rgba(93, 109, 126, 0.8);
   border-radius: 25px;
   margin: 0 auto;
   text-align: center;
@@ -21,8 +23,9 @@
 }
 
 .navbar {
-  background-color: #424242;
+  background-color: rgba(93, 109, 126, 0.8);
   height: auto;
+  border: none;
 }
 
 .navbar-default {

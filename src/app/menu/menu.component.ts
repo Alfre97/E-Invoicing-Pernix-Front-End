@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
   selectedReceiver: UserEmitterReceiver;
   selectedService: Service;
   selectUndefinedOptionValue: any;
- 
+
 
 
   constructor(private userService: UserService) { }
@@ -95,5 +95,6 @@ export class MenuComponent implements OnInit {
       invoice.idReceiver=this.selectedReceiver.id;
       invoice.idService=this.selectedService.id;
       console.log(invoice);
+      this.userService.sendInvoice(invoice).subscribe();
   }
 }
