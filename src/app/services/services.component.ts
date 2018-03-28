@@ -7,7 +7,6 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   selector: 'app-services',
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.css'],
-  template: '<button class="btn btn-default" (click)="showSuccess()">Toastr Tester</button>'
 })
 export class ServicesComponent implements OnInit {
 
@@ -16,15 +15,15 @@ export class ServicesComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toastr.success('You are awesome!', 'Success!');
+    this.toastr.success('Servicio creado!', 'Correcto');
   }
 
   showError() {
-    this.toastr.error('This is not good!', 'Oops!');
+    this.toastr.error('Servicio no creado!', 'Oops');
   }
 
   showWarning() {
-    this.toastr.warning('You are being warned.', 'Alert!');
+    this.toastr.warning('Servicio no creado, llene todos los campos.', 'Alerta');
   }
 
   showInfo() {
@@ -38,22 +37,34 @@ export class ServicesComponent implements OnInit {
   ngOnInit() {
   }
 
-  addService(lineNumber: string, selectedCodeType: string, code: string, amount: string, meisureUnit: string, businessMeasure: string, detail: string, unitPrice: string,
-    totalAmount: string, discount: string, subtotal: string, lineTotalAmount: string) {
-    let service: Service = new Service();
-    service.lineNumber = lineNumber;
-    service.codeType = selectedCodeType;
-    service.code = code;
-    service.amount = amount;
-    service.meisureUnit;
-    service.businessMeasure = businessMeasure;
-    service.detail = detail;
-    service.unitPrice = unitPrice;
-    service.totalAmount = totalAmount;
-    service.discount = discount;
-    service.subtotal = subtotal;
-    service.lineTotalAmount = lineTotalAmount;
-    this.userService.addService(service).subscribe();
+  addService(lineNumber: string, selectedCodeType: string, code: string, amount: string, meisureUnit: string,
+    businessMeasure: string, detail: string, unitPrice: string, totalAmount: string, discount: string,
+    subtotal: string, lineTotalAmount: string) {
+    if (lineNumber != '' && selectedCodeType != '' && code != '' && amount != '' && meisureUnit != '' &&
+      businessMeasure != '' && detail != '' && unitPrice != '' && totalAmount != '' && discount != '' &&
+      subtotal != '' && lineTotalAmount != '') {
+      let service: Service = new Service();
+      service.lineNumber = lineNumber;
+      service.codeType = selectedCodeType;
+      service.code = code;
+      service.amount = amount;
+      service.meisureUnit;
+      service.businessMeasure = businessMeasure;
+      service.detail = detail;
+      service.unitPrice = unitPrice;
+      service.totalAmount = totalAmount;
+      service.discount = discount;
+      service.subtotal = subtotal;
+      service.lineTotalAmount = lineTotalAmount;
+      this.userService.addService(service).subscribe();
+      this.showSuccess();
+    } else if (lineNumber != '' || selectedCodeType != '' || code != '' || amount != '' || meisureUnit != '' ||
+      businessMeasure != '' || detail != '' || unitPrice != '' || totalAmount != '' || discount != '' ||
+      subtotal != '' || lineTotalAmount != '') {
+      this.showWarning();
+    } else {
+      this.showError();
+    }
   }
 
 }
