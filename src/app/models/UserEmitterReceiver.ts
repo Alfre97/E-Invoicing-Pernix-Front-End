@@ -1,5 +1,5 @@
 export class UserEmitterReceiver{
-    
+
     id: Number
     name: String
     identificationType: String

@@ -45,12 +45,31 @@ export class UserService {
   }
 
   sendInvoice(invoice: Invoice): Observable<Invoice>{
-    return this.http.post<Invoice>(rootUrl + this.sendInvoice+'?'+ 'key='+ invoice.key + '&consecutiveNumber=' + invoice.consecutiveNumber + '&dateCreated='+ invoice.dateCreated
-    +'&sellTerm='+invoice.sellTerm+ '&paymentLapse='+invoice.paymentLapse +'&paymentMethod='+invoice.paymentMethod
-    +'&selectedCurrency='+invoice.selectedCurrency+'&exchangeRate='+invoice.exchangeRate+'&recordedServices='+invoice.recordedServices
-    +'&recordedCommodity='+ invoice.recordedCommodity+'&exemptCommodity='+invoice.exemptCommodity+ '&recordedTotal='+invoice.recordedTotal+'&exemptTotal='+invoice.totalSell
-    +'&totalDiscount='+invoice.totalDiscount + '&netSell='+invoice.netSell + '&totalTax='+invoice.totalTax + '&totalVoucher='+invoice.totalVoucher + '&resolutionNumber='+invoice.resolutionNumber
-    + '&resolutionDate='+invoice.resolutionDate + '&otherText='+invoice.otherText,  JSON.stringify(invoice), httpOptions);
+    return this.http.post<Invoice>(rootUrl + this.sendInvoiceURL +'?'+
+    '&dateCreated=' + invoice.dateCreated +
+    '&sellTerm=' + invoice.sellTerm +
+    '&paymentLapse=' + invoice.paymentLapse +
+    '&paymentMethod='+ invoice.paymentMethod +
+    '&selectedCurrency=' + invoice.selectedCurrency +
+    '&exchangeRate=' + invoice.exchangeRate +
+    '&recordedServices=' + invoice.recordedServices +
+    '&exemptServices=' + invoice.exemptServices +
+    '&recordedCommodity=' + invoice.recordedCommodity +
+    '&exemptCommodity=' + invoice.exemptCommodity +
+    '&recordedTotal=' + invoice.recordedTotal +
+    '&exemptTotal=' + invoice.exemptTotal +
+    '&totalSell=' + invoice.totalSell +
+    '&totalDiscount=' + invoice.totalDiscount +
+    '&netSell=' + invoice.netSell +
+    '&totalTax=' + invoice.totalTax +
+    '&totalVoucher=' + invoice.totalVoucher +
+    '&resolutionNumber=' + invoice.resolutionNumber +
+    '&resolutionDate=' + invoice.resolutionDate +
+    '&otherText=' + invoice.otherText +
+    '&idEmitter=' + invoice.idEmitter +
+    '&idReceiver=' + invoice.idReceiver +
+    '&idService=' + invoice.idService,
+    JSON.stringify(invoice), httpOptions);
   }
 
   getEmitters(): Observable<UserEmitterReceiver[]> {

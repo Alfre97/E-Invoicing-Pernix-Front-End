@@ -62,25 +62,27 @@ export class EmitterComponent implements OnInit {
     }
   }
 
-  addEmitter(name: String,identificationType: String,identificationNumber: String,comercialName: String,locationProvinceName: String,locationCantonName: String,
-    locationDistrictName: String,locationNeighborhoodName: String,otherSignals: String,phoneCountryCode: String,phoneNumber:String,faxCountryCode: String,
-    faxNumber: String, email: String){
+  addEmitter(name: String, email: String, idType: String,
+    number: String, comercialName: String, province: String,
+    canton: String, district: String, neighborhood: String,
+    otherSignals: String, phoneCountryCode:String, emitterPhone: String,
+    faxCountryCode: String, faxNumber: String){
     let emitter: UserEmitterReceiver= new UserEmitterReceiver();
-    emitter.name=name;
-    emitter.identificationType=identificationType;
-    emitter.identificationNumber=identificationNumber;
-    emitter.comercialName=comercialName;
-    emitter.locationProvinceName=locationProvinceName;
-    emitter.locationCantonName=locationCantonName;
-    emitter.locationDistrictName=locationDistrictName;
-    emitter.locationNeighborhoodName=locationNeighborhoodName;
-    emitter.otherSignals=otherSignals;
-    emitter.phoneCountryCode=phoneCountryCode;
-    emitter.phoneNumber=phoneNumber;
-    emitter.faxCountryCode=faxCountryCode;
-    emitter.faxNumber=faxNumber;
-    emitter.email=email;
-    emitter.userType='Emitter';
+    emitter.name = name;
+    emitter.email = email;
+    emitter.identificationType = idType;
+    emitter.identificationNumber = number;
+    emitter.comercialName = comercialName;
+    emitter.locationProvinceName = province;
+    emitter.locationCantonName = canton;
+    emitter.locationDistrictName = district;
+    emitter.locationNeighborhoodName = neighborhood;
+    emitter.otherSignals = otherSignals;
+    emitter.phoneCountryCode = phoneCountryCode;
+    emitter.phoneNumber = emitterPhone;
+    emitter.faxCountryCode = faxCountryCode;
+    emitter.faxNumber = faxNumber;
+    emitter.userType = 'Emitter';
     this.userservice.addUser(emitter).subscribe();
   }
 }

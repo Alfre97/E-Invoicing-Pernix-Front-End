@@ -65,12 +65,11 @@ export class MenuComponent implements OnInit {
     this.userService.getReceivers().subscribe(data => this.receivers=data);
   }
 
-  processInvoice(key:String, consecutiveNumber: String, dateCreated: String, sellTerm: String, paymentLapse:String, paymentMethod: String,selectedCurrency: String, exchangeRate: String,
+  processInvoice(dateCreated: String, sellTerm: String, paymentLapse:String, paymentMethod: String,selectedCurrency: String, exchangeRate: String,
     recordedServices: String, exemptServices: String, recordedCommodity: String, exemptCommodity: String, recordedTotal:String, exemptTotal:String, totalSell:String,
     totalDiscount:String, netSell:String, totalTax:String, totalVoucher:String, resolutionNumber:String, resolutionDate:String, otherText:String ){
       let invoice: Invoice = new Invoice();
-      invoice.key=key;
-      invoice.consecutiveNumber=consecutiveNumber;
+
       invoice.dateCreated=dateCreated;
       invoice.sellTerm=sellTerm;
       invoice.paymentLapse=paymentLapse;
@@ -95,6 +94,7 @@ export class MenuComponent implements OnInit {
       invoice.idReceiver=this.selectedReceiver.id;
       invoice.idService=this.selectedService.id;
       console.log(invoice);
+      
       this.userService.sendInvoice(invoice).subscribe();
   }
 }

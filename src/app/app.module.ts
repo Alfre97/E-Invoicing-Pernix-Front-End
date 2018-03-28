@@ -9,14 +9,13 @@ import { ReceiverComponent } from './receiver/receiver.component';
 import { EmitterComponent } from './emitter/emitter.component';
 import { ProductsComponent } from './products/products.component';
 import { ServicesComponent } from './services/services.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { HttpClientModule }  from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
 import { FormsModule } from '@angular/forms';
-
-
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
   declarations: [
@@ -30,13 +29,15 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastModule.forRoot(),
     AppRoutingModule,
-    OwlDateTimeModule, 
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule
-    
+
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
