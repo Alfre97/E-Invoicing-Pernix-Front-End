@@ -10,16 +10,17 @@
       <li><a routerLink="/emitter">Emisor</a></li>
       <li><a routerLink="/services">Servicios</a></li>
       <li><a routerLink="/products">Productos</a></li>
+      <li><a routerLink="/tax">Impuestos</a></li>
     </ul>
   </div>
 </nav>
 <div class="center-panel">
   <h1>Crear Factura</h1>
-  <div class="page-style">
+  <div class="page-style col-sm-8" [@slideInOut] *ngIf="showGeneral">
     <br>
     <div class="col-sm-4">
       <h3>Fecha de Emisión</h3>
-      <input #dateCreated class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
+      <input [(ngModel)]="dateCreated" class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
       <owl-date-time #dt1></owl-date-time>
       <br>
       <br>
@@ -36,30 +37,30 @@
         <option *ngFor="let receiver of receivers" [ngValue]="receiver"> {{receiver.comercialName}}  </option>
       </select>
       <h3>Servicio</h3>
-      <select [(ngModel)]="selectedService" class="form-control">
-        <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Servicio</option>
-        <option *ngFor="let service of services" [ngValue]="service">{{service.lineNumber}}-{{service.detail}}</option>
-      </select>
+      <mat-select placeholder="Seleccione un Servicio" [(ngModel)]="selectedService" class="form-control" multiple>
+        <mat-option *ngFor="let service of services" [value]="service">{{service.lineNumber}}-{{service.detail}}</mat-option>
+      </mat-select>
       <br>
       <br>
     </div>
     <div class="col-sm-4">
       <h3>Condición de Venta</h3>
-      <select #sellTerm class="form-control">
+      <select [(ngModel)]="sellTerm" class="form-control">
+        <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Condición de Venta</option>
         <option *ngFor="let term of sellTerms">{{term}}</option>
       </select>
       <h3>Plazo de Crédito</h3>
-      <input #paymentLapse class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
+      <input [(ngModel)]="paymentLapse" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
       <h3>Medio de Pago</h3>
-      <select #paymentMethod class="form-control">
-        <option *ngFor="let method of paymentMethods">{{method}}</option>
-      </select>
+      <mat-select placeholder="Seleccione un Medio de Pago" class=" form-control" [(ngModel)]="paymentMethod" multiple>
+          <mat-option *ngFor="let method of paymentMethods" [value]="method" >{{method}}</mat-option>
+      </mat-select>
       <br>
       <br>
     </div>
+    <button class="btn btn-primary btn-width" (click)="displayInvoiceResume(dateCreated, selectedEmitter, selectedReceiver, selectedService, sellTerm, paymentLapse, paymentMethod)">Siguiente ></button>
   </div>
-  <br><br>
-  <div class="page-style">
+  <div class="page-style col-sm-8"  [@slideInOut] *ngIf="showResume">
     <h3>Resumen de Factura</h3>
     <div class="col-sm-4">
       <label>Código de Moneda</label>
@@ -71,7 +72,6 @@
       <input [(ngModel)]="exchangeRate" class="form-control" placeholder="Tipo de Cambio">
       <label>Total de Servicios Gravados</label>
       <input [(ngModel)]="recordedServices" class="form-control" placeholder="Total de Servicios Gravados">
-
       <label>Total de Servicios Exentos</label>
       <input [(ngModel)]="exemptServices" class="form-control" placeholder="Total de Servicios Exentos">
     </div>
@@ -101,26 +101,29 @@
     </div>
     <br>
     <br>
+    <button class="btn btn-primary btn-width" (click)="displayInvoiceGeneral()"> < Anterior </button>
+    <button class="btn btn-primary btn-width" (click)="displayInvoiceResolutions(selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, 
+    exemptCommodity, recordedTotal, exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher)">Siguiente ></button>
   </div>
-  <br><br>
-  <div class="page-style">
-    <div class="col-sm-6">
+  <div [@slideInOut] *ngIf="showResolutions" class="page-style col-sm-8" >
+    <div >
       <h3>Número de Resolución</h3>
-      <input #resolutionNumber class="form-control" placeholder="Número de resolución DGT XXXX">
+      <input [(ngModel)]="resolutionNumber" class="form-control" placeholder="Número de resolución DGT XXXX">
       <h3>Fecha de Resolución</h3>
-      <input #resolutionDate class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Fecha y hora de Resolución">
+      <input [(ngModel)]="resolutionDate" class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Fecha y hora de Resolución">
       <owl-date-time #dt2></owl-date-time>
       <h3>Otro Texto</h3>
-      <textarea #otherText class="form-control" placeholder="Elemento opcional"></textarea>
+      <textarea [(ngModel)]="otherText" class="form-control" placeholder="Elemento opcional"></textarea>
       <br>
       <br>
+      <button class="btn btn-primary btn-width" (click)="backToInvoiceResume()"> < Anterior </button>
+      <button class="btn btn-primary btn-width" (click)="processInvoice(dateCreated, sellTerm, paymentLapse,
+      paymentMethod, selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal,
+      exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher, resolutionNumber  , resolutionDate, otherText)">Crear Factura</button>
     </div>
-    <div class="col-sm-6 colBtn">
-      <button class="btn btn-primary btn-margin" (click)="processInvoice(dateCreated.value, sellTerm.value, paymentLapse.value,
-      paymentMethod.value, selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal,
-      exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher, resolutionNumber.value, resolutionDate.value, otherText.value)">Crear Factura</button>
-      <br>
-      <br>
+    <div>  
+    <br>
+    <br>
     </div>
   </div>
   <br>

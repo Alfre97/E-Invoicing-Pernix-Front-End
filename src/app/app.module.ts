@@ -14,8 +14,10 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import {MatSelectModule} from '@angular/material/select';
+import { TaxComponent } from './tax/tax.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     ReceiverComponent,
     EmitterComponent,
     ProductsComponent,
-    ServicesComponent
+    ServicesComponent,
+    TaxComponent
   ],
   imports: [
     BrowserModule,
@@ -36,8 +39,9 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     OwlNativeDateTimeModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
-
+    FormsModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

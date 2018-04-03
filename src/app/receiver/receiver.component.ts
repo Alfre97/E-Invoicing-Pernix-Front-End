@@ -117,3 +117,4 @@ export class ReceiverComponent implements OnInit {
       this.showError();
     }
   }
+}

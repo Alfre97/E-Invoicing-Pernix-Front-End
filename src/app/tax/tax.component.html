@@ -1,0 +1,51 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/menu">Menu</a></li>
+        <li><a routerLink="/invoice">Factura</a></li>
+        <li><a routerLink="/receiver">Receptor</a></li>
+        <li><a routerLink="/emitter">Emisor</a></li>
+        <li><a routerLink="/services">Servicios</a></li>
+        <li><a routerLink="/products">Productos</a></li>
+        <li class="active"><a routerLink="/tax">Impuestos</a></li>
+      </ul>
+    </div>
+</nav>
+<div class="center-panel">
+    <h1>Agregar Impuesto</h1>
+</div>
+<div class="page-style">
+  <div class="col-sm-6">
+    <h3>Código</h3>
+    <select class="form-control">
+      <option *ngFor="let taxCode of taxCodes">{{taxCode}}</option>
+    </select>
+    <h3>Tarifa</h3>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Tarifa del Impuesto">
+    <h3>Monto</h3>
+    <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Se calcula multiplicando subtotal * tarifa">
+    <h3>Tipo de Documento</h3>
+    <select #selectedCodeType class="form-control">
+        <option value="01">Compras Autorizadas</option>
+        <option value="02">Ventas Exentas a Diplomáticos</option>
+        <option value="03">Orden de Compra (Instituciones Públicas y Otros Organismos)</option>
+        <option value="04">Exenciones Dirección General de Hacienda</option>
+        <option value="05">Zonas Francas</option>
+        <option value="99">Otros</option>
+      </select>
+      <h3>Número de Documento</h3>
+      <input class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Número de Documento">
+
+  </div>
+  <div class="col-sm-6">
+    <h3>Nombre de Institución</h3>
+    <input class="form-control" placeholder="Nombre de Institución que emitió exoneración">
+    <h3>Fecha de Emisión</h3>
+    <input [(ngModel)]="dateCreated" class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
+    <owl-date-time #dt1></owl-date-time>
+  </div>
+
+</div>

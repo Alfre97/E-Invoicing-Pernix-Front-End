@@ -1,0 +1,17 @@
+.page-style {
+    display: inline-block;
+    width: 98%;
+    height: auto;
+    background-color: rgba(93, 109, 126, 0.8);
+    border-radius: 25px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+  }
+
+.center-panel {
+    text-align: center;
+    width: auto;
+    height: auto;
+    color: white;
+  }

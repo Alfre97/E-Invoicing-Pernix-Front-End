@@ -12,9 +12,7 @@
 }
 
 .page-style {
-  display: inline-block;
-  width: 98%;
-  height: auto;
+  width: 100%;
   background-color: rgba(93, 109, 126, 0.8);
   border-radius: 25px;
   margin: 0 auto;
@@ -45,4 +43,26 @@
 
 .colBtn {
   height: 300px;
+}
+
+.btn-width{
+  width: 10%;
+  display: inline-block;
+}
+
+.general-overlay{
+  position: relative;
+}
+
+.invoice-absolute{
+  position: absolute;
+}
+
+.multiselect-background{
+  background-color: white;
+}
+
+.element::-webkit-input-placeholder {
+  color: black;
+  font-weight: bold;
 }

@@ -10,6 +10,7 @@ import { EmitterComponent } from './emitter/emitter.component';
 import { ProductsComponent } from './products/products.component';
 import { ReceiverComponent } from './receiver/receiver.component';
 import { ServicesComponent } from './services/services.component';
+import { TaxComponent } from './tax/tax.component';
 
 const routes: Routes = [
   {path: '', component: MenuComponent, pathMatch:'full'},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'emitter', component: EmitterComponent},
   {path: 'products', component: ProductsComponent},
   {path: 'receiver', component: ReceiverComponent},
-  {path: 'services', component: ServicesComponent}
+  {path: 'services', component: ServicesComponent},
+  {path: 'tax', component: TaxComponent}
 ];
 
 @NgModule({
