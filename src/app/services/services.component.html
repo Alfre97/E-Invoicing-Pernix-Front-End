@@ -57,6 +57,12 @@
     <input #lineTotalAmount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Total Línea">
 </div>
 <div class="col-sm-12">
+  <mat-select placeholder="Seleccione Impuestos" [(ngModel)]="selectedTax" class="form-control" multiple>
+    <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}} Institucion: {{tax.institutionName}}</mat-option>
+  </mat-select>
+  <br>
+</div>
+<div class="col-sm-12">
     <button (click)="addService(lineNumber.value, selectedCodeType.value, code.value, amount.value, measureUnit.value, businessMeasure.value, detail.value, unitPrice.value
     , totalAmount.value, discount.value, subtotal.value, lineTotalAmount.value);" class="btn btn-primary btn-margin">Agregar Servicio</button>
 <br>

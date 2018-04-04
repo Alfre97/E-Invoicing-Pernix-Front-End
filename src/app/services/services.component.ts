@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Service } from '../Models/Service';
 import { UserService } from '../user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Tax } from '../models/Tax';
 
 @Component({
   selector: 'app-services',
@@ -9,6 +10,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./services.component.css'],
 })
 export class ServicesComponent implements OnInit {
+  private taxes: Tax[];
 
   constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -35,6 +37,11 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    let taxes = this.getTaxes();
+  }
+
+  getTaxes(){
+    this.userService.getTaxes().subscribe(data => this.taxes = data);
   }
 
   addService(lineNumber: string, selectedCodeType: string, code: string, amount: string, meisureUnit: string,

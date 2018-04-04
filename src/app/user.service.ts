@@ -6,79 +6,94 @@ import { of } from 'rxjs/observable/of';
 import { Service } from './Models/Service';
 import { UserEmitterReceiver } from './models/UserEmitterReceiver';
 import { Invoice } from './models/Invoice';
+import { Tax } from './models/Tax';
 
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const rootUrl='https://dry-harbor-97946.herokuapp.com';
+const rootUrl = 'https://dry-harbor-97946.herokuapp.com';
 @Injectable()
 export class UserService {
 
-  private addServiceURL='/addService';
-  private getServicesURL='/getServices';
-  private addEmitterUrl='/addUser'
-  private getEmitterUrl='/getEmitters';
-  private getReceiverUrl='/getReceivers';
-  private sendInvoiceURL='/uploadInvoice';
+  private addServiceURL = '/addService';
+  private getServicesURL = '/getServices';
+  private addEmitterUrl = '/addUser'
+  private getEmitterUrl = '/getEmitters';
+  private getReceiverUrl = '/getReceivers';
+  private sendInvoiceURL = '/uploadInvoice';
+  private addTaxURL = '/addTax';
+  private getTaxesURL = '/getTaxes';
   constructor(private http: HttpClient) {
   }
 
-  addService(service: Service): Observable <Service>{
-    return this.http.post<Service>(rootUrl + this.addServiceURL+'?' + 'amount=' + service.amount+ '&code='+ service.code+ '&codeType='+service.codeType
-    +'&comercialUnitOfMeasurement='+ service.businessMeasure +'&detail=' + service.detail + '&discount='+ service.discount + '&lineNumber='+ service.lineNumber
-    + '&priceByUnit='+service.unitPrice + '&subTotal=' + service.subtotal + '&total='+service.totalAmount + '&totalAmount='+ service.lineTotalAmount
-    + '&unitOfMeasurementName='+ service.meisureUnit +'&unitOfMeasurementType=' + service.meisureUnit,  JSON.stringify(service), httpOptions);
+  addService(service: Service): Observable<Service> {
+    return this.http.post<Service>(rootUrl + this.addServiceURL + '?' + 'amount=' + service.amount + '&code=' + service.code + '&codeType=' + service.codeType
+      + '&comercialUnitOfMeasurement=' + service.businessMeasure + '&detail=' + service.detail + '&discount=' + service.discount + '&lineNumber=' + service.lineNumber
+      + '&priceByUnit=' + service.unitPrice + '&subTotal=' + service.subtotal + '&total=' + service.totalAmount + '&totalAmount=' + service.lineTotalAmount
+      + '&unitOfMeasurementName=' + service.meisureUnit + '&unitOfMeasurementType=' + service.meisureUnit, JSON.stringify(service), httpOptions);
   }
 
-  getServices(): Observable<Service[]>{
+  getServices(): Observable<Service[]> {
     return this.http.get<Service[]>(rootUrl + this.getServicesURL);
   }
 
-  addUser(emitter: UserEmitterReceiver): Observable<UserEmitterReceiver>{
-    return this.http.post<UserEmitterReceiver>(rootUrl + this.addEmitterUrl+'?'+ 'userName='+ emitter.name + '&comercialName=' + emitter.comercialName + '&identificationType='+ emitter.identificationType
-    +'&identificationNumber='+emitter.identificationNumber+ '&locationProvinceName='+emitter.locationProvinceName +'&locationCantonName='+emitter.locationCantonName
-    +'&locationDistrictName='+emitter.locationDistrictName+'&locationNeighborhoodName='+emitter.locationNeighborhoodName+'&locationSignals='+emitter.otherSignals
-    +'&phoneCountryCode='+ emitter.phoneCountryCode+'&phoneNumber='+emitter.phoneNumber+ '&faxCountryCode='+emitter.faxCountryCode+'&faxNumber='+emitter.faxNumber
-    +'&email='+emitter.email + '&userType='+emitter.userType,  JSON.stringify(emitter), httpOptions);
+  getTaxes(): Observable<Tax[]> {
+    return this.http.get<Tax[]>(rootUrl + this.getTaxesURL);
   }
 
-  sendInvoice(invoice: Invoice): Observable<Invoice>{
-    return this.http.post<Invoice>(rootUrl + this.sendInvoiceURL +'?'+
-    '&dateCreated=' + invoice.dateCreated +
-    '&sellTerm=' + invoice.sellTerm +
-    '&paymentLapse=' + invoice.paymentLapse +
-    '&paymentMethod='+ invoice.paymentMethod +
-    '&selectedCurrency=' + invoice.selectedCurrency +
-    '&exchangeRate=' + invoice.exchangeRate +
-    '&recordedServices=' + invoice.recordedServices +
-    '&exemptServices=' + invoice.exemptServices +
-    '&recordedCommodity=' + invoice.recordedCommodity +
-    '&exemptCommodity=' + invoice.exemptCommodity +
-    '&recordedTotal=' + invoice.recordedTotal +
-    '&exemptTotal=' + invoice.exemptTotal +
-    '&totalSell=' + invoice.totalSell +
-    '&totalDiscount=' + invoice.totalDiscount +
-    '&netSell=' + invoice.netSell +
-    '&totalTax=' + invoice.totalTax +
-    '&totalVoucher=' + invoice.totalVoucher +
-    '&resolutionNumber=' + invoice.resolutionNumber +
-    '&resolutionDate=' + invoice.resolutionDate +
-    '&otherText=' + invoice.otherText +
-    '&idEmitter=' + invoice.idEmitter +
-    '&idReceiver=' + invoice.idReceiver +
-    '&idService=' + invoice.idService,
-    JSON.stringify(invoice), httpOptions);
+  addUser(emitter: UserEmitterReceiver): Observable<UserEmitterReceiver> {
+    return this.http.post<UserEmitterReceiver>(rootUrl + this.addEmitterUrl + '?' + 'userName=' + emitter.name + '&comercialName=' + emitter.comercialName + '&identificationType=' + emitter.identificationType
+      + '&identificationNumber=' + emitter.identificationNumber + '&locationProvinceName=' + emitter.locationProvinceName + '&locationCantonName=' + emitter.locationCantonName
+      + '&locationDistrictName=' + emitter.locationDistrictName + '&locationNeighborhoodName=' + emitter.locationNeighborhoodName + '&locationSignals=' + emitter.otherSignals
+      + '&phoneCountryCode=' + emitter.phoneCountryCode + '&phoneNumber=' + emitter.phoneNumber + '&faxCountryCode=' + emitter.faxCountryCode + '&faxNumber=' + emitter.faxNumber
+      + '&email=' + emitter.email + '&userType=' + emitter.userType, JSON.stringify(emitter), httpOptions);
+  }
+
+  addTax(tax: Tax): Observable<Tax> {
+    return this.http.post<Tax>(rootUrl + this.addTaxURL + '?' + 'code=' + tax.code
+    + 'taxTotal=' + tax.taxTotal + 'rate=' + tax.rate + 'purchasePercentage=' + tax.purchasePercentage
+    + 'date=' + tax.date + 'rate=' + tax.rate + 'taxExo=' + tax.taxExo + 'institutionName=' + tax.institutionName
+    + 'documentNumber=' + tax.documentNumber + 'documentType=' + tax.documentType
+    , JSON.stringify(tax), httpOptions);
+  }
+
+  sendInvoice(invoice: Invoice): Observable<Invoice> {
+    return this.http.post<Invoice>(rootUrl + this.sendInvoiceURL + '?' +
+      '&dateCreated=' + invoice.dateCreated +
+      '&sellTerm=' + invoice.sellTerm +
+      '&paymentLapse=' + invoice.paymentLapse +
+      '&paymentMethod=' + invoice.paymentMethod +
+      '&selectedCurrency=' + invoice.selectedCurrency +
+      '&exchangeRate=' + invoice.exchangeRate +
+      '&recordedServices=' + invoice.recordedServices +
+      '&exemptServices=' + invoice.exemptServices +
+      '&recordedCommodity=' + invoice.recordedCommodity +
+      '&exemptCommodity=' + invoice.exemptCommodity +
+      '&recordedTotal=' + invoice.recordedTotal +
+      '&exemptTotal=' + invoice.exemptTotal +
+      '&totalSell=' + invoice.totalSell +
+      '&totalDiscount=' + invoice.totalDiscount +
+      '&netSell=' + invoice.netSell +
+      '&totalTax=' + invoice.totalTax +
+      '&totalVoucher=' + invoice.totalVoucher +
+      '&resolutionNumber=' + invoice.resolutionNumber +
+      '&resolutionDate=' + invoice.resolutionDate +
+      '&otherText=' + invoice.otherText +
+      '&idEmitter=' + invoice.idEmitter +
+      '&idReceiver=' + invoice.idReceiver +
+      '&idService=' + invoice.idService,
+      JSON.stringify(invoice), httpOptions);
   }
 
   getEmitters(): Observable<UserEmitterReceiver[]> {
-    return this.http.get<UserEmitterReceiver[]>(rootUrl+ this.getEmitterUrl);
+    return this.http.get<UserEmitterReceiver[]>(rootUrl + this.getEmitterUrl);
   }
-  getReceivers(){
-    return this.http.get<UserEmitterReceiver[]>(rootUrl+this.getReceiverUrl);
+  getReceivers() {
+    return this.http.get<UserEmitterReceiver[]>(rootUrl + this.getReceiverUrl);
   }
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

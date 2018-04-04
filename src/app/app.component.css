@@ -1,1 +1,9 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css";
+.background {
+  position: absolute;
+  margin: 0;
+  min-height: 100%;
+  right: 0;
+  left: 0;
+  background-image: url('assets/lake.jpg');
+}

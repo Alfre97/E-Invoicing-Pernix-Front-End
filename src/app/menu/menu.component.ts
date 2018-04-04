@@ -66,7 +66,7 @@ export class MenuComponent implements OnInit {
   }
 
   showWarning() {
-    this.toastr.warning('Factura no creada, llene todos los campos.', 'Alerta');
+    this.toastr.warning('Llene todos los campos.', 'Alerta');
   }
 
   showInfo() {
@@ -76,14 +76,15 @@ export class MenuComponent implements OnInit {
   showCustom() {
     this.toastr.custom('<span style="color: red">Message in red.</span>', null, { enableHTML: true });
   }
+  
   backToInvoiceResume(){
     this.showGeneral=false;
     this.showResolutions=false;
     this.showResume = true;
   }
   displayInvoiceResume(dateCreated, selectedEmitter, selectedReceiver, selectedService, sellTerm, paymentLapse, paymentMethod) {
-    if((dateCreated!=undefined && dateCreated!='') && (selectedEmitter!=undefined && selectedEmitter!='') && (selectedReceiver!=undefined && selectedReceiver!='') 
-    && (selectedService!=undefined && selectedService!='') && (sellTerm!=undefined && sellTerm!='') && (paymentLapse!=undefined && paymentLapse!='') && 
+    if((dateCreated!=undefined && dateCreated!='') && (selectedEmitter!=undefined && selectedEmitter!='') && (selectedReceiver!=undefined && selectedReceiver!='')
+    && (selectedService!=undefined && selectedService!='') && (sellTerm!=undefined && sellTerm!='') && (paymentLapse!=undefined && paymentLapse!='') &&
     (paymentMethod!=undefined && paymentMethod!='')){
       this.showGeneral=false;
       this.showResolutions=false;
@@ -99,11 +100,11 @@ export class MenuComponent implements OnInit {
     this.showResolutions=false;
     this.showGeneral=true;
   }
-  displayInvoiceResolutions(selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, 
+  displayInvoiceResolutions(selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity,
     exemptCommodity, recordedTotal, exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher){
-    if((selectedCurrency!=undefined && selectedCurrency!='') && (exchangeRate!=undefined && exchangeRate!='') && (recordedServices!=undefined && recordedServices!='') 
-    && (exemptServices!=undefined && exemptServices!='') && (recordedCommodity!=undefined && recordedCommodity!='') && (exemptCommodity!=undefined && exemptCommodity!='') && 
-    (recordedTotal!=undefined && recordedTotal!='') && (exemptTotal!=undefined && exemptTotal!='') && (totalSell!=undefined && totalSell!='') && (totalDiscount!=undefined && totalDiscount!='') && 
+    if((selectedCurrency!=undefined && selectedCurrency!='') && (exchangeRate!=undefined && exchangeRate!='') && (recordedServices!=undefined && recordedServices!='')
+    && (exemptServices!=undefined && exemptServices!='') && (recordedCommodity!=undefined && recordedCommodity!='') && (exemptCommodity!=undefined && exemptCommodity!='') &&
+    (recordedTotal!=undefined && recordedTotal!='') && (exemptTotal!=undefined && exemptTotal!='') && (totalSell!=undefined && totalSell!='') && (totalDiscount!=undefined && totalDiscount!='') &&
     (netSell!=undefined && netSell!='') && (totalTax!=undefined && totalTax!='') && (totalVoucher!=undefined && totalVoucher!='')){
       this.showResume = false;
       this.showGeneral=false;

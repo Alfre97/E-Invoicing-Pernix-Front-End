@@ -37,7 +37,7 @@
         <option *ngFor="let receiver of receivers" [ngValue]="receiver"> {{receiver.comercialName}}  </option>
       </select>
       <h3>Servicio</h3>
-      <mat-select placeholder="Seleccione un Servicio" [(ngModel)]="selectedService" class="form-control" multiple>
+      <mat-select placeholder="Seleccione Servicios" [(ngModel)]="selectedService" class="form-control" multiple>
         <mat-option *ngFor="let service of services" [value]="service">{{service.lineNumber}}-{{service.detail}}</mat-option>
       </mat-select>
       <br>
@@ -102,7 +102,7 @@
     <br>
     <br>
     <button class="btn btn-primary btn-width" (click)="displayInvoiceGeneral()"> < Anterior </button>
-    <button class="btn btn-primary btn-width" (click)="displayInvoiceResolutions(selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, 
+    <button class="btn btn-primary btn-width" (click)="displayInvoiceResolutions(selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity,
     exemptCommodity, recordedTotal, exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher)">Siguiente ></button>
   </div>
   <div [@slideInOut] *ngIf="showResolutions" class="page-style col-sm-8" >
@@ -121,7 +121,7 @@
       paymentMethod, selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal,
       exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher, resolutionNumber  , resolutionDate, otherText)">Crear Factura</button>
     </div>
-    <div>  
+    <div>
     <br>
     <br>
     </div>

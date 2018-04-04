@@ -23,7 +23,7 @@ export class Invoice{
     otherText:String
     idEmitter: Number;
     idReceiver:Number;
-    idService:Number
+    idService:Number;
 
     constructor(){}
 }

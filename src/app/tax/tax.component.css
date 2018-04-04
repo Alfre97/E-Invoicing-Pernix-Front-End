@@ -1,17 +1,37 @@
+.navbar {
+  background-color: rgba(93, 109, 126, 0.8);
+  height: auto;
+  border: none;
+}
+
+.navbar-default {
+  margin-bottom: 0;
+}
+
+.navbar a {
+  color: white;
+}
+
 .page-style {
-    display: inline-block;
-    width: 98%;
-    height: auto;
-    background-color: rgba(93, 109, 126, 0.8);
-    border-radius: 25px;
-    margin: 0 auto;
-    text-align: center;
-    color: white;
-  }
+  display: inline-block;
+  width: 98%;
+  height: auto;
+  background-color: rgba(93, 109, 126, 0.8);
+  border-radius: 25px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+}
 
 .center-panel {
-    text-align: center;
-    width: auto;
-    height: auto;
-    color: white;
-  }
+  text-align: center;
+  width: auto;
+  height: auto;
+  color: white;
+}
+
+.form-control {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+}
