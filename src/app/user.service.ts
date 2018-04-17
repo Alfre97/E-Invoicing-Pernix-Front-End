@@ -7,6 +7,7 @@ import { Service } from './Models/Service';
 import { UserEmitterReceiver } from './models/UserEmitterReceiver';
 import { Invoice } from './models/Invoice';
 import { Tax } from './models/Tax';
+import { Code } from './models/Code';
 
 
 const httpOptions = {
@@ -25,18 +26,24 @@ export class UserService {
   private sendInvoiceURL = '/uploadInvoice';
   private addTaxURL = '/addTax';
   private getTaxesURL = '/getTaxes';
+  private getCodesURL = '/getCodes';
+  private addCodeURL = '/addCode';
   constructor(private http: HttpClient) {
   }
 
   addService(service: Service): Observable<Service> {
-    return this.http.post<Service>(rootUrl + this.addServiceURL + '?' + 'amount=' + service.amount + '&code=' + service.code + '&codeType=' + service.codeType
-      + '&comercialUnitOfMeasurement=' + service.businessMeasure + '&detail=' + service.detail + '&discount=' + service.discount + '&lineNumber=' + service.lineNumber
+    return this.http.post<Service>(rootUrl + this.addServiceURL + '?' + 'amount=' + service.amount + '&codes=' + service.codes
+      + '&comercialUnitOfMeasurement=' + service.businessMeasure + '&detail=' + service.detail + '&discount=' + service.discount + '&discountNature=' + service.discountNature + '&lineNumber=' + service.lineNumber
       + '&priceByUnit=' + service.unitPrice + '&subTotal=' + service.subtotal + '&total=' + service.totalAmount + '&totalAmount=' + service.lineTotalAmount
-      + '&unitOfMeasurementName=' + service.meisureUnit + '&unitOfMeasurementType=' + service.meisureUnit, JSON.stringify(service), httpOptions);
+      + '&unitOfMeasurementName=' + service.meisureUnit + '&unitOfMeasurementType=' + service.meisureUnit + '&taxes=' + service.taxes, JSON.stringify(service), httpOptions);
   }
 
   getServices(): Observable<Service[]> {
     return this.http.get<Service[]>(rootUrl + this.getServicesURL);
+  }
+
+  getCodes(): Observable<Code[]> {
+    return this.http.get<Code[]>(rootUrl + this.getCodesURL);
   }
 
   getTaxes(): Observable<Tax[]> {
@@ -53,10 +60,15 @@ export class UserService {
 
   addTax(tax: Tax): Observable<Tax> {
     return this.http.post<Tax>(rootUrl + this.addTaxURL + '?' + 'code=' + tax.code
-    + 'taxTotal=' + tax.taxTotal + 'rate=' + tax.rate + 'purchasePercentage=' + tax.purchasePercentage
-    + 'date=' + tax.date + 'rate=' + tax.rate + 'taxExo=' + tax.taxExo + 'institutionName=' + tax.institutionName
-    + 'documentNumber=' + tax.documentNumber + 'documentType=' + tax.documentType
+    + '&rate=' + tax.rate + '&purchasePercentage=' + tax.purchasePercentage
+    + '&date=' + tax.date + '&institutionName=' + tax.institutionName
+    + '&documentNumber=' + tax.documentNumber + '&documentType=' + tax.documentType
     , JSON.stringify(tax), httpOptions);
+  }
+
+  addCode(code: Code): Observable<Code> {
+    return this.http.post<Code>(rootUrl + this.addCodeURL + '?' + 'codeType=' + code.codeType
+    + '&code=' + code.code, JSON.stringify(code), httpOptions);
   }
 
   sendInvoice(invoice: Invoice): Observable<Invoice> {

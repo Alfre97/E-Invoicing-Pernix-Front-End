@@ -3,6 +3,9 @@ import { Service } from '../Models/Service';
 import { UserService } from '../user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Tax } from '../models/Tax';
+import { Code } from '../models/Code';
+import { Units } from '../models/Unit/unit-mock';
+import { Unit } from '../models/Unit/Unit';
 
 @Component({
   selector: 'app-services',
@@ -10,10 +13,37 @@ import { Tax } from '../models/Tax';
   styleUrls: ['./services.component.css'],
 })
 export class ServicesComponent implements OnInit {
+  units = Units;
   private taxes: Tax[];
+  private codes: Code[];
+  selectedTaxes: Tax[];
+  selectedCodes: Code[];
+  selectedUnit: String;
+  amount = 0.0;
+  lineTotalAmount = 0.0;
+  totalAmount = 0.0;
+  unitPrice = 0.0;
+  subtotal = 0.0;
+  discount = 0.0;
 
   constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
+  }
+
+  calculateLineTotalAmount() {
+    this.lineTotalAmount = this.subtotal;
+    for (let tax of this.selectedTaxes){
+      var rate = +tax.rate;
+      this.lineTotalAmount += rate * this.subtotal;
+    }
+  }
+
+  subTotal() {
+    this.subtotal = this.totalAmount - this.discount;
+  }
+
+  lineTotal() {
+    this.totalAmount = this.amount *  this.unitPrice;
   }
 
   showSuccess() {
@@ -38,36 +68,56 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
     let taxes = this.getTaxes();
+    let codes = this.getCodes();
+  }
+
+  getCodes(){
+    this.userService.getCodes().subscribe(data => this.codes = data);
   }
 
   getTaxes(){
     this.userService.getTaxes().subscribe(data => this.taxes = data);
   }
 
-  addService(lineNumber: string, selectedCodeType: string, code: string, amount: string, meisureUnit: string,
-    businessMeasure: string, detail: string, unitPrice: string, totalAmount: string, discount: string,
-    subtotal: string, lineTotalAmount: string) {
-    if (lineNumber != '' && selectedCodeType != '' && code != '' && amount != '' && meisureUnit != '' &&
-      businessMeasure != '' && detail != '' && unitPrice != '' && totalAmount != '' && discount != '' &&
-      subtotal != '' && lineTotalAmount != '') {
+  addService(lineNumber: string, businessMeasure: string, detail: string, discountNature: string) {
+    if (lineNumber != '' && businessMeasure != '' && detail != '' && discountNature != ''
+            && this.selectedTaxes != undefined && this.selectedCodes != undefined
+            && this.selectedUnit != '' && this.amount != 0
+            && this.lineTotalAmount != 0 && this.totalAmount != 0
+            && this.unitPrice != 0 && this.subtotal != 0
+            && this.discount != undefined)  {
+      console.log(this.selectedTaxes);
       let service: Service = new Service();
       service.lineNumber = lineNumber;
-      service.codeType = selectedCodeType;
-      service.code = code;
-      service.amount = amount;
-      service.meisureUnit;
+      service.amount = this.amount;
       service.businessMeasure = businessMeasure;
       service.detail = detail;
-      service.unitPrice = unitPrice;
-      service.totalAmount = totalAmount;
-      service.discount = discount;
-      service.subtotal = subtotal;
-      service.lineTotalAmount = lineTotalAmount;
+      service.unitPrice = this.unitPrice;
+      service.totalAmount = this.totalAmount;
+      service.discountNature = discountNature;
+      service.discount = this.discount;
+      service.subtotal = this.subtotal;
+      service.lineTotalAmount = this.lineTotalAmount;
+      service.codes = "";
+      service.taxes = "";
+      service.meisureUnit = this.selectedUnit;
+
+      for (let code of this.selectedCodes){
+        service.codes += code.id + ", ";
+      }
+
+      for (let tax of this.selectedTaxes){
+        service.taxes += tax.id + ", ";
+      }
+
       this.userService.addService(service).subscribe();
       this.showSuccess();
-    } else if (lineNumber != '' || selectedCodeType != '' || code != '' || amount != '' || meisureUnit != '' ||
-      businessMeasure != '' || detail != '' || unitPrice != '' || totalAmount != '' || discount != '' ||
-      subtotal != '' || lineTotalAmount != '') {
+    } else if (lineNumber == '' || businessMeasure == '' || detail == '' || discountNature == ''
+            || this.selectedTaxes == undefined || this.selectedCodes == undefined
+            || this.selectedUnit == '' || this.amount == 0
+            || this.lineTotalAmount == 0 || this.totalAmount == 0
+            || this.unitPrice == 0 || this.subtotal == 0
+            || this.discount == undefined) {
       this.showWarning();
     } else {
       this.showError();

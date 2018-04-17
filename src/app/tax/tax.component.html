@@ -4,18 +4,17 @@
       <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a routerLink="/menu">Menu</a></li>
-      <li><a routerLink="/invoice">Factura</a></li>
-      <li><a routerLink="/receiver">Receptor</a></li>
-      <li><a routerLink="/emitter">Emisor</a></li>
+      <li><a routerLink="/menu">Crear</a></li>
+      <li><a routerLink="/invoice">Facturas</a></li>
+      <li><a routerLink="/receiver">Receptores</a></li>
+      <li><a routerLink="/emitter">Emisores</a></li>
       <li><a routerLink="/services">Servicios</a></li>
-      <li><a routerLink="/products">Productos</a></li>
       <li class="active"><a routerLink="/tax">Impuestos</a></li>
     </ul>
   </div>
 </nav>
 <div class="center-panel">
-  <h1>Agregar Impuesto</h1>
+  <h1>Agregar Impuesto de Servicio</h1>
   <div class="page-style">
     <div class="col-sm-6">
       <h2>General</h2>
@@ -36,27 +35,25 @@
         <option value="98">Otros</option>
         <option value="99">Otros</option>
       </select>
-      <h3>Monto</h3>
-      <input #taxTotal class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Se calcula multiplicando subtotal * tarifa">
       <h3>Tarifa</h3>
-      <input #rate class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Tarifa del Impuesto">
+      <input [(ngModel)]="rate" disabled class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46)' placeholder="Tarifa del Impuesto">
       <h3>Porcentaje</h3>
-      <input #purchasePercentage class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
+      <input [(ngModel)]="purchasePercentage" maxlength="2" (change)="calculateRate()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
       <br>
     </div>
     <div class="col-sm-6">
-      <h2>Exoneración</h2>
+        <h2>Exoneración</h2>
+        <input class="checkbox" type="checkbox" [(ngModel)]="exhonerationAvaible">
       <h3>Fecha de Emisión</h3>
       <input [(ngModel)]="dateCreated" class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
       <owl-date-time #dt1></owl-date-time>
-      <h3>Monto</h3>
-      <input #taxExo class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto del impuesto exhonerado">
       <h3>Nombre de Institución</h3>
       <input #institutionName class="form-control" placeholder="Nombre de la institución que emitió exoneración">
       <h3>Número de Documento</h3>
       <input #documentNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Número de Documento">
       <h3>Tipo de Documento</h3>
       <select #selectedDocumentType class="form-control">
+        <option value="">Seleccione</option>
         <option value="01">Compras Autorizadas</option>
         <option value="02">Ventas Exentas a Diplomáticos</option>
         <option value="03">Orden de Compra (Instituciones Públicas y Otros Organismos)</option>
@@ -67,8 +64,8 @@
       <br>
     </div>
     <div class="col-sm-12">
-      <button (click)="addTax(selectedCodeType.value, taxTotal.value, rate.value, purchasePercentage.value,
-      dateCreated, taxExo.value, institutionName.value, documentNumber.value, selectedDocumentType.value
+      <button (click)="addTax(selectedCodeType.value, purchasePercentage.value,
+      dateCreated, institutionName.value, documentNumber.value, selectedDocumentType.value
       )" class="btn btn-primary btn-lg button-at-bottom">Agregar Impuesto</button>
       <br>
       <br>

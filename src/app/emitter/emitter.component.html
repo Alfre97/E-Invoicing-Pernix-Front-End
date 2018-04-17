@@ -4,13 +4,11 @@
       <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a routerLink="/menu">Menu</a></li>
-      <li><a routerLink="/invoice">Factura</a></li>
-      <li><a routerLink="/receiver">Receptor</a></li>
-      <li class="active"><a routerLink="/Emisor">Emisor</a></li>
+      <li><a routerLink="/menu">Crear</a></li>
+      <li><a routerLink="/invoice">Facturas</a></li>
+      <li><a routerLink="/receiver">Receptores</a></li>
+      <li class="active"><a routerLink="/Emisor">Emisores</a></li>
       <li><a routerLink="/services">Servicios</a></li>
-      <li><a routerLink="/products">Productos</a></li>
-      <li><a routerLink="/tax">Taxes</a></li>
     </ul>
   </div>
 </nav>
@@ -30,7 +28,7 @@
         <option>NITE</option>
     </select>
       <h3>Numero de Identificación</h3>
-      <input #emitterNumber class="form-control" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #emitterNumber class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
       <h3>Nombre Comercial</h3>
       <input #emitterBusinessName class="form-control" placeholder="Nombre Comercial">
     </div>
@@ -57,16 +55,16 @@
     <div class="col-sm-6">
       <h2>Telefóno</h2>
       <h3>Código de país</h3>
-      <input #phoneCountryCode placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #phoneCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
       <h3>Telefóno</h3>
-      <input #emitterPhone placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #emitterPhone maxlength="15" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     </div>
     <div class="col-sm-6">
       <h2>Fax</h2>
       <h3>Código de país</h3>
-      <input #faxCountryCode placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #faxCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
       <h3>Fax</h3>
-      <input #faxNumber placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+      <input #faxNumber maxlength="15" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
       <br>
     </div>
     <div class="col-sm-12">

@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a routerLink="/menu">Crear</a></li>
+      <li><a routerLink="/invoice">Factura</a></li>
+      <li><a routerLink="/receiver">Receptor</a></li>
+      <li><a routerLink="/emitter">Emisor</a></li>
+      <li><a routerLink="/services">Servicios</a></li>
+      <li class="active"><a routerLink="/code">Codigos</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="center-panel">
+  <h1>Agregar Codigo de Servicio</h1>
+  <div class="page-style">
+    <div class="col-sm-12">
+      <h3>Tipo de Código</h3>
+      <select #selectedCodeType class="form-control">
+        <option value="01">Código del producto del vendedor</option>
+        <option value="02">Código del producto del comprador</option>
+        <option value="03">Código del producto asignado por la industria</option>
+        <option value="04">Código de uso interno</option>
+        <option value="99">Otros</option>
+      </select>
+      <h3>Código</h3>
+      <input #code class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Código">
+      <br>
+    </div>
+    <div class="col-sm-12">
+      <button (click)="addCode(selectedCodeType.value, code.value)" class="btn btn-primary btn-lg button-at-bottom">Agregar Codigo</button>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>

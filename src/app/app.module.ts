@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import {MatSelectModule} from '@angular/material/select';
 import { TaxComponent } from './tax/tax.component';
+import { CodeComponent } from './code/code.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TaxComponent } from './tax/tax.component';
     EmitterComponent,
     ProductsComponent,
     ServicesComponent,
-    TaxComponent
+    TaxComponent,
+    CodeComponent
   ],
   imports: [
     BrowserModule,

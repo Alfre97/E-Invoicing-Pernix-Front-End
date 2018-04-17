@@ -4,13 +4,13 @@
       <a class="navbar-brand" routerLink="/menu">Factura Digital</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a routerLink="/menu">Menu</a></li>
-      <li><a routerLink="/invoice">Factura</a></li>
-      <li><a routerLink="/receiver">Receptor</a></li>
-      <li><a routerLink="/emitter">Emisor</a></li>
+      <li><a routerLink="/menu">Crear</a></li>
+      <li><a routerLink="/invoice">Facturas</a></li>
+      <li><a routerLink="/receiver">Receptores</a></li>
+      <li><a routerLink="/emitter">Emisores</a></li>
       <li class="active"><a routerLink="/services">Servicios</a></li>
-      <li><a routerLink="/products">Productos</a></li>
       <li><a routerLink="/tax">Impuestos</a></li>
+      <li><a routerLink="/code">Codigos</a></li>
     </ul>
   </div>
 </nav>
@@ -19,52 +19,46 @@
   <h1>Agregar Servicio<h1>
     <div class="page-style">
       <div class="col-sm-6">
-
       <h3>Número de línea</h3>
     <input #lineNumber class="form-control" placeholder="Numero de linea">
-    <h3>Tipo de Código</h3>
-    <select #selectedCodeType class="form-control">
-      <option value="01">Código del producto del vendedor</option>
-      <option value="02">Código del producto del comprador</option>
-      <option value="03">Código del producto asignado por la industria</option>
-      <option value="04">Código de uso interno</option>
-      <option value="99">Otros</option>
-    </select>
-    <h3>Código</h3>
-    <input #code class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Código">
+    <h3>Codigos</h3>
+    <mat-select placeholder="Seleccione Codigos" [(ngModel)]="selectedCodes" class="form-control" multiple>
+      <mat-option *ngFor="let code of codes" [value]="code">Tipo: {{code.codeType}} Codigo: {{code.code}}</mat-option>
+    </mat-select>
     <h3>Cantidad</h3>
-    <input #amount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Cantidad">
+    <input [(ngModel)]="amount" (change)="lineTotal()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Cantidad">
     <h3>Unidad de Medida</h3>
-    <select #measureUnit class="form-control">
-      <option value="sp">Servicios Profesionales</option>
+    <select [(ngModel)]="selectedUnit" class="form-control">
+      <option *ngFor="let unit of units"  [value]="unit.code">{{unit.description}}</option>
     </select>
     <h3>Unidad de Medida Comercial</h3>
     <input #businessMeasure class="form-control" placeholder="Unidad de Medida Comercial">
-    <br>
+    <h3>Impuesto</h3>
+    <mat-select placeholder="Seleccione Impuestos" (change)="calculateLineTotalAmount()" [(ngModel)]="selectedTaxes" class="form-control" multiple>
+      <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}}% Institucion: {{tax.institutionName}}</mat-option>
+    </mat-select>
   </div>
   <div class="col-sm-6">
     <h3>Detalle</h3>
     <input #detail class="form-control" placeholder="Detalle del Servicio">
     <h3>Precio Unitario</h3>
-    <input #unitPrice class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Precio Unitario">
-    <h3>Monto Total</h3>
-    <input #totalAmount class="form-control" placeholder="Monto Total">
-    <h3>Descuento</h3>
-    <input #discount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Descuento">
+    <input [(ngModel)]="unitPrice" (change)="lineTotal()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Precio Unitario">
+    <h3>Monto</h3>
+    <input [(ngModel)]="totalAmount" disabled class="form-control" placeholder="Monto Total">
+    <h3>Monto Descuento</h3>
+    <input [(ngModel)]="discount" (change)="subTotal()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Descuento">
+    <h3>Naturaleza del Descuento</h3>
+    <input #discountNature (change)="subTotal()" class="form-control" onkeypress='return event.charCode > 57 || event.charCode == 32' placeholder="Descuento">
     <h3>Subtotal</h3>
-    <input #subtotal class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Subtotal">
-    <h3>Monto Total Línea</h3>
-    <input #lineTotalAmount class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Total Línea">
+    <input [(ngModel)]="subtotal" disabled (change)="calculateLineTotalAmount()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Subtotal">
 </div>
 <div class="col-sm-12">
-  <mat-select placeholder="Seleccione Impuestos" [(ngModel)]="selectedTax" class="form-control" multiple>
-    <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}} Institucion: {{tax.institutionName}}</mat-option>
-  </mat-select>
-  <br>
+    <h3>Monto Total</h3>
+    <input [(ngModel)]="lineTotalAmount" disabled class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Total Línea">
+    <br>
 </div>
 <div class="col-sm-12">
-    <button (click)="addService(lineNumber.value, selectedCodeType.value, code.value, amount.value, measureUnit.value, businessMeasure.value, detail.value, unitPrice.value
-    , totalAmount.value, discount.value, subtotal.value, lineTotalAmount.value);" class="btn btn-primary btn-margin">Agregar Servicio</button>
+    <button (click)="addService(lineNumber.value, businessMeasure.value, detail.value, discountNature.value);" class="btn btn-primary btn-margin">Agregar Servicio</button>
 <br>
 <br>
 </div>

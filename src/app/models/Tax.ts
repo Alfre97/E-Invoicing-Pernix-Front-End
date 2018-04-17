@@ -1,10 +1,9 @@
 export class Tax {
+  id: String;
   code: String;
-  taxTotal: String;
   rate: String;
-  purchasePercentage: String;
+  purchasePercentage: Number;
   date: String;
-  taxExo: String;
   institutionName: String;
   documentNumber: String;
   documentType: String;
