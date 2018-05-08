@@ -34,12 +34,13 @@ export class ServicesComponent implements OnInit {
     this.lineTotalAmount = this.subtotal;
     for (let tax of this.selectedTaxes){
       var rate = +tax.rate;
-      this.lineTotalAmount += rate * this.subtotal;
+      this.lineTotalAmount = this.lineTotalAmount + (rate * this.subtotal);
     }
   }
 
   subTotal() {
     this.subtotal = this.totalAmount - this.discount;
+    this.calculateLineTotalAmount();
   }
 
   lineTotal() {
@@ -103,11 +104,11 @@ export class ServicesComponent implements OnInit {
       service.meisureUnit = this.selectedUnit;
 
       for (let code of this.selectedCodes){
-        service.codes += code.id + ", ";
+        service.codes += code.id + ",";
       }
 
       for (let tax of this.selectedTaxes){
-        service.taxes += tax.id + ", ";
+        service.taxes += tax.id + ",";
       }
 
       this.userService.addService(service).subscribe();

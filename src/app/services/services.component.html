@@ -14,53 +14,79 @@
     </ul>
   </div>
 </nav>
-
-<div class="center-panel">
-  <h1>Agregar Servicio<h1>
-    <div class="page-style">
-      <div class="col-sm-6">
-      <h3>Número de línea</h3>
-    <input #lineNumber class="form-control" placeholder="Numero de linea">
-    <h3>Codigos</h3>
-    <mat-select placeholder="Seleccione Codigos" [(ngModel)]="selectedCodes" class="form-control" multiple>
-      <mat-option *ngFor="let code of codes" [value]="code">Tipo: {{code.codeType}} Codigo: {{code.code}}</mat-option>
-    </mat-select>
-    <h3>Cantidad</h3>
-    <input [(ngModel)]="amount" (change)="lineTotal()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Cantidad">
-    <h3>Unidad de Medida</h3>
-    <select [(ngModel)]="selectedUnit" class="form-control">
-      <option *ngFor="let unit of units"  [value]="unit.code">{{unit.description}}</option>
-    </select>
-    <h3>Unidad de Medida Comercial</h3>
-    <input #businessMeasure class="form-control" placeholder="Unidad de Medida Comercial">
-    <h3>Impuesto</h3>
-    <mat-select placeholder="Seleccione Impuestos" (change)="calculateLineTotalAmount()" [(ngModel)]="selectedTaxes" class="form-control" multiple>
-      <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}}% Institucion: {{tax.institutionName}}</mat-option>
-    </mat-select>
-  </div>
-  <div class="col-sm-6">
-    <h3>Detalle</h3>
-    <input #detail class="form-control" placeholder="Detalle del Servicio">
-    <h3>Precio Unitario</h3>
-    <input [(ngModel)]="unitPrice" (change)="lineTotal()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Precio Unitario">
-    <h3>Monto</h3>
-    <input [(ngModel)]="totalAmount" disabled class="form-control" placeholder="Monto Total">
-    <h3>Monto Descuento</h3>
-    <input [(ngModel)]="discount" (change)="subTotal()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Descuento">
-    <h3>Naturaleza del Descuento</h3>
-    <input #discountNature (change)="subTotal()" class="form-control" onkeypress='return event.charCode > 57 || event.charCode == 32' placeholder="Descuento">
-    <h3>Subtotal</h3>
-    <input [(ngModel)]="subtotal" disabled (change)="calculateLineTotalAmount()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Subtotal">
-</div>
-<div class="col-sm-12">
-    <h3>Monto Total</h3>
-    <input [(ngModel)]="lineTotalAmount" disabled class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Total Línea">
+<br>
+<br>
+<br>
+<div class="container-fluid">
+  <div class="wizard">
     <br>
-</div>
-<div class="col-sm-12">
-    <button (click)="addService(lineNumber.value, businessMeasure.value, detail.value, discountNature.value);" class="btn btn-primary btn-margin">Agregar Servicio</button>
-<br>
-<br>
-</div>
+    <aw-wizard>
+      <aw-wizard-step stepTitle="">
+        <h3>Número de línea</h3>
+        <input #lineNumber class="form-control noAuto" placeholder="Numero de linea">
+        <h3>Codigos</h3>
+        <mat-select placeholder="Seleccione Codigos" [(ngModel)]="selectedCodes" class="form-control noAuto" multiple>
+          <mat-option *ngFor="let code of codes" [value]="code">Tipo: {{code.codeType}} Codigo: {{code.code}}</mat-option>
+        </mat-select>
+        <h3>Cantidad</h3>
+        <input [(ngModel)]="amount" (change)="lineTotal()" class="form-control noAuto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Cantidad">
+        <h3>Unidad de Medida</h3>
+        <select [(ngModel)]="selectedUnit" class="form-control noAuto">
+        <option *ngFor="let unit of units" [value]="unit.code">{{unit.description}}</option>
+      </select>
+        <br>
+        <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
+        <br>
+        <br>
+      </aw-wizard-step>
 
+      <aw-wizard-step stepTitle="">
+        <h3>Unidad de Medida Comercial</h3>
+        <input #businessMeasure class="form-control noAuto" placeholder="Unidad de Medida Comercial">
+        <h3>Impuesto</h3>
+        <mat-select placeholder="Seleccione Impuestos" (change)="calculateLineTotalAmount()" [(ngModel)]="selectedTaxes" class="form-control noAuto" multiple>
+          <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}}% Institucion: {{tax.institutionName}}</mat-option>
+        </mat-select>
+        <h3>Detalle</h3>
+        <input #detail class="form-control noAuto" placeholder="Detalle del Servicio">
+        <h3>Precio Unitario</h3>
+        <input [(ngModel)]="unitPrice" (change)="lineTotal()" class="form-control noAuto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Precio Unitario">
+        <br>
+        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+        <br>
+        <br>
+        <br>
+      </aw-wizard-step>
+
+      <aw-wizard-step stepTitle="">
+        <h3>Monto</h3>
+        <input [(ngModel)]="totalAmount" disabled class="form-control auto" placeholder="Monto Total">
+        <h3>Monto Descuento</h3>
+        <input [(ngModel)]="discount" (change)="subTotal()" class="form-control noAuto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Descuento">
+        <h3>Naturaleza del Descuento</h3>
+        <input #discountNature (change)="calculateLineTotalAmount()" class="form-control noAuto" onkeypress='return event.charCode > 57 || event.charCode == 32' placeholder="Descuento">
+        <h3>Subtotal</h3>
+        <input [(ngModel)]="subtotal" disabled (change)="calculateLineTotalAmount()" class="form-control auto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Subtotal">
+        <br>
+        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+        <br>
+        <br>
+        <br>
+      </aw-wizard-step>
+
+      <aw-wizard-step stepTitle="">
+        <h3>Monto Total</h3>
+        <input [(ngModel)]="lineTotalAmount" disabled class="form-control main-value auto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Total Línea">
+        <br>
+        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+        <button (click)="addService(lineNumber.value, businessMeasure.value, detail.value, discountNature.value);" class="nex btn btn-primary btn-margin">Agregar Servicio</button>
+        <br>
+        <br>
+        <br>
+      </aw-wizard-step>
+    </aw-wizard>
   </div>
+</div>
+<br>

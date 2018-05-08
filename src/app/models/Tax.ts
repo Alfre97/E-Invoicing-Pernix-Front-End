@@ -7,5 +7,6 @@ export class Tax {
   institutionName: String;
   documentNumber: String;
   documentType: String;
+  serviceId: String;
   constructor() { }
 }

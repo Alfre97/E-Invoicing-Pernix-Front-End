@@ -19,6 +19,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import {MatSelectModule} from '@angular/material/select';
 import { TaxComponent } from './tax/tax.component';
 import { CodeComponent } from './code/code.component';
+import { ArchwizardModule } from 'angular-archwizard';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CodeComponent } from './code/code.component';
     HttpClientModule,
     FormsModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ArchwizardModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

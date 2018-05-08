@@ -76,7 +76,7 @@ export class MenuComponent implements OnInit {
   showCustom() {
     this.toastr.custom('<span style="color: red">Message in red.</span>', null, { enableHTML: true });
   }
-  
+
   backToInvoiceResume(){
     this.showGeneral=false;
     this.showResolutions=false;

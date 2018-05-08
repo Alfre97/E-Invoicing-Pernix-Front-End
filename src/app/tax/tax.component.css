@@ -16,27 +16,50 @@
 .navbar a {
   color: white;
 }
-
-.page-style {
-  display: inline-block;
-  width: 98%;
-  height: auto;
-  background-color: rgba(93, 109, 126, 0.8);
-  border-radius: 25px;
-  margin: 0 auto;
-  text-align: center;
-  color: white;
-}
-
-.center-panel {
-  text-align: center;
-  width: auto;
-  height: auto;
-  color: white;
-}
-
 .form-control {
   width: 80%;
   display: block;
   margin: 0 auto;
+}
+
+.wizard {
+  width: 60%;
+  height: auto;
+  background-color: white;
+  border-radius: 25px;
+  margin: 0 auto;
+  color: black;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .wizard {
+    width: 100%;
+  }
+}
+
+.nex {
+  float: right;
+  margin-right: 10%;
+}
+
+.prev {
+  float: left;
+  margin-left: 10%;
+}
+
+.main-value {
+  width: 40%;
+  border-width: 1px;
+  border-color: #19B4DE;
+}
+
+.noAuto {
+  border-width: 1px;
+  border-color: #19DE31;
+}
+
+.auto {
+  border-width: 1px;
+  border-color: #EA9809;
 }
