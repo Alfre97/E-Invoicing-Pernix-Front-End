@@ -16,14 +16,15 @@
 .navbar a {
   color: white;
 }
+
 .form-control {
-  width: 80%;
+  width: 50%;
   display: block;
   margin: 0 auto;
 }
 
 .wizard {
-  width: 60%;
+  width: 50%;
   height: auto;
   background-color: white;
   border-radius: 25px;

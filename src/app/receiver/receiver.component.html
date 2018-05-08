@@ -12,68 +12,87 @@
     </ul>
   </div>
 </nav>
-
-<div class="center-panel">
-  <h1>Agregar Receptor</h1>
-  <div class="page-style"> <br>
-    <div class="col-sm-6">
-      <h3>Nombre</h3>
-      <input #receiverName class="form-control" placeholder="Nombre">
-      <h3>Correo</h3>
-      <input #receiverEmail class="form-control" type="email" placeholder="Correo">
-      <h3>Identificación</h3>
-      <select #idType class="form-control">
-        <option>Cédula física</option>
-        <option>Cédula jurídica</option>
-        <option>DIMEX</option>
-        <option>NITE</option>
-    </select>
-      <h3>Numero de Identificación</h3>
-      <input #receiverNumber class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-      <h3>Nombre Comercial</h3>
-      <input #receiverBusinessName class="form-control" placeholder="Nombre Comercial">
-    </div>
-    <div class="col-sm-6">
-      <h3>Provincia</h3>
-      <select #receiverProvince class="form-control" (change)="onProvinceChange($event.target.value)">
-      <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
-    </select>
-      <h3>Cantón</h3>
-      <select #receiverCanton class="form-control" (change)="onCantonChange($event.target.value)">
-        <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
-    </select>
-      <h3>Distrito</h3>
-      <select #receiverDistrict class="form-control">
-        <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
-    </select>
-      <h3>Barrio</h3>
-      <select #receiverNeighborhood class="form-control">
-        <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
-    </select>
-      <h3>Otras Señas</h3>
-      <textarea #otherSignals class="form-control" placeholder="Señas destacables del lugar"></textarea>
-    </div>
-    <div class="col-sm-6">
-      <h2>Telefóno</h2>
-      <h3>Código de país</h3>
-      <input #phoneCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-      <h3>Telefóno</h3>
-      <input #receiverPhone maxlength="15" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-    </div>
-    <div class="col-sm-6">
-      <h2>Fax</h2>
-      <h3>Código de país</h3>
-      <input #faxCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-      <h3>Fax</h3>
-      <input #faxNumber maxlength="12" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-      <br>
-    </div>
-    <div class="col-sm-12">
-      <button (click)="addReceiver(receiverName.value, idType.value, receiverNumber.value, receiverBusinessName.value, receiverProvince.value,
-      receiverCanton.value, receiverDistrict.value, receiverNeighborhood.value, otherSignals.value, phoneCountryCode.value, receiverPhone.value,
-      faxCountryCode.value, faxNumber.value, receiverEmail.value)" class="btn btn-primary btn-lg button-at-bottom">Agregar Receptor</button>
-      <br>
-      <br>
-    </div>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+  <div class="wizard">
+    <br>
+    <aw-wizard>
+      <aw-wizard-step stepTitle="General">
+        <h3>Nombre</h3>
+        <input #receiverName class="form-control" placeholder="Nombre">
+        <h3>Correo</h3>
+        <input #receiverEmail class="form-control" type="email" placeholder="Correo">
+        <h3>Identificación</h3>
+        <select #idType class="form-control">
+          <option>Cédula física</option>
+          <option>Cédula jurídica</option>
+          <option>DIMEX</option>
+          <option>NITE</option>
+        </select>
+        <h3>Numero de Identificación</h3>
+        <input #receiverNumber class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+        <h3>Nombre Comercial</h3>
+        <input #receiverBusinessName class="form-control" placeholder="Nombre Comercial">
+        <br>
+        <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
+        <br>
+        <br>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="Dirección">
+        <h3>Provincia</h3>
+        <select #receiverProvince class="form-control" (change)="onProvinceChange($event.target.value)">
+        <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
+        </select>
+        <h3>Cantón</h3>
+        <select #receiverCanton class="form-control" (change)="onCantonChange($event.target.value)">
+          <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
+        </select>
+        <h3>Distrito</h3>
+        <select #receiverDistrict class="form-control">
+          <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
+        </select>
+        <h3>Barrio</h3>
+        <select #receiverNeighborhood class="form-control">
+          <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
+        </select>
+        <h3>Otras Señas</h3>
+        <textarea #otherSignals class="form-control" placeholder="Señas destacables del lugar"></textarea>
+        <br>
+        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+        <br>
+        <br>
+        <br>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="Telefóno">
+        <h3>Código de país</h3>
+        <input #phoneCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+        <h3>Telefóno</h3>
+        <input #receiverPhone maxlength="15" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+        <br>
+        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+        <br>
+        <br>
+        <br>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="Fax">
+        <h3>Código de país</h3>
+        <input #faxCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+        <h3>Fax</h3>
+        <input #faxNumber maxlength="12" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+        <br>
+        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+        <button (click)="addReceiver(receiverName.value, idType.value, receiverNumber.value, receiverBusinessName.value, receiverProvince.value,
+        receiverCanton.value, receiverDistrict.value, receiverNeighborhood.value, otherSignals.value, phoneCountryCode.value, receiverPhone.value,
+        faxCountryCode.value, faxNumber.value, receiverEmail.value)" class="btn btn-primary nex">Agregar Receptor</button>
+        <br>
+        <br>
+        <br>
+      </aw-wizard-step>
+    </aw-wizard>
   </div>
 </div>
+<br>
