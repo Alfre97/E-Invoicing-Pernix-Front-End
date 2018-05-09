@@ -45,12 +45,12 @@
 
       <aw-wizard-step stepTitle="Pa&#8203;go">
         <h3>Condición de Venta</h3>
-        <select [(ngModel)]="sellTerm" class="form-control">
+        <select [(ngModel)]="selectedTerm" class="form-control" (change)="enablePaymentLapse()">
         <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Condición de Venta</option>
         <option *ngFor="let term of sellTerms">{{term}}</option>
       </select>
         <h3>Plazo de Crédito</h3>
-        <input [(ngModel)]="paymentLapse" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
+        <input [(ngModel)]="paymentLapse" [disabled]=isCredit class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
         <h3>Medio de Pago</h3>
         <mat-select placeholder="Seleccione un Medio de Pago" class=" form-control" [(ngModel)]="paymentMethod" multiple>
           <mat-option *ngFor="let method of paymentMethods" [value]="method">{{method}}</mat-option>
@@ -129,7 +129,7 @@
         <textarea [(ngModel)]="otherText" class="form-control" placeholder="Elemento opcional"></textarea>
         <br>
         <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn btn-primary btn-width nex" (click)="processInvoice(dateCreated, sellTerm, paymentLapse,
+        <button class="btn btn btn-primary btn-width nex" (click)="processInvoice(dateCreated, paymentLapse,
       paymentMethod, selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal,
       exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher, resolutionNumber  , resolutionDate, otherText)">Crear Factura</button>
         <br>

@@ -20,7 +20,7 @@
   <div class="wizard">
     <br>
     <aw-wizard>
-      <aw-wizard-step stepTitle="">
+      <aw-wizard-step stepTitle="General">
         <h3>Tipo de Código</h3>
         <select #selectedCodeType class="form-control">
           <option value="01">Código del producto del vendedor</option>
@@ -32,7 +32,7 @@
         <h3>Código</h3>
         <input #code class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Código">
         <br>
-        <button (click)="addCode(selectedCodeType.value, code.value)" class="btn btn-primary btn-lg button-at-bottom">Agregar Codigo</button>
+        <button (click)="addCode(selectedCodeType.value, code.value)" class="btn btn-primary">Agregar Codigo</button>
         <br>
         <br>
       </aw-wizard-step>
