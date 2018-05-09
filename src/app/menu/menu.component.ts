@@ -11,7 +11,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  styleUrls: ['./menu.component.scss'],
   animations: [
     trigger('slideInOut', [
       transition(':enter', [

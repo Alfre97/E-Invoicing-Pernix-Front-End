@@ -10,7 +10,7 @@ import { Unit } from '../models/Unit/Unit';
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
-  styleUrls: ['./services.component.css'],
+  styleUrls: ['./services.component.scss'],
 })
 export class ServicesComponent implements OnInit {
   units = Units;

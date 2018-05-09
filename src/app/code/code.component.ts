@@ -6,7 +6,7 @@ import { Code } from '../models/Code';
 @Component({
   selector: 'app-code',
   templateUrl: './code.component.html',
-  styleUrls: ['./code.component.css']
+  styleUrls: ['./code.component.scss']
 })
 export class CodeComponent implements OnInit {
 
