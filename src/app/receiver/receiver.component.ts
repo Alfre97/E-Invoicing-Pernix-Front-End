@@ -6,7 +6,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-receiver',
   templateUrl: './receiver.component.html',
-  styleUrls: ['./receiver.component.css']
+  styleUrls: ['./receiver.component.scss']
 })
 export class ReceiverComponent implements OnInit {
   public provinces = ['San Jose', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'];
