@@ -4,5 +4,18 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  rootURL: 'http://localhost:5000',
+  //rootURL: 'https://dry-harbor-97946.herokuapp.com',
+
+  addService: '/addService',
+  getServices: '/getServices',
+  addEmitter: '/addUser',
+  getEmitter: '/getEmitters',
+  getReceiver: '/getReceivers',
+  sendInvoice: '/uploadInvoice',
+  addTax: '/addTax',
+  getTaxes: '/getTaxes',
+  getCodes: '/getCodes',
+  addCode: '/addCode'
 };

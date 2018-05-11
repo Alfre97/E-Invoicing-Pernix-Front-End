@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from './user.service';
+import { UserService } from './user/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { MatSelectModule } from '@angular/material/select';

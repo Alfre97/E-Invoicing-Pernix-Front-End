@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewContainerRef} from '@angular/core';
-import { UserService } from '../user.service';
+import { Component, ViewContainerRef} from '@angular/core';
+import { UserService } from '../user/user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Code } from '../models/Code';
+import { CodeService } from './code.service';
 
 @Component({
   selector: 'app-code',
   templateUrl: './code.component.html',
-  styleUrls: ['./code.component.css']
+  styleUrls: ['./code.component.css'],
+  providers: [CodeService]
 })
-export class CodeComponent implements OnInit {
+export class CodeComponent {
 
-  constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private codeService: CodeService,
+              public toastr: ToastsManager,
+              vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
-  }
-
-  ngOnInit() {
   }
 
   addCode(selectedCodeType: String, code: String) {
@@ -22,12 +23,16 @@ export class CodeComponent implements OnInit {
       let cod: Code = new Code();
       cod.codeType = selectedCodeType;
       cod.code = code;
-      this.userService.addCode(cod).subscribe();
-      this.showSuccess();
+      this.codeService.addCode(cod).subscribe( 
+        response => {
+          this.showSuccess();
+        },
+        error => {
+          this.showError();
+        }
+      );
     } else if (selectedCodeType != '' || code != '') {
       this.showWarning();
-    } else {
-      this.showError();
     }
   }
 

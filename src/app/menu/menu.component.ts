@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../user.service';
+import { UserService } from '../user/user.service';
+import { ServiceService } from '../services/service.service'
+import { InvoiceService } from '../Invoice/invoice.service'
 import { Service } from '../Models/Service';
 import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
 import { Invoice } from '../models/Invoice';
@@ -10,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
+  providers: [ServiceService, InvoiceService]
 })
 
 export class MenuComponent implements OnInit {
@@ -32,7 +35,11 @@ export class MenuComponent implements OnInit {
   private sellTerms = ['Contado', 'Crédito', 'Consignación', 'Apartado', 'Arrendamiento con opción de compra', 'Arrendamiento en función financiera', 'Otros'];
   private paymentMethods = ['Efectivo', 'Tarjeta', 'Cheque', 'Transferencia - Depósito bancario', 'Recaudado por terceros', 'Otros'];
 
-  constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private userService: UserService,
+              private serviceService: ServiceService,
+              private invoiceService: InvoiceService,
+              public toastr: ToastsManager,
+              vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -70,14 +77,38 @@ export class MenuComponent implements OnInit {
   }
 
   getServices() {
-    this.userService.getServices().subscribe(data => this.services = data);
+    this.serviceService.getServices().subscribe(
+      response => {
+        this.services = response;
+        //Add action whe the Request send a good response
+      },
+      error => {
+        //Add action whe the Request send a bad response
+      }
+    );
   }
 
   getEmitters() {
-    this.userService.getEmitters().subscribe(data => this.emitters = data);
+    this.userService.getEmitters().subscribe(
+      response => {
+        this.emitters = response;
+        //Add action whe the Request send a good response
+      },
+      error => {
+        //Add action whe the Request send a bad response
+      }
+    );
   }
   getReceivers() {
-    this.userService.getReceivers().subscribe(data => this.receivers = data);
+    this.userService.getReceivers().subscribe(
+      response => {
+        this.receivers = response;
+        //Add action whe the Request send a good response
+      },
+      error => {
+        //Add action whe the Request send a bad response
+      }
+    );
   }
 
   processInvoice(dateCreated: String, paymentLapse: String, paymentMethod: String, selectedCurrency: String, exchangeRate: String,
@@ -109,7 +140,14 @@ export class MenuComponent implements OnInit {
       invoice.idEmitter = this.selectedEmitter.id;
       invoice.idReceiver = this.selectedReceiver.id;
       invoice.idService = this.selectedService.id;
-      this.userService.sendInvoice(invoice).subscribe();
+      this.invoiceService.sendInvoice(invoice).subscribe(
+        response => {
+          //Add action whe the Request send a good response
+        },
+        error => {
+          //Add action whe the Request send a bad response
+        }
+      );
       this.showSuccess();
     } else if ((resolutionNumber == '' || resolutionNumber == undefined) || (resolutionDate == '' || resolutionDate == undefined) || (otherText == '' || otherText == undefined)) {
       this.showWarning();
