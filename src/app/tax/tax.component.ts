@@ -7,7 +7,7 @@ import { Tax } from '../models/Tax';
 @Component({
   selector: 'app-tax',
   templateUrl: './tax.component.html',
-  providers: [TaxService]
+  providers: [TaxService],
   styleUrls: ['./tax.component.scss']
 })
 export class TaxComponent implements OnInit {
@@ -17,9 +17,9 @@ export class TaxComponent implements OnInit {
   exhonerationAvaible = "";
 
   constructor(private userService: UserService,
-              private taxService: TaxService,
-              public toastr: ToastsManager,
-              vcr: ViewContainerRef) {
+    private taxService: TaxService,
+    public toastr: ToastsManager,
+    vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -60,8 +60,8 @@ export class TaxComponent implements OnInit {
       } else {
         this.showError();
       }
-    } else if (dateCreated != undefined || institutionName != undefined || documentNumber != '' || selectedDocumentType != ''){
-        this.showWarningExhoneration();
+    } else if (dateCreated != undefined || institutionName != undefined || documentNumber != '' || selectedDocumentType != '') {
+      this.showWarningExhoneration();
     } else {
       if (selectedCodeType != '' && this.rate != '' && this.purchasePercentage != 0) {
         let tax: Tax = new Tax();
