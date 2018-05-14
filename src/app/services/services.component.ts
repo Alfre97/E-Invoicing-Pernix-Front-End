@@ -13,8 +13,8 @@ import { TaxService } from '../tax/tax.service';
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
-  providers: [CodeService, ServiceService, TaxService]
-  styleUrls: ['./services.component.scss'],
+  providers: [CodeService, ServiceService, TaxService],
+  styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent implements OnInit {
   units = Units;
@@ -31,17 +31,17 @@ export class ServicesComponent implements OnInit {
   discount = 0.0;
 
   constructor(private userService: UserService,
-              private codeService: CodeService,
-              private serviceService: ServiceService,
-              private taxService: TaxService,
-              public toastr: ToastsManager,
-              vcr: ViewContainerRef) {
+    private codeService: CodeService,
+    private serviceService: ServiceService,
+    private taxService: TaxService,
+    public toastr: ToastsManager,
+    vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
   calculateLineTotalAmount() {
     this.lineTotalAmount = this.subtotal;
-    for (let tax of this.selectedTaxes){
+    for (let tax of this.selectedTaxes) {
       var rate = +tax.rate;
       this.lineTotalAmount = this.lineTotalAmount + (rate * this.subtotal);
     }
@@ -53,7 +53,7 @@ export class ServicesComponent implements OnInit {
   }
 
   lineTotal() {
-    this.totalAmount = this.amount *  this.unitPrice;
+    this.totalAmount = this.amount * this.unitPrice;
   }
 
   showSuccess() {
@@ -81,7 +81,7 @@ export class ServicesComponent implements OnInit {
     let codes = this.getCodes();
   }
 
-  getCodes(){
+  getCodes() {
     this.codeService.getCodes().subscribe(
       response => {
         this.codes = response
@@ -93,17 +93,17 @@ export class ServicesComponent implements OnInit {
     );
   }
 
-  getTaxes(){
+  getTaxes() {
     this.taxService.getTaxes().subscribe(data => this.taxes = data);
   }
 
   addService(lineNumber: string, businessMeasure: string, detail: string, discountNature: string) {
     if (lineNumber != '' && businessMeasure != '' && detail != '' && discountNature != ''
-            && this.selectedTaxes != undefined && this.selectedCodes != undefined
-            && this.selectedUnit != '' && this.amount != 0
-            && this.lineTotalAmount != 0 && this.totalAmount != 0
-            && this.unitPrice != 0 && this.subtotal != 0
-            && this.discount != undefined)  {
+      && this.selectedTaxes != undefined && this.selectedCodes != undefined
+      && this.selectedUnit != '' && this.amount != 0
+      && this.lineTotalAmount != 0 && this.totalAmount != 0
+      && this.unitPrice != 0 && this.subtotal != 0
+      && this.discount != undefined) {
       console.log(this.selectedTaxes);
       let service: Service = new Service();
       service.lineNumber = lineNumber;
@@ -120,11 +120,11 @@ export class ServicesComponent implements OnInit {
       service.taxes = "";
       service.meisureUnit = this.selectedUnit;
 
-      for (let code of this.selectedCodes){
+      for (let code of this.selectedCodes) {
         service.codes += code.id + ",";
       }
 
-      for (let tax of this.selectedTaxes){
+      for (let tax of this.selectedTaxes) {
         service.taxes += tax.id + ",";
       }
 
@@ -138,11 +138,11 @@ export class ServicesComponent implements OnInit {
       );
       this.showSuccess();
     } else if (lineNumber == '' || businessMeasure == '' || detail == '' || discountNature == ''
-            || this.selectedTaxes == undefined || this.selectedCodes == undefined
-            || this.selectedUnit == '' || this.amount == 0
-            || this.lineTotalAmount == 0 || this.totalAmount == 0
-            || this.unitPrice == 0 || this.subtotal == 0
-            || this.discount == undefined) {
+      || this.selectedTaxes == undefined || this.selectedCodes == undefined
+      || this.selectedUnit == '' || this.amount == 0
+      || this.lineTotalAmount == 0 || this.totalAmount == 0
+      || this.unitPrice == 0 || this.subtotal == 0
+      || this.discount == undefined) {
       this.showWarning();
     } else {
       this.showError();
