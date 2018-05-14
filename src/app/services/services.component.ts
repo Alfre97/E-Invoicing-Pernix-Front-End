@@ -13,8 +13,8 @@ import { TaxService } from '../tax/tax.service';
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
-  styleUrls: ['./services.component.css'],
   providers: [CodeService, ServiceService, TaxService]
+  styleUrls: ['./services.component.scss'],
 })
 export class ServicesComponent implements OnInit {
   units = Units;

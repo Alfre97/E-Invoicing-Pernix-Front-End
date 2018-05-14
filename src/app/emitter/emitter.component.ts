@@ -6,7 +6,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-emitter',
   templateUrl: './emitter.component.html',
-  styleUrls: ['./emitter.component.css']
+  styleUrls: ['./emitter.component.scss']
 })
 export class EmitterComponent implements OnInit {
 

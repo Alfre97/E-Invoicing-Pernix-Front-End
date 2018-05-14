@@ -7,8 +7,8 @@ import { Tax } from '../models/Tax';
 @Component({
   selector: 'app-tax',
   templateUrl: './tax.component.html',
-  styleUrls: ['./tax.component.css'],
   providers: [TaxService]
+  styleUrls: ['./tax.component.scss']
 })
 export class TaxComponent implements OnInit {
 

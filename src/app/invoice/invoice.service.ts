@@ -24,8 +24,8 @@ export class InvoiceService {
                          netSell : invoice.netSell, totalTax : invoice.totalTax,
                          totalVoucher : invoice.totalVoucher, resolutionNumber : invoice.resolutionNumber,
                          resolutionDate : invoice.resolutionDate, otherText : invoice.otherText,
-                         idEmitter : invoice.idEmitter, idReceiver : invoice.idReceiver,
-                         idService : invoice.idService};
+                         idEmitter : { id: invoice.idEmitter }, idReceiver : { id: invoice.idReceiver },
+                         idService : { id: invoice.idService } };
 
     return this.httpClient.post(route, invoiceData)
       .map(res => res)

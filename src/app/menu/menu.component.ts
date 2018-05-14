@@ -11,8 +11,8 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
-  providers: [ServiceService, InvoiceService]
+  providers: [ServiceService, InvoiceService],
+  styleUrls: ['./menu.component.scss']
 })
 
 export class MenuComponent implements OnInit {
