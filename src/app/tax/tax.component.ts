@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../user/user.service';
+import { TaxService } from './tax.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Tax } from '../models/Tax';
 
 @Component({
   selector: 'app-tax',
   templateUrl: './tax.component.html',
+  providers: [TaxService]
   styleUrls: ['./tax.component.scss']
 })
 export class TaxComponent implements OnInit {
@@ -14,7 +16,10 @@ export class TaxComponent implements OnInit {
   purchasePercentage = 0;
   exhonerationAvaible = "";
 
-  constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private userService: UserService,
+              private taxService: TaxService,
+              public toastr: ToastsManager,
+              vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -39,7 +44,14 @@ export class TaxComponent implements OnInit {
         tax.institutionName = institutionName;
         tax.documentNumber = documentNumber;
         tax.documentType = selectedDocumentType;
-        this.userService.addTax(tax).subscribe();
+        this.taxService.addTax(tax).subscribe(
+          response => {
+            //Add action whe the Request send a good response
+          },
+          error => {
+            //Add action whe the Request send a bad response
+          }
+        );
         this.showSuccess();
       } else if (selectedCodeType == '' || this.rate == '' || this.purchasePercentage == 0 ||
         dateCreated == '' || institutionName == '' ||
@@ -56,7 +68,14 @@ export class TaxComponent implements OnInit {
         tax.code = selectedCodeType;
         tax.rate = this.rate;
         tax.purchasePercentage = this.purchasePercentage;
-        this.userService.addTax(tax).subscribe();
+        this.taxService.addTax(tax).subscribe(
+          response => {
+            //Add action whe the Request send a good response
+          },
+          error => {
+            //Add action whe the Request send a bad response
+          }
+        );
         this.showSuccess();
       } else if (selectedCodeType == '' || this.rate == '' || this.purchasePercentage == 0) {
         this.showWarning();

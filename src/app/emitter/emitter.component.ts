@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
-import { UserService } from '../user.service';
+import { UserService } from '../user/user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -107,7 +107,14 @@ export class EmitterComponent implements OnInit {
       emitter.faxCountryCode = faxCountryCode;
       emitter.faxNumber = faxNumber;
       emitter.userType = 'Emitter';
-      this.userService.addUser(emitter).subscribe();
+      this.userService.addUser(emitter).subscribe(
+        response => {
+          //Add action whe the Request send a good response
+        },
+        error => {
+          //Add action whe the Request send a bad response
+        }
+      );
       this.showSuccess();
     } else if (name != '' || email != '' || idType != '' || number != '' || comercialName != '' || province != '' ||
       canton != '' || district != '' || neighborhood != '' || otherSignals != '' || phoneCountryCode != '' ||
