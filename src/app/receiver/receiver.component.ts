@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { UserService } from '../user/user.service';
-import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
+import { ReceiverService } from '../receiver/receiver.service';
+import { UserEmitterReceiver } from '../models/UserEmitterReceiver.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -24,7 +24,7 @@ export class ReceiverComponent implements OnInit {
   public districtsOnSelectedCanton = this.cartagoDistricts;
   public tresRiosNeighborhoods = ['Eulalia', 'Florencio del Castillo', 'Jirales', 'Mariana', 'Tacora'];
 
-  constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private receiverService: ReceiverService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -105,8 +105,7 @@ export class ReceiverComponent implements OnInit {
       receiver.faxCountryCode = faxCountryCode;
       receiver.faxNumber = faxNumber;
       receiver.email = email;
-      receiver.userType = 'Receiver';
-      this.userService.addUser(receiver).subscribe(
+      this.receiverService.addUser(receiver).subscribe(
         response => {
           //Add action whe the Request send a good response
         },

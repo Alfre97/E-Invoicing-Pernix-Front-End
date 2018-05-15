@@ -7,19 +7,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ReceiverComponent } from './receiver/receiver.component';
 import { EmitterComponent } from './emitter/emitter.component';
-import { ProductsComponent } from './products/products.component';
 import { ServicesComponent } from './services/services.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from './user/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { MatSelectModule } from '@angular/material/select';
 import { TaxComponent } from './tax/tax.component';
 import { CodeComponent } from './code/code.component';
 import { ArchwizardModule } from 'angular-archwizard';
+import { CodeService } from "./code/code.service";
+import { EmitterService } from "./emitter/emitter.service";
+import { InvoiceService } from "./invoice/invoice.service";
+import { ReceiverService } from "./receiver/receiver.service";
+import { ServiceService } from "./services/services.service";
+import { TaxService } from "./tax/tax.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +32,6 @@ import { ArchwizardModule } from 'angular-archwizard';
     InvoiceComponent,
     ReceiverComponent,
     EmitterComponent,
-    ProductsComponent,
     ServicesComponent,
     TaxComponent,
     CodeComponent
@@ -47,7 +50,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     ReactiveFormsModule,
     ArchwizardModule
   ],
-  providers: [UserService],
+  providers: [CodeService, EmitterService, InvoiceService, ReceiverService, ServiceService, TaxService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Service } from '../models/Service';
+import { Service } from '../models/Service.model';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -22,12 +22,23 @@ export class ServiceService {
 
   addService(service: Service) {
     const route = environment.rootURL + environment.addService;
-    const serviceData = {amount: service.amount, codes: service.codes, comercialUnitMeasurement: service.businessMeasure,
-      detail: service.detail, discount: service.discount, discountNature: service.discountNature,
-      lineNumber: service.lineNumber, priceByUnit: service.unitPrice, subTotal: service.subtotal,
-      total: service.totalAmount, totalAmount: service.lineTotalAmount, unitOfMeasurementName: service.meisureUnit,
-      meisureUnit: service.meisureUnit, unitOfMeasurementType: service.meisureUnit, taxes: service.taxes};
-   
+    const serviceData = {
+      lineNumber: service.lineNumber,
+      codeList: service.codeList,
+      amount: service.amount,
+      unitOfMeasurementType: service.unitOfMeasurementType,
+      unitOfMeasurementName: service.unitOfMeasurementName,
+      comercialUnitMeasurement: service.comercialUnitOfMeasurement,
+      detail: service.detail,
+      priceByUnit: service.priceByUnit,
+      totalAmount: service.totalAmount,
+      discount: service.discount,
+      discountNature: service.discountNature,
+      subTotal: service.subtotal,
+      taxList: service.taxList,
+      total: service.totalAmount
+    };
+
     return this.httpClient.post(route, serviceData)
       .map(res => res)
       .catch(error => Observable.throw(error));
