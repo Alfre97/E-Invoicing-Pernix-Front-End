@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { UserService } from '../user/user.service';
 import { TaxService } from './tax.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Tax } from '../models/Tax';
+import { Tax } from '../models/Tax.model';
 
 @Component({
   selector: 'app-tax',
@@ -12,11 +11,11 @@ import { Tax } from '../models/Tax';
 })
 export class TaxComponent implements OnInit {
 
-  rate = "";
+  rate = 0.0;
   purchasePercentage = 0;
   exhonerationAvaible = "";
 
-  constructor(private userService: UserService,
+  constructor(
     private taxService: TaxService,
     public toastr: ToastsManager,
     vcr: ViewContainerRef) {
@@ -27,13 +26,13 @@ export class TaxComponent implements OnInit {
   }
 
   calculateRate() {
-    this.rate = "0." + this.purchasePercentage;
+    this.rate = this.purchasePercentage / 100;
   }
 
   addTax(selectedCodeType: String, dateCreated: String,
     institutionName: String, documentNumber: String, selectedDocumentType: String) {
     if (this.exhonerationAvaible == "true") {
-      if (selectedCodeType != '' && this.rate != '' && this.purchasePercentage != 0 &&
+      if (selectedCodeType != '' && this.rate != 0.0 && this.purchasePercentage != 0 &&
         dateCreated != '' && institutionName != '' && selectedDocumentType != '' &&
         documentNumber != '') {
         let tax: Tax = new Tax();
@@ -53,7 +52,7 @@ export class TaxComponent implements OnInit {
           }
         );
         this.showSuccess();
-      } else if (selectedCodeType == '' || this.rate == '' || this.purchasePercentage == 0 ||
+      } else if (selectedCodeType == '' || this.rate == 0.0 || this.purchasePercentage == 0 ||
         dateCreated == '' || institutionName == '' ||
         documentNumber == '' || selectedDocumentType == '') {
         this.showWarning();
@@ -63,7 +62,7 @@ export class TaxComponent implements OnInit {
     } else if (dateCreated != undefined || institutionName != undefined || documentNumber != '' || selectedDocumentType != '') {
       this.showWarningExhoneration();
     } else {
-      if (selectedCodeType != '' && this.rate != '' && this.purchasePercentage != 0) {
+      if (selectedCodeType != '' && this.rate != 0.0 && this.purchasePercentage != 0) {
         let tax: Tax = new Tax();
         tax.code = selectedCodeType;
         tax.rate = this.rate;
@@ -77,7 +76,7 @@ export class TaxComponent implements OnInit {
           }
         );
         this.showSuccess();
-      } else if (selectedCodeType == '' || this.rate == '' || this.purchasePercentage == 0) {
+      } else if (selectedCodeType == '' || this.rate == 0.0 || this.purchasePercentage == 0) {
         this.showWarning();
       } else {
         this.showError();

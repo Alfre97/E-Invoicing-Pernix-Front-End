@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
-import { UserService } from '../user/user.service';
+import { UserEmitterReceiver } from '../models/UserEmitterReceiver.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { EmitterService } from '../emitter/emitter.service';
 
 @Component({
   selector: 'app-emitter',
@@ -25,7 +25,7 @@ export class EmitterComponent implements OnInit {
   public districtsOnSelectedCanton = this.cartagoDistricts;
   public tresRiosNeighborhoods = ['Eulalia', 'Florencio del Castillo', 'Jirales', 'Mariana', 'Tacora'];
 
-  constructor(private userService: UserService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private emitterService: EmitterService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -106,8 +106,7 @@ export class EmitterComponent implements OnInit {
       emitter.phoneNumber = emitterPhone;
       emitter.faxCountryCode = faxCountryCode;
       emitter.faxNumber = faxNumber;
-      emitter.userType = 'Emitter';
-      this.userService.addUser(emitter).subscribe(
+      this.emitterService.addUser(emitter).subscribe(
         response => {
           //Add action whe the Request send a good response
         },

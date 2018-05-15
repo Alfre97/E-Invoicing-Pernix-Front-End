@@ -1,14 +1,17 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { Service } from '../Models/Service';
-import { UserService } from '../user/user.service';
-import { ServiceService } from './service.service'
+import { Service } from '../models/Service.model';
+import { ServiceService } from './services.service'
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Tax } from '../models/Tax';
-import { Code } from '../models/Code';
+import { Tax } from '../models/Tax.model';
+import { Code } from '../models/Code.model';
 import { Units } from '../models/Unit/unit-mock';
 import { Unit } from '../models/Unit/Unit';
 import { CodeService } from '../code/code.service';
 import { TaxService } from '../tax/tax.service';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-services',
@@ -22,7 +25,7 @@ export class ServicesComponent implements OnInit {
   private codes: Code[];
   selectedTaxes: Tax[];
   selectedCodes: Code[];
-  selectedUnit: String;
+  selectedUnit: Unit;
   amount = 0.0;
   lineTotalAmount = 0.0;
   totalAmount = 0.0;
@@ -30,12 +33,12 @@ export class ServicesComponent implements OnInit {
   subtotal = 0.0;
   discount = 0.0;
 
-  constructor(private userService: UserService,
+  constructor(
     private codeService: CodeService,
     private serviceService: ServiceService,
     private taxService: TaxService,
     public toastr: ToastsManager,
-    vcr: ViewContainerRef) {
+    vcr: ViewContainerRef, private httpClient: HttpClient) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -56,24 +59,24 @@ export class ServicesComponent implements OnInit {
     this.totalAmount = this.amount * this.unitPrice;
   }
 
-  showSuccess() {
-    this.toastr.success('Servicio creado!', 'Correcto');
+  showSuccess(message: string) {
+    this.toastr.success(message, 'Correcto');
   }
 
-  showError() {
-    this.toastr.error('Servicio no creado!', 'Oops');
+  showError(message: string) {
+    this.toastr.error(message, 'Oops');
   }
 
-  showWarning() {
-    this.toastr.warning('Servicio no creado, llene todos los campos.', 'Alerta');
+  showWarning(message: string) {
+    this.toastr.warning(message, 'Alerta');
   }
 
-  showInfo() {
-    this.toastr.info('Just some information for you.');
+  showInfo(message: string) {
+    this.toastr.info(message);
   }
 
-  showCustom() {
-    this.toastr.custom('<span style="color: red">Message in red.</span>', null, { enableHTML: true });
+  showCustom(message: string) {
+    this.toastr.custom(message, null, { enableHTML: true });
   }
 
   ngOnInit() {
@@ -94,39 +97,40 @@ export class ServicesComponent implements OnInit {
   }
 
   getTaxes() {
-    this.taxService.getTaxes().subscribe(data => this.taxes = data);
+    this.taxService.getTaxes().subscribe(
+      response => {
+        this.taxes = response
+        //Add action whe the Request send a good response
+      },
+      error => {
+        //Add action whe the Request send a bad response
+      }
+    );
   }
 
-  addService(lineNumber: string, businessMeasure: string, detail: string, discountNature: string) {
+  createService(lineNumber: string, businessMeasure: string, detail: string, discountNature: string) {
     if (lineNumber != '' && businessMeasure != '' && detail != '' && discountNature != ''
       && this.selectedTaxes != undefined && this.selectedCodes != undefined
-      && this.selectedUnit != '' && this.amount != 0
+      && this.amount != 0 && this.selectedUnit.description != '' && this.selectedUnit.code != ''
       && this.lineTotalAmount != 0 && this.totalAmount != 0
       && this.unitPrice != 0 && this.subtotal != 0
       && this.discount != undefined) {
-      console.log(this.selectedTaxes);
+
       let service: Service = new Service();
       service.lineNumber = lineNumber;
+      service.codeList = this.selectedCodes;
       service.amount = this.amount;
-      service.businessMeasure = businessMeasure;
+      service.unitOfMeasurementType = this.selectedUnit.code;
+      service.unitOfMeasurementName = this.selectedUnit.description;
+      service.comercialUnitOfMeasurement = businessMeasure;
       service.detail = detail;
-      service.unitPrice = this.unitPrice;
+      service.priceByUnit = this.unitPrice;
       service.totalAmount = this.totalAmount;
-      service.discountNature = discountNature;
       service.discount = this.discount;
+      service.discountNature = discountNature;
       service.subtotal = this.subtotal;
-      service.lineTotalAmount = this.lineTotalAmount;
-      service.codes = "";
-      service.taxes = "";
-      service.meisureUnit = this.selectedUnit;
-
-      for (let code of this.selectedCodes) {
-        service.codes += code.id + ",";
-      }
-
-      for (let tax of this.selectedTaxes) {
-        service.taxes += tax.id + ",";
-      }
+      service.taxList = this.selectedTaxes;
+      service.total = this.lineTotalAmount;
 
       this.serviceService.addService(service).subscribe(
         response => {
@@ -136,17 +140,24 @@ export class ServicesComponent implements OnInit {
           //Add action whe the Request send a bad response
         }
       );
-      this.showSuccess();
     } else if (lineNumber == '' || businessMeasure == '' || detail == '' || discountNature == ''
       || this.selectedTaxes == undefined || this.selectedCodes == undefined
-      || this.selectedUnit == '' || this.amount == 0
+      || this.selectedUnit.description == '' || this.selectedUnit.code != '' || this.amount == 0
       || this.lineTotalAmount == 0 || this.totalAmount == 0
       || this.unitPrice == 0 || this.subtotal == 0
       || this.discount == undefined) {
-      this.showWarning();
+      this.showWarning("You have empty spaces.");
     } else {
-      this.showError();
+      this.showError("You have empty spaces or undefined values.");
     }
   }
 
+  addService(service: Service) {
+    const route = environment.rootURL + environment.addService;
+    const serviceData = { id: service.id, lineNumber: service.lineNumber };
+
+    return this.httpClient.post(route, serviceData)
+      .map(res => res)
+      .catch(error => Observable.throw(error));
+  }
 }

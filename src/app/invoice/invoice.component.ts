@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../user/user.service';
-import { ServiceService } from '../services/service.service'
-import { InvoiceService } from '../Invoice/invoice.service'
-import { Service } from '../Models/Service';
-import { UserEmitterReceiver } from '../models/UserEmitterReceiver';
-import { Invoice } from '../models/Invoice';
+import { ServiceService } from '../services/services.service'
+import { InvoiceService } from '../invoice/invoice.service'
+import { Service } from '../models/Service.model';
+import { UserEmitterReceiver } from '../models/UserEmitterReceiver.model';
+import { Invoice } from '../models/Invoice.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { EmitterService } from '../emitter/emitter.service';
+import { ReceiverService } from '../receiver/receiver.service';
 
 @Component({
   selector: 'app-invoice',
@@ -20,10 +21,11 @@ export class InvoiceComponent implements OnInit {
   private receivers: UserEmitterReceiver[];
   selectedEmitter: UserEmitterReceiver;
   selectedReceiver: UserEmitterReceiver;
-  selectedService: Service;
-  selectedTerm: String;
+  selectedService: Service[];
+  selectedSellTerm: String;
   isCredit: boolean;
   selectUndefinedOptionValue: any;
+  selectedPaymentMethods: String[];
   private currencies = ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BOV', 'BRL', 'BSD', 'BWP', 'BYR', 'BZD', 'CAD',
     'CDF', 'CHE', 'CHF', 'CHW', 'CLF', 'CNY', 'COP', 'COU', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'GBP', 'GEL', 'GHS', 'GIP', 'GMD', 'GNF',
     'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KMF', 'KPW', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP', 'LKR', 'LRD',
@@ -34,7 +36,8 @@ export class InvoiceComponent implements OnInit {
   private sellTerms = ['Contado', 'Crédito', 'Consignación', 'Apartado', 'Arrendamiento con opción de compra', 'Arrendamiento en función financiera', 'Otros'];
   private paymentMethods = ['Efectivo', 'Tarjeta', 'Cheque', 'Transferencia - Depósito bancario', 'Recaudado por terceros', 'Otros'];
 
-  constructor(private userService: UserService,
+  constructor(private emitterService: EmitterService,
+    private receiverService: ReceiverService,
     private serviceService: ServiceService,
     private invoiceService: InvoiceService,
     public toastr: ToastsManager,
@@ -50,8 +53,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   enablePaymentLapse() {
-    if (this.selectedTerm == 'Crédito') {
+    if (this.selectedSellTerm == 'Crédito') {
       this.isCredit = false;
+    } else {
+      this.isCredit = true;
     }
   }
 
@@ -88,7 +93,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getEmitters() {
-    this.userService.getEmitters().subscribe(
+    this.emitterService.getEmitters().subscribe(
       response => {
         this.emitters = response;
         //Add action whe the Request send a good response
@@ -99,7 +104,7 @@ export class InvoiceComponent implements OnInit {
     );
   }
   getReceivers() {
-    this.userService.getReceivers().subscribe(
+    this.receiverService.getReceivers().subscribe(
       response => {
         this.receivers = response;
         //Add action whe the Request send a good response
@@ -110,16 +115,16 @@ export class InvoiceComponent implements OnInit {
     );
   }
 
-  processInvoice(dateCreated: String, paymentLapse: String, paymentMethod: String, selectedCurrency: String, exchangeRate: String,
+  processInvoice(dateCreated: String, paymentLapse: String, selectedCurrency: String, exchangeRate: String,
     recordedServices: String, exemptServices: String, recordedCommodity: String, exemptCommodity: String, recordedTotal: String, exemptTotal: String,
     totalSell: String, totalDiscount: String, netSell: String, totalTax: String, totalVoucher: String, resolutionNumber: String, resolutionDate: String,
     otherText: String) {
     if ((resolutionNumber != '' && resolutionNumber != undefined) && (resolutionDate != '' && resolutionDate != undefined) && (otherText != '' && otherText != undefined)) {
       let invoice: Invoice = new Invoice();
       invoice.dateCreated = dateCreated;
-      invoice.sellTerm = this.selectedTerm;
+      invoice.sellTerm = this.selectedSellTerm;
       invoice.paymentLapse = paymentLapse;
-      invoice.paymentMethod = paymentMethod;
+      invoice.paymentMethod = this.selectedPaymentMethods;
       invoice.selectedCurrency = selectedCurrency;
       invoice.exchangeRate = exchangeRate;
       invoice.recordedServices = recordedServices;
@@ -136,9 +141,9 @@ export class InvoiceComponent implements OnInit {
       invoice.resolutionNumber = resolutionNumber;
       invoice.resolutionDate = resolutionDate;
       invoice.otherText = otherText;
-      invoice.idEmitter = this.selectedEmitter.id;
-      invoice.idReceiver = this.selectedReceiver.id;
-      invoice.idService = this.selectedService.id;
+      invoice.emitter = this.selectedEmitter;
+      invoice.receiver = this.selectedReceiver;
+      invoice.service = this.selectedService;
       this.invoiceService.sendInvoice(invoice).subscribe(
         response => {
           //Add action whe the Request send a good response

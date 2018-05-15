@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Code } from '../models/Code';
+import { Code } from '../models/Code.model';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class CodeService {
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getCodes() {
     const route = environment.rootURL + environment.getCodes;
@@ -22,10 +22,10 @@ export class CodeService {
 
   addCode(code: Code) {
     const route = environment.rootURL + environment.addCode;
-    const codeData = {codeType: code.codeType, code: code.code};
+    const codeData = { codeType: code.codeType, code: code.code };
 
     return this.httpClient.post(route, codeData)
-      .map(res => {console.log("pass",res)})
+      .map(res => { console.log("pass", res) })
       .catch(error => Observable.throw(error));
   }
 }

@@ -41,16 +41,6 @@
   border-color: #19B4DE;
 }
 
-.noAuto {
-  border-width: 1px;
-  border-color: #19DE31;
-}
-
-.auto {
-  border-width: 1px;
-  border-color: #EA9809;
-}
-
 .container-fluid {
   margin-top: 5%;
 }

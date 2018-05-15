@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { environment } from '../../environments/environment';
-import { Tax } from '../models/Tax';
+import { Tax } from '../models/Tax.model';
 
 @Injectable()
 export class TaxService {
@@ -22,9 +22,18 @@ export class TaxService {
 
   addTax(tax: Tax) {
     const route = environment.rootURL + environment.getTaxes;
-    const taxData = {code: tax.code, rate: tax.rate, purchasePercentage: tax.purchasePercentage,
-                     date: tax.date, institutionName: tax.institutionName, documentNumber: tax.documentNumber,
-                     documentType: tax.documentType};
+    const taxData = {
+      code: tax.code,
+      taxTotal: tax.taxTotal,
+      rate: tax.rate,
+      service: { id: tax.serviceId },
+      date: tax.date,
+      taxExonarated: tax.taxExonarated,
+      institutionName: tax.institutionName,
+      documentNumber: tax.documentNumber,
+      purchasePercentage: tax.purchasePercentage,
+      documentType: tax.documentType
+    };
 
     return this.httpClient.post(route, taxData)
       .map(res => res)

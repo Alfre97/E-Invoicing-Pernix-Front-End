@@ -1,7 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { UserService } from '../user/user.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Code } from '../models/Code';
+import { Code } from '../models/Code.model';
 import { CodeService } from './code.service';
 
 @Component({
