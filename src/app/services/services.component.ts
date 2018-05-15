@@ -80,12 +80,12 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    let taxes = this.getTaxes();
-    let codes = this.getCodes();
+    let taxes = this.getNotLinkedTaxes();
+    let codes = this.getNotLinkedCodes();
   }
 
-  getCodes() {
-    this.codeService.getCodes().subscribe(
+  getNotLinkedCodes() {
+    this.codeService.getNotLinkedCodes().subscribe(
       response => {
         this.codes = response
         //Add action whe the Request send a good response
@@ -96,8 +96,8 @@ export class ServicesComponent implements OnInit {
     );
   }
 
-  getTaxes() {
-    this.taxService.getTaxes().subscribe(
+  getNotLinkedTaxes() {
+    this.taxService.getNotLinkedTaxes().subscribe(
       response => {
         this.taxes = response
         //Add action whe the Request send a good response
@@ -150,14 +150,5 @@ export class ServicesComponent implements OnInit {
     } else {
       this.showError("You have empty spaces or undefined values.");
     }
-  }
-
-  addService(service: Service) {
-    const route = environment.rootURL + environment.addService;
-    const serviceData = { id: service.id, lineNumber: service.lineNumber };
-
-    return this.httpClient.post(route, serviceData)
-      .map(res => res)
-      .catch(error => Observable.throw(error));
   }
 }

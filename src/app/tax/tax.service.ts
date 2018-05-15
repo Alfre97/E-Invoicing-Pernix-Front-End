@@ -20,8 +20,16 @@ export class TaxService {
       .catch(error => Observable.throw(error));
   }
 
+  getNotLinkedTaxes() {
+    const route = environment.rootURL + environment.getNotLinkedTaxes;
+
+    return this.httpClient.get(route)
+      .map(res => res)
+      .catch(error => Observable.throw(error));
+  }
+
   addTax(tax: Tax) {
-    const route = environment.rootURL + environment.getTaxes;
+    const route = environment.rootURL + environment.addTax;
     const taxData = {
       code: tax.code,
       taxTotal: tax.taxTotal,
