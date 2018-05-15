@@ -17,5 +17,7 @@ export const environment = {
   addTax: '/addTax',
   getTaxes: '/getTaxes',
   getCodes: '/getCodes',
-  addCode: '/addCode'
+  addCode: '/addCode',
+  getNotLinkedTaxes: '/getNotLinkedTaxes',
+  getNotLinkedCodes: '/getNotLinkedCodes'
 };
