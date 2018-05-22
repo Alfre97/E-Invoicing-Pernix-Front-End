@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { UserEmitterReceiver } from '../models/UserEmitterReceiver.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { EmitterService } from '../emitter/emitter.service';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-emitter',
@@ -10,6 +11,7 @@ import { EmitterService } from '../emitter/emitter.service';
 })
 export class EmitterComponent implements OnInit {
 
+  identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
   public provinces = ['San Jose', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'];
   public SJCantons = ['San José', 'Escazú', 'Desamparados', 'Puriscal', 'Tarrazú', 'Aserrí', 'Mora', 'Goicoechea',
     'Santa Ana', 'Alajuelita', 'Vázquez de Coronado', 'Acosta', 'Tibás', 'Moravia', 'Montes de Oca', 'Turrubares', 'Dota', 'Curridabat', 'Pérez Zeledón', 'León Cortés'];
@@ -25,7 +27,70 @@ export class EmitterComponent implements OnInit {
   public districtsOnSelectedCanton = this.cartagoDistricts;
   public tresRiosNeighborhoods = ['Eulalia', 'Florencio del Castillo', 'Jirales', 'Mariana', 'Tacora'];
 
-  constructor(private emitterService: EmitterService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  generalForm;
+  addressForm;
+  phoneForm;
+  faxForm;
+
+  constructor(private emitterService: EmitterService,
+              public toastr: ToastsManager,
+              public formBuilder: FormBuilder,
+              vcr: ViewContainerRef) {
+
+    this.generalForm = formBuilder.group({
+      receiverName: new FormControl('', [
+        Validators.required
+      ]),
+      receiverEmail: new FormControl('', [
+        Validators.required
+      ]),
+      idType: new FormControl('', [
+        Validators.required
+      ]),
+      receiverNumber: new FormControl('', [
+        Validators.required
+      ]),
+      receiverBusinessName: new FormControl('', [
+        Validators.required
+      ])
+    });
+
+    this.addressForm = formBuilder.group({
+      receiverProvince: new FormControl('', [
+        Validators.required
+      ]),
+      receiverCanton: new FormControl('', [
+        Validators.required
+      ]),
+      receiverDistrict: new FormControl('', [
+        Validators.required
+      ]),
+      receiverNeighborhood: new FormControl('', [
+        Validators.required
+      ]),
+      otherSignals: new FormControl('', [
+        Validators.required
+      ])
+    });
+
+    this.phoneForm = formBuilder.group({
+      phoneCountryCode: new FormControl('', [
+        Validators.required
+      ]),
+      receiverPhone: new FormControl('', [
+        Validators.required
+      ])
+    });
+
+    this.faxForm = formBuilder.group({
+      faxCountryCode: new FormControl('', [
+        Validators.required
+      ]),
+      faxNumber: new FormControl('', [
+        Validators.required
+      ])
+    });
+
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -85,27 +150,23 @@ export class EmitterComponent implements OnInit {
     }
   }
 
-  addEmitter(name: String, email: String, idType: String, number: String, comercialName: String, province: String,
-    canton: String, district: String, neighborhood: String, otherSignals: String, phoneCountryCode: String,
-    emitterPhone: String, faxCountryCode: String, faxNumber: String) {
-    if (name != '' && email != '' && idType != '' && number != '' && comercialName != '' && province != '' &&
-      canton != '' && district != '' && neighborhood != '' && otherSignals != '' && phoneCountryCode != '' &&
-      emitterPhone != '' && faxCountryCode != '' && faxNumber != '') {
+  addEmitter() {
+    if (this.generalForm.valid && this.addressForm.valid && this.phoneForm.valid && this.faxForm.valid) {
       let emitter: UserEmitterReceiver = new UserEmitterReceiver();
-      emitter.name = name;
-      emitter.email = email;
-      emitter.identificationType = idType;
-      emitter.identificationNumber = number;
-      emitter.comercialName = comercialName;
-      emitter.locationProvinceName = province;
-      emitter.locationCantonName = canton;
-      emitter.locationDistrictName = district;
-      emitter.locationNeighborhoodName = neighborhood;
-      emitter.otherSignals = otherSignals;
-      emitter.phoneCountryCode = phoneCountryCode;
-      emitter.phoneNumber = emitterPhone;
-      emitter.faxCountryCode = faxCountryCode;
-      emitter.faxNumber = faxNumber;
+      emitter.name = this.generalForm.controls['receiverName'];
+      emitter.email = this.generalForm.controls['receiverEmail'];
+      emitter.identificationType = this.generalForm.controls['idType'];
+      emitter.identificationNumber = this.generalForm.controls['receiverNumber'];
+      emitter.comercialName = this.generalForm.controls['receiverBusinessName'];
+      emitter.locationProvinceName = this.addressForm.controls['receiverProvince'];
+      emitter.locationCantonName = this.addressForm.controls['receiverCanton'];
+      emitter.locationDistrictName = this.addressForm.controls['receiverDistrict'];
+      emitter.locationNeighborhoodName = this.addressForm.controls['receiverNeighborhood'];
+      emitter.otherSignals = this.addressForm.controls['otherSignals'];
+      emitter.phoneCountryCode = this.phoneForm.controls['phoneCountryCode'];
+      emitter.phoneNumber = this.phoneForm.controls['receiverPhone'];
+      emitter.faxCountryCode = this.faxForm.controls['faxCountryCode'];
+      emitter.faxNumber = this.faxForm.controls['faxNumber'];
       this.emitterService.addUser(emitter).subscribe(
         response => {
           //Add action whe the Request send a good response
@@ -115,10 +176,6 @@ export class EmitterComponent implements OnInit {
         }
       );
       this.showSuccess();
-    } else if (name != '' || email != '' || idType != '' || number != '' || comercialName != '' || province != '' ||
-      canton != '' || district != '' || neighborhood != '' || otherSignals != '' || phoneCountryCode != '' ||
-      emitterPhone != '' || faxCountryCode != '' || faxNumber != '') {
-      this.showWarning();
     } else {
       this.showError();
     }

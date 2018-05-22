@@ -3,77 +3,125 @@
     <br>
     <aw-wizard>
       <aw-wizard-step stepTitle="General">
-        <h3>Nombre del Emisor</h3>
-        <input #receiverName class="form-control" placeholder="Nombre">
-        <h3>Correo</h3>
-        <input #receiverEmail class="form-control" type="email" placeholder="Correo">
-        <h3>Identificación</h3>
-        <select #idType class="form-control">
-          <option>Cédula física</option>
-          <option>Cédula jurídica</option>
-          <option>DIMEX</option>
-          <option>NITE</option>
-        </select>
-        <h3>Numero de Identificación</h3>
-        <input #receiverNumber class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-        <h3>Nombre Comercial</h3>
-        <input #receiverBusinessName class="form-control" placeholder="Nombre Comercial">
-        <br>
-        <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
+        <form [formGroup]="generalForm">
+          <div class="form-group">
+            <h3>Nombre del Emisor</h3>
+            <input formControlName="receiverName" name="receiverName" id="receiverName" class="form-control" placeholder="Nombre">
+            <label class="error-messages" *ngIf="generalForm.get('receiverName').touched && generalForm.get('receiverName').hasError('required')">
+                El nombre de emisor es requerido
+            </label>
+            <h3>Correo</h3>
+            <input formControlName="receiverEmail" name="receiverEmail" id="receiverEmail" class="form-control" type="email" placeholder="Correo">
+            <label class="error-messages" *ngIf="generalForm.get('receiverEmail').touched && generalForm.get('receiverEmail').hasError('required')">
+                El correo es requerido
+            </label>
+            <h3>Identificación</h3>
+            <select formControlName="idType" name="idType" id="idType" class="form-control">
+              <option value="" hidden disable selected>Seleccione su identificacion</option>
+              <option *ngFor="let identification of identificationList" value="{{ identificacion }}">{{ identificacion }}</option>
+            </select>
+            <label class="error-messages" *ngIf="generalForm.get('idType').touched && generalForm.get('idType').hasError('required')">
+                La identificación es requerido
+            </label>
+            <h3>Número de Identificación</h3>
+            <input formControlName="receiverNumber" name="receiverNumber" id="receiverNumber" class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="generalForm.get('receiverNumber').touched && generalForm.get('receiverNumber').hasError('required')">
+                El número de identificación es requerido
+            </label>
+            <h3>Nombre Comercial</h3>
+            <input formControlName="receiverBusinessName" name="receiverBusinessName" id="receiverBusinessName" class="form-control" placeholder="Nombre Comercial">
+            <label class="error-messages" *ngIf="generalForm.get('receiverBusinessName').touched && generalForm.get('receiverBusinessName').hasError('required')">
+                El nombre comercial es requerido
+            </label>
+            <br>
+            <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
+            </div>
+          </form>
       </aw-wizard-step>
+
       <aw-wizard-step stepTitle="Dirección">
-        <h3>Provincia</h3>
-        <select #receiverProvince class="form-control" (change)="onProvinceChange($event.target.value)">
-        <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
-        </select>
-        <h3>Cantón</h3>
-        <select #receiverCanton class="form-control" (change)="onCantonChange($event.target.value)">
-          <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
-        </select>
-        <h3>Distrito</h3>
-        <select #receiverDistrict class="form-control">
-          <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
-        </select>
-        <h3>Barrio</h3>
-        <select #receiverNeighborhood class="form-control">
-          <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
-        </select>
-        <h3>Otras Señas</h3>
-        <textarea #otherSignals class="form-control" placeholder="Señas destacables del lugar"></textarea>
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
-        <br>
+        <form [formGroup]="addressForm">
+          <div class="form-group">
+            <h3>Provincia</h3>
+            <select formControlName="receiverProvince" name="receiverProvince" id="receiverProvince" class="form-control" (change)="onProvinceChange($event.target.value)">
+              <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
+            </select>
+            <label class="error-messages" *ngIf="addressForm.get('receiverProvince').touched && addressForm.get('receiverProvince').hasError('required')">
+                La provincia es requerida
+            </label>
+            <h3>Cantón</h3>
+            <select formControlName="receiverCanton" name="receiverCanton" id="receiverCanton" class="form-control" (change)="onCantonChange($event.target.value)">
+              <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
+            </select>
+            <label class="error-messages" *ngIf="addressForm.get('receiverCanton').touched && addressForm.get('receiverCanton').hasError('required')">
+                El cantón es requerido
+            </label>
+            <h3>Distrito</h3>
+            <select formControlName="receiverDistrict" name="receiverDistrict" id="receiverDistrict" class="form-control">
+              <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
+            </select>
+            <label class="error-messages" *ngIf="addressForm.get('receiverDistrict').touched && addressForm.get('receiverDistrict').hasError('required')">
+                El distrito es requerido
+            </label>
+            <h3>Barrio</h3>
+            <select formControlName="receiverNeighborhood" name="receiverNeighborhood" id="receiverNeighborhood" class="form-control">
+              <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
+            </select>
+            <label class="error-messages" *ngIf="addressForm.get('receiverNeighborhood').touched && addressForm.get('receiverNeighborhood').hasError('required')">
+                El barrio es requerido
+            </label>
+            <h3>Otras Señas</h3>
+            <textarea formControlName="otherSignals" name="otherSignals" id="otherSignals" class="form-control" placeholder="Señas destacables del lugar"></textarea>
+            <!-- <label class="error-messages" *ngIf="addressForm.get('otherSignals').touched && addressForm.get('otherSignals').hasError('required')">
+                El tipo de documento es requerido
+            </label> -->
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
+
       <aw-wizard-step stepTitle="Telefóno">
-        <h3>Código de país</h3>
-        <input #phoneCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-        <h3>Telefóno</h3>
-        <input #receiverPhone maxlength="15" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
-        <br>
+        <form [formGroup]="phoneForm">
+          <div class="form-group">
+            <h3>Código de país</h3>
+            <input formControlName="phoneCountryCode" name="phoneCountryCode" id="phoneCountryCode" maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="phoneForm.get('phoneCountryCode').touched && phoneForm.get('phoneCountryCode').hasError('required')">
+                El código de país es requerido
+            </label>
+            <h3>Telefóno</h3>
+            <input formControlName="receiverPhone" name="receiverPhone" id="receiverPhone" maxlength="15" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="phoneForm.get('receiverPhone').touched && phoneForm.get('receiverPhone').hasError('required')">
+                El telefóno es requerido
+            </label>
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
+
       <aw-wizard-step stepTitle="Fax">
-        <h3>Código de país</h3>
-        <input #faxCountryCode maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-        <h3>Fax</h3>
-        <input #faxNumber maxlength="12" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button (click)="addEmitter(name.value, email.value, idType.value, emitterNumber.value, emitterBusinessName.value, emitterProvince.value, emitterCanton.value,
-         emitterDistrict.value, emitterNeighborhood.value, otherSignals.value, phoneCountryCode.value, emitterPhone.value, faxCountryCode.value, faxNumber.value);"
-         class="btn btn-primary nex">Agregar Emisor</button>
-        <br>
-        <br>
-        <br>
+        <form [formGroup]="faxForm">
+          <div class="form-group">
+            <h3>Código de país</h3>
+            <input formControlName="faxCountryCode" name="faxCountryCode" id="faxCountryCode" maxlength="3" placeholder="Código de páis" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="faxForm.get('faxCountryCode').touched && faxForm.get('faxCountryCode').hasError('required')">
+                El código de país es requerido
+            </label>
+            <h3>Fax</h3>
+            <input formControlName="faxNumber" name="faxNumber" id="faxNumber" maxlength="12" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="faxForm.get('faxNumber').touched && faxForm.get('faxNumber').hasError('required')">
+                El Fax es requerido
+            </label>
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button (click)="addEmitter(name.value, email.value, idType.value, emitterNumber.value, emitterBusinessName.value, emitterProvince.value, emitterCanton.value,
+            emitterDistrict.value, emitterNeighborhood.value, otherSignals.value, phoneCountryCode.value, emitterPhone.value, faxCountryCode.value, faxNumber.value);"
+            class="btn btn-primary nex">Agregar Emisor</button>
+          </div>
+        </form>
       </aw-wizard-step>
     </aw-wizard>
   </div>

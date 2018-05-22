@@ -1,125 +1,127 @@
 <div class="container-fluid">
   <div class="wizard">
-    <br>
     <aw-wizard>
-      <aw-wizard-step stepTitle="Gen&#8203;eral">
-        <h3>Fecha de Emisión</h3>
-        <input [(ngModel)]="dateCreated" class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
-        <owl-date-time #dt1></owl-date-time>
-        <h3>Emisor</h3>
-        <select [(ngModel)]="selectedEmitter" class="form-control">
-        <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Emisor</option>
-        <option *ngFor="let emitter of emitters" [ngValue]="emitter"> {{emitter.comercialName}}</option>
-      </select>
-        <h3>Receptor</h3>
-        <select [(ngModel)]="selectedReceiver" class="form-control">
-        <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Receptor</option>
-        <option *ngFor="let receiver of receivers" [ngValue]="receiver"> {{receiver.comercialName}}  </option>
-      </select>
-        <h3>Servicio</h3>
-        <mat-select placeholder="Seleccione Servicios" (change)="getRecordedServices()" [(ngModel)]="selectedService" class="form-control" multiple>
-          <mat-option *ngFor="let service of services" [value]="service">{{service.lineNumber}}-{{service.detail}}</mat-option>
-        </mat-select>
-        <br>
-        <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
+      <aw-wizard-step stepTitle="General">
+        <form [formGroup]="generalForm">
+          <div class="form-group">
+            <h3>Fecha de Emisión</h3>
+            <input formControlName="dateCreated" name="dateCreated" id="dateCreated" type="date" class="form-control" placeholder="Fecha de Emisión">
+            <h3>Emisor</h3>
+            <select formControlName="selectedEmitter" name="selectedEmitter" id="selectedEmitter" class="form-control">
+              <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Emisor</option>
+              <option *ngFor="let emitter of emitters" [ngValue]="emitter"> {{emitter.comercialName}}</option>
+            </select>
+            <h3>Receptor</h3>
+            <select formControlName="selectedReceiver" name="selectedReceiver" id="selectedReceiver" class="form-control">
+              <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Receptor</option>
+              <option *ngFor="let receiver of receivers" [ngValue]="receiver"> {{receiver.comercialName}}  </option>
+            </select>
+            <h3>Servicio</h3>
+            <mat-select formControlName="selectedService" name="selectedService" id="selectedService" placeholder="Seleccione Servicios" class="form-control" multiple>
+              <mat-option *ngFor="let service of services" [value]="service">{{service.lineNumber}}-{{service.detail}}</mat-option>
+            </mat-select>
+            <br>
+            <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
 
-      <aw-wizard-step stepTitle="Pa&#8203;go">
-        <h3>Condición de Venta</h3>
-        <select [(ngModel)]="selectedSellTerm" class="form-control" (change)="enablePaymentLapse()">
-        <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Condición de Venta</option>
-        <option *ngFor="let term of sellTerms">{{term}}</option>
-      </select>
-        <h3>Plazo de Crédito</h3>
-        <input [(ngModel)]="paymentLapse" [disabled]=isCredit class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
-        <h3>Medio de Pago</h3>
-        <mat-select [(ngModel)]="selectedPaymentMethods" placeholder="Seleccione un Medio de Pago" class=" form-control" [(ngModel)]="paymentMethod" multiple>
-          <mat-option *ngFor="let method of paymentMethods" [value]="method">{{method}}</mat-option>
-        </mat-select>
-        <h3>Código de Moneda</h3>
-        <select [(ngModel)]="selectedCurrency" class="form-control">
-          <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Moneda</option>
-          <option *ngFor="let currency of currencies" (ngValue)="currency">{{currency}}</option>
-        </select>
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
-        <br>
+      <aw-wizard-step stepTitle="Pago">
+        <form [formGroup]="payForm">
+          <div class="form-group">
+            <h3>Condición de Venta</h3>
+            <select formControlName="selectedSellTerm" name="selectedSellTerm" id="selectedSellTerm" class="form-control" (change)="enablePaymentLapse()">
+              <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Condición de Venta</option>
+              <option *ngFor="let term of sellTerms">{{term}}</option>
+            </select>
+            <h3>Plazo de Crédito</h3>
+            <input formControlName="paymentLapse" name="paymentLapse" id="paymentLapse" [disabled]=isCredit class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
+            <h3>Medio de Pago</h3>
+            <mat-select formControlName="selectedPaymentMethods" name="selectedPaymentMethods" id="selectedPaymentMethods" placeholder="Seleccione un Medio de Pago" class=" form-control" [(ngModel)]="paymentMethod" multiple>
+              <mat-option *ngFor="let method of paymentMethods" [value]="method">{{method}}</mat-option>
+            </mat-select>
+            <h3>Código de Moneda</h3>
+            <select formControlName="selectedCurrency" name="selectedCurrency" id="selectedCurrency" class="form-control">
+              <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Moneda</option>
+              <option *ngFor="let currency of currencies" (ngValue)="currency">{{currency}}</option>
+            </select>
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
 
-      <aw-wizard-step stepTitle="Re&#8203;su&#8203;men">
-        <h3>Tipo de Cambio</h3>
-        <input [(ngModel)]="exchangeRate" class="form-control" placeholder="Tipo de Cambio">
-        <h3>Total de Servicios Gravados</h3>
-        <input [(ngModel)]="recordedServices" class="form-control" placeholder="Total de Servicios Gravados">
-        <h3>Total de Servicios Exentos</h3>
-        <input [(ngModel)]="exemptServices" class="form-control" placeholder="Total de Servicios Exentos">
-        <h3>Total de Mercancias Gravadas</h3>
-        <input [(ngModel)]="recordedCommodity" class="form-control" placeholder="Total de Mercancias Gravadas">
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
-        <br>
-      </aw-wizard-step>
-
-      <aw-wizard-step>
-        <h3>Total de Mercancias Exentas</h3>
-        <input [(ngModel)]="exemptCommodity" class="form-control" placeholder="Total de Mercancias Exentas">
-        <h3>Total  Gravado</h3>
-        <input [(ngModel)]="recordedTotal" class="form-control" placeholder="Total  Gravado">
-        <h3>Total Exento</h3>
-        <input [(ngModel)]="exemptTotal" class="form-control" placeholder="Total Exento">
-        <h3>Total Venta</h3>
-        <input [(ngModel)]="totalSell" class="form-control" placeholder="Total Venta">
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
-        <br>
+      <aw-wizard-step stepTitle="Resumen">
+        <form [formGroup]="resumenForm">
+          <div class="form-group">
+            <h3>Tipo de Cambio</h3>
+            <input formControlName="exchangeRate" name="exchangeRate" id="exchangeRate" class="form-control" placeholder="Tipo de Cambio">
+            <h3>Total de Servicios Gravados</h3>
+            <input formControlName="recordedServices" name="recordedServices" id="recordedServices" class="form-control" placeholder="Total de Servicios Gravados">
+            <h3>Total de Servicios Exentos</h3>
+            <input formControlName="exemptServices" name="exemptServices" id="exemptServices" class="form-control" placeholder="Total de Servicios Exentos">
+            <h3>Total de Mercancias Gravadas</h3>
+            <input formControlName="recordedCommodity" name="recordedCommodity" id="recordedCommodity" class="form-control" placeholder="Total de Mercancias Gravadas">
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
 
       <aw-wizard-step>
-        <h3>Total Descuento</h3>
-        <input [(ngModel)]="totalDiscount" class="form-control" placeholder="Total Descuento">
-        <h3>Total de Venta Neta</h3>
-        <input [(ngModel)]="netSell" class="form-control" placeholder="Total de Venta Neta">
-        <h3>Total de Impuesto</h3>
-        <input [(ngModel)]="totalTax" class="form-control" placeholder="Total de Impuesto">
-        <h3>Total Comprobante</h3>
-        <input [(ngModel)]="totalVoucher" class="form-control" placeholder="Total Comprobante">
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
-        <br>
+        <form [formGroup]="resumenForm01">
+          <div class="form-group">
+            <h3>Total de Mercancias Exentas</h3>
+            <input formControlName="exemptCommodity" name="exemptCommodity" id="exemptCommodity" class="form-control" placeholder="Total de Mercancias Exentas">
+            <h3>Total  Gravado</h3>
+            <input formControlName="recordedTotal" name="recordedTotal" id="recordedTotal" class="form-control" placeholder="Total  Gravado">
+            <h3>Total Exento</h3>
+            <input formControlName="exemptTotal" name="exemptTotal" id="exemptTotal" class="form-control" placeholder="Total Exento">
+            <h3>Total Venta</h3>
+            <input formControlName="totalSell" name="totalSell" id="totalSell" class="form-control" placeholder="Total Venta">
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
 
-      <aw-wizard-step stepTitle="Reso&#8203;lu&#8203;ción">
-        <h3>Número de Resolución</h3>
-        <input [(ngModel)]="resolutionNumber" class="form-control" placeholder="Número de resolución DGT XXXX">
-        <h3>Fecha de Resolución</h3>
-        <input [(ngModel)]="resolutionDate" class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Fecha y hora de Resolución">
-        <owl-date-time #dt2></owl-date-time>
-        <h3>Otro Texto</h3>
-        <textarea [(ngModel)]="otherText" class="form-control" placeholder="Elemento opcional"></textarea>
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button class="btn btn btn-primary btn-width nex" (click)="processInvoice(dateCreated, paymentLapse,
-      selectedCurrency, exchangeRate, recordedServices, exemptServices, recordedCommodity, exemptCommodity, recordedTotal,
-      exemptTotal, totalSell, totalDiscount, netSell, totalTax, totalVoucher, resolutionNumber  , resolutionDate, otherText)">Crear Factura</button>
-        <br>
-        <br>
-        <br>
+      <aw-wizard-step>
+        <form [formGroup]="resumenForm02">
+          <div class="form-group">
+            <h3>Total Descuento</h3>
+            <input formControlName="totalDiscount" name="totalDiscount" id="totalDiscount" class="form-control" placeholder="Total Descuento">
+            <h3>Total de Venta Neta</h3>
+            <input formControlName="netSell" name="netSell" id="netSell" class="form-control" placeholder="Total de Venta Neta">
+            <h3>Total de Impuesto</h3>
+            <input formControlName="totalTax" name="totalTax" id="totalTax" class="form-control" placeholder="Total de Impuesto">
+            <h3>Total Comprobante</h3>
+            <input formControlName="totalVoucher" name="totalVoucher" id="totalVoucher" class="form-control" placeholder="Total Comprobante">
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
+      </aw-wizard-step>
+
+      <aw-wizard-step stepTitle="Resolución">
+        <form [formGroup]="resolutionForm">
+          <div class="form-group">
+            <h3>Número de Resolución</h3>
+            <input formControlName="resolutionNumber" name="resolutionNumber" id="resolutionNumber" class="form-control" placeholder="Número de resolución DGT XXXX">
+            <h3>Fecha de Resolución</h3>
+            <input formControlName="resolutionDate" name="resolutionDate" id="resolutionDate" class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Fecha y hora de Resolución">
+            <owl-date-time #dt2></owl-date-time>
+            <h3>Otro Texto</h3>
+            <textarea formControlName="otherText" name="otherText" id="otherText" class="form-control" placeholder="Elemento opcional"></textarea>
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button class="btn btn btn-primary btn-width nex" (click)="processInvoice()">Crear Factura</button>
+          </div>
+        </form>
       </aw-wizard-step>
     </aw-wizard>
   </div>
 </div>
-<br>

@@ -1,10 +1,18 @@
-.checkbox {
-  transform: scale(1.5);
-  display: inline;
-}
-
 .form-control {
+  height: calc(2.25rem + 11px) !important;
   width: 50%;
   display: block;
   margin: 0 auto;
+}
+
+.checkbox {
+  transform: scale(1.5);
+  display: inline;
+  height: 11px !important;
+  margin: 4px;
+  width: 11px;
+}
+
+.error-messages {
+  color: red;
 }

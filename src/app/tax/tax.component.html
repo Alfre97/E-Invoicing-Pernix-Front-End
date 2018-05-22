@@ -1,62 +1,65 @@
 <div class="container-fluid">
   <div class="wizard">
-    <br>
+
     <aw-wizard>
       <aw-wizard-step stepTitle="General">
-        <h3>Código</h3>
-        <select #selectedCodeType class="form-control">
-          <option value="01">Impuesto general sobre las ventas.</option>
-          <option value="02">Impuesto selectivo de consumo.</option>
-          <option value="03">Impuesto ünico a los combustivos.</option>
-          <option value="04">Impuesto especifico de bebidas alcohólicas.</option>
-          <option value="05">Impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador.</option>
-          <option value="06">Impuesto a los productos de tabaco.</option>
-          <option value="07">Servicios.</option>
-          <option value="08">Impuesto general a las Ventas Diplomaticos.</option>
-          <option value="09">Impuesto general sobre Ventas compras autorizadas.</option>
-          <option value="10">Impuesto general sobre las ventas instituciones publicas y otros organismos.</option>
-          <option value="11">Impuesto selectivo de consumo compras autorizadas.</option>
-          <option value="12">Impuesto especifico al Cemento.</option>
-          <option value="98">Otros</option>
-        </select>
-        <h3>Tarifa <span style="font-size: 50%" tooltip="Tarifa del impuesto. Ej: '0.13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-        <input [(ngModel)]="rate" class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46)' placeholder="Tarifa del Impuesto">
-        <h3>Porcentaje <span style="font-size: 50%" tooltip="Porcentaje de la compra exonerado. Ej: '13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-        <input [(ngModel)]="purchasePercentage" maxlength="2" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
-        <br>
-        <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
-        <br>
-        <br>
+        <form [formGroup]="taxeForm01">
+          <div class="form-group">  
+            <h3>Código</h3>
+            <select formControlName="exhonerationAvaible" name="exhonerationAvaible" id="exhonerationAvaible" class="form-control">
+              <option hidden selected disabled value="">Seleccione su tipo de impuesto</option>
+              <option *ngFor="let taxe of taxeList" value="{{ taxe.value }}">{{ taxe.name }}</option>
+            </select>
+            <label class="error-messages" *ngIf="taxeForm01.get('exhonerationAvaible').touched && taxeForm01.get('exhonerationAvaible').hasError('required')">
+                Tipo de Código es requerido.
+            </label>
+            <h3>Tarifa <span style="font-size: 50%" tooltip="Tarifa del impuesto. Ej: '0.13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <input formControlName="rate" name="rate" id="rate" disabled class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46)' placeholder="Tarifa del Impuesto">
+            <h3>Porcentaje <span style="font-size: 50%" tooltip="Porcentaje de la compra exonerado. Ej: '13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <input formControlName="purchasePercentage" name="purchasePercentage" id="purchasePercentage" maxlength="2" (change)="calculateRate()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
+            <label class="error-messages" *ngIf="taxeForm01.get('purchasePercentage').touched && taxeForm01.get('purchasePercentage').hasError('required')">
+               El porcentaje de exoneracion es requerido.
+            </label>
+            <br>
+            <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
+          </div>
+        </form>
       </aw-wizard-step>
+
       <aw-wizard-step stepTitle="Exhoneración">
-        <label>Incluir exhoneración...... </label><input class="checkbox" type="checkbox" [(ngModel)]="exhonerationAvaible">
-        <h3>Fecha de Emisión</h3>
-        <input [(ngModel)]="dateCreated" class="form-control" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Fecha de Emisión">
-        <owl-date-time #dt1></owl-date-time>
-        <h3>Nombre de Institución</h3>
-        <input #institutionName class="form-control" placeholder="Nombre de la institución que emitió exoneración">
-        <h3>Número de Documento</h3>
-        <input #documentNumber class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Número de Documento">
-        <h3>Tipo de Documento</h3>
-        <select #selectedDocumentType class="form-control">
-        <option value="">Seleccione</option>
-        <option value="01">Compras Autorizadas</option>
-        <option value="02">Ventas Exentas a Diplomáticos</option>
-        <option value="03">Orden de Compra (Instituciones Públicas y Otros Organismos)</option>
-        <option value="04">Exenciones Dirección General de Hacienda</option>
-        <option value="05">Zonas Francas</option>
-        <option value="99">Otros</option>
-    </select>
-        <br>
-        <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-        <button (click)="addTax(selectedCodeType.value, purchasePercentage.value,
-        dateCreated, institutionName.value, documentNumber.value, selectedDocumentType.value
-        )" class="nex btn btn-primary">Agregar Impuesto</button>
-        <br>
-        <br>
-        <br>
+        <form [formGroup]="taxeForm02">
+          <div class="form-group">
+            <label>Incluir exhoneración</label>
+              <input formControlName="exhonerationAvaible" name="exhonerationAvaible" id="exhonerationAvaible" class="checkbox form-control" type="checkbox"> 
+            <h3>Fecha de Emisión</h3>
+              <input type="date" formControlName="dateCreated" name="dateCreated" id="dateCreated" class="form-control" placeholder="Fecha de Emisión">
+              <label class="error-messages" *ngIf="taxeForm02.get('dateCreated').touched && taxeForm02.get('dateCreated').hasError('required')">
+                  La fecha de Emision es requerida.
+              </label>
+            <h3>Nombre de Institución</h3>
+              <input formControlName="institutionName" name="institutionName" id="institutionName" class="form-control" placeholder="Nombre de la institución que emitió exoneración">
+              <label class="error-messages" *ngIf="taxeForm02.get('institutionName').touched && taxeForm02.get('institutionName').hasError('required')">
+                  El nombre de la institucion es requerido.
+              </label>
+            <h3>Número de Documento</h3>
+              <input formControlName="documentNumber" name="documentNumber" id="documentNumber" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Número de Documento">
+              <label class="error-messages" *ngIf="taxeForm02.get('documentNumber').touched && taxeForm02.get('documentNumber').hasError('required')">
+                  El numero de documento es requerido.
+              </label>
+            <h3>Tipo de Documento</h3>
+            <select formControlName="selectedDocumentType" name="selectedDocumentType" id="selectedDocumentType" class="form-control">
+              <option hidden disabled selected value="" > Seleccione su documento</option>
+              <option *ngFor="let document of documentType" value="{{document.value}}">{{ document.name }}</option>
+            </select>
+            <label class="error-messages" *ngIf="taxeForm02.get('selectedDocumentType').touched && taxeForm02.get('selectedDocumentType').hasError('required')">
+                El tipo de documento es requerido
+            </label>
+            <br>
+            <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
+            <button (click)="addTax()" type="button" class="btn btn-primary">Agregar Impuesto</button>
+          </div>
+        </form>
       </aw-wizard-step>
     </aw-wizard>
   </div>
 </div>
-<br>
