@@ -24,6 +24,7 @@ import { InvoiceService } from "./invoice/invoice.service";
 import { ReceiverService } from "./receiver/receiver.service";
 import { ServiceService } from "./services/services.service";
 import { TaxService } from "./tax/tax.service";
+import { TooltipModule } from "ngx-tooltip";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { TaxService } from "./tax/tax.service";
     FormsModule,
     MatSelectModule,
     ReactiveFormsModule,
-    ArchwizardModule
+    ArchwizardModule,
+    TooltipModule
   ],
   providers: [CodeService, EmitterService, InvoiceService, ReceiverService, ServiceService, TaxService],
   bootstrap: [AppComponent]

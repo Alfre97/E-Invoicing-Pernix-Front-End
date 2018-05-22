@@ -75,10 +75,6 @@ export class TaxComponent implements OnInit {
   ngOnInit() {
   }
 
-  calculateRate() {
-    this.rate = this.purchasePercentage / 100;
-  }
-
   addTax() {
     if (this.exhonerationAvaible == "true") {
       if (this.taxeForm01.valid || this.taxeForm02.valid) {

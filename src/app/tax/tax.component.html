@@ -13,9 +13,9 @@
             <label class="error-messages" *ngIf="taxeForm01.get('exhonerationAvaible').touched && taxeForm01.get('exhonerationAvaible').hasError('required')">
                 Tipo de Código es requerido.
             </label>
-            <h3>Tarifa</h3>
+            <h3>Tarifa <span style="font-size: 50%" tooltip="Tarifa del impuesto. Ej: '0.13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="rate" name="rate" id="rate" disabled class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46)' placeholder="Tarifa del Impuesto">
-            <h3>Porcentaje</h3>
+            <h3>Porcentaje <span style="font-size: 50%" tooltip="Porcentaje de la compra exonerado. Ej: '13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="purchasePercentage" name="purchasePercentage" id="purchasePercentage" maxlength="2" (change)="calculateRate()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
             <label class="error-messages" *ngIf="taxeForm01.get('purchasePercentage').touched && taxeForm01.get('purchasePercentage').hasError('required')">
                El porcentaje de exoneracion es requerido.

@@ -28,7 +28,7 @@ export class ServiceService {
       amount: service.amount,
       unitOfMeasurementType: service.unitOfMeasurementType,
       unitOfMeasurementName: service.unitOfMeasurementName,
-      comercialUnitMeasurement: service.comercialUnitOfMeasurement,
+      comercialUnitOfMeasurement: service.comercialUnitOfMeasurement,
       detail: service.detail,
       priceByUnit: service.priceByUnit,
       totalAmount: service.totalAmount,
@@ -36,7 +36,7 @@ export class ServiceService {
       discountNature: service.discountNature,
       subTotal: service.subtotal,
       taxList: service.taxList,
-      total: service.totalAmount
+      total: service.total
     };
 
     return this.httpClient.post(route, serviceData)
