@@ -34,7 +34,6 @@ export class TaxService {
       code: tax.code,
       taxTotal: tax.taxTotal,
       rate: tax.rate,
-      service: { id: tax.serviceId },
       date: tax.date,
       taxExonarated: tax.taxExonarated,
       institutionName: tax.institutionName,

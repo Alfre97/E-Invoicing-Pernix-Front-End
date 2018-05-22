@@ -5,25 +5,24 @@
       <aw-wizard-step stepTitle="General">
         <h3>Código</h3>
         <select #selectedCodeType class="form-control">
-          <option value="01">Impuesto General sobre las ventas</option>
-          <option value="02">Impuesto Selectivo de Consumo</option>
-          <option value="03">Impuesto ünico a los combustivos</option>
-          <option value="04">Impuesto especifico de bebidas alcohólicas</option>
-          <option value="05">Impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador</option>
-          <option value="06">Impuesto a los productos de tabaco</option>
-          <option value="07">Servicios</option>
-          <option value="08">Impuesto General a las Ventas Diplomaticos</option>
-          <option value="09">Impuesto General sobre Ventas compras autorizadas</option>
-          <option value="10">Impuesto General sobre las ventas instituciones publicas y otros organismos</option>
-          <option value="11">Impuesto Selectivo de consumo compras autorizadas</option>
-          <option value="12">Impuesto Especifico al Cemento</option>
+          <option value="01">Impuesto general sobre las ventas.</option>
+          <option value="02">Impuesto selectivo de consumo.</option>
+          <option value="03">Impuesto ünico a los combustivos.</option>
+          <option value="04">Impuesto especifico de bebidas alcohólicas.</option>
+          <option value="05">Impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador.</option>
+          <option value="06">Impuesto a los productos de tabaco.</option>
+          <option value="07">Servicios.</option>
+          <option value="08">Impuesto general a las Ventas Diplomaticos.</option>
+          <option value="09">Impuesto general sobre Ventas compras autorizadas.</option>
+          <option value="10">Impuesto general sobre las ventas instituciones publicas y otros organismos.</option>
+          <option value="11">Impuesto selectivo de consumo compras autorizadas.</option>
+          <option value="12">Impuesto especifico al Cemento.</option>
           <option value="98">Otros</option>
-          <option value="99">Otros</option>
         </select>
-        <h3>Tarifa</h3>
-        <input [(ngModel)]="rate" disabled class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46)' placeholder="Tarifa del Impuesto">
-        <h3>Porcentaje</h3>
-        <input [(ngModel)]="purchasePercentage" maxlength="2" (change)="calculateRate()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
+        <h3>Tarifa <span style="font-size: 50%" tooltip="Tarifa del impuesto. Ej: '0.13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+        <input [(ngModel)]="rate" class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46)' placeholder="Tarifa del Impuesto">
+        <h3>Porcentaje <span style="font-size: 50%" tooltip="Porcentaje de la compra exonerado. Ej: '13'" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+        <input [(ngModel)]="purchasePercentage" maxlength="2" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Porcentaje de la compra exonerado">
         <br>
         <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
         <br>

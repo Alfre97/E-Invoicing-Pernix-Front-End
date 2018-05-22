@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent implements OnInit {
-  units = Units;
+  units: Unit[] = Units;
   private taxes: Tax[];
   private codes: Code[];
   selectedTaxes: Tax[];
@@ -57,6 +57,7 @@ export class ServicesComponent implements OnInit {
 
   lineTotal() {
     this.totalAmount = this.amount * this.unitPrice;
+    this.subTotal();
   }
 
   showSuccess(message: string) {
@@ -108,8 +109,12 @@ export class ServicesComponent implements OnInit {
     );
   }
 
+  refresh(): void {
+    window.location.reload();
+  }
+
   createService(lineNumber: string, businessMeasure: string, detail: string, discountNature: string) {
-    if (lineNumber != '' && businessMeasure != '' && detail != '' && discountNature != ''
+    if (lineNumber != '' && businessMeasure != '' && detail != ''
       && this.selectedTaxes != undefined && this.selectedCodes != undefined
       && this.amount != 0 && this.selectedUnit.description != '' && this.selectedUnit.code != ''
       && this.lineTotalAmount != 0 && this.totalAmount != 0
@@ -131,6 +136,8 @@ export class ServicesComponent implements OnInit {
       service.subtotal = this.subtotal;
       service.taxList = this.selectedTaxes;
       service.total = this.lineTotalAmount;
+      this.showSuccess("Servicio creado.");
+      this.refresh();
 
       this.serviceService.addService(service).subscribe(
         response => {
@@ -140,7 +147,7 @@ export class ServicesComponent implements OnInit {
           //Add action whe the Request send a bad response
         }
       );
-    } else if (lineNumber == '' || businessMeasure == '' || detail == '' || discountNature == ''
+    } else if (lineNumber == '' || businessMeasure == '' || detail == ''
       || this.selectedTaxes == undefined || this.selectedCodes == undefined
       || this.selectedUnit.description == '' || this.selectedUnit.code != '' || this.amount == 0
       || this.lineTotalAmount == 0 || this.totalAmount == 0

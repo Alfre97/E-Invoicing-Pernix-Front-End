@@ -25,10 +25,6 @@ export class TaxComponent implements OnInit {
   ngOnInit() {
   }
 
-  calculateRate() {
-    this.rate = this.purchasePercentage / 100;
-  }
-
   addTax(selectedCodeType: String, dateCreated: String,
     institutionName: String, documentNumber: String, selectedDocumentType: String) {
     if (this.exhonerationAvaible == "true") {

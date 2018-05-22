@@ -13,7 +13,8 @@
         <input [(ngModel)]="amount" (change)="lineTotal()" class="form-control noAuto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Cantidad">
         <h3>Unidad de Medida</h3>
         <select [(ngModel)]="selectedUnit" class="form-control">
-        <option *ngFor="let unit of units" [value]="unit.code">{{unit.description}}</option>
+        <option disabled  [value]="selectUndefinedOptionValue">Seleccione una unidad</option>
+        <option *ngFor="let unit of units" [ngValue]="unit">{{unit.description}} - {{unit.code}}</option>
       </select>
         <br>
         <button class="btn btn-primary" type="button" awNextStep>Siguiente ></button>
