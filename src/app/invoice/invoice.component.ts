@@ -44,14 +44,14 @@ export class InvoiceComponent implements OnInit {
   resumenForm01;
   resumenForm02;
   resolutionForm;
-  
+
   constructor(private emitterService: EmitterService,
-              private receiverService: ReceiverService,
-              private serviceService: ServiceService,
-              private invoiceService: InvoiceService,
-              private formBuilder: FormBuilder,
-              public toastr: ToastsManager,
-              vcr: ViewContainerRef) {
+    private receiverService: ReceiverService,
+    private serviceService: ServiceService,
+    private invoiceService: InvoiceService,
+    private formBuilder: FormBuilder,
+    public toastr: ToastsManager,
+    vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -232,13 +232,12 @@ export class InvoiceComponent implements OnInit {
       invoice.service = this.selectedService;
       this.invoiceService.sendInvoice(invoice).subscribe(
         response => {
-          //Add action whe the Request send a good response
+          this.showSuccess();
         },
         error => {
-          //Add action whe the Request send a bad response
+          this.showError();
         }
       );
-      this.showSuccess();
     } else {
       this.showError();
       this.validateAllFormFields(this.generalForm);

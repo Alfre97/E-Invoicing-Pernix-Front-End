@@ -12,20 +12,20 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class CodeComponent {
 
-  codesList: any = [{value: 1, name: 'Código del producto del vendedor'},
-                    {value: 2, name: 'Código del producto del comprador'},
-                    {value: 3, name: 'Código del producto asignado por la industria'},
-                    {value: 4, name: 'Código de uso interno'},
-                    {value: 99, name: 'Otros'}];
+  codesList: any = [{ value: 1, name: 'Código del producto del vendedor' },
+  { value: 2, name: 'Código del producto del comprador' },
+  { value: 3, name: 'Código del producto asignado por la industria' },
+  { value: 4, name: 'Código de uso interno' },
+  { value: 99, name: 'Otros' }];
 
   codeForm;
   selectedCodeType;
   code;
 
   constructor(private codeService: CodeService,
-              public toastr: ToastsManager,
-              public formBuilder: FormBuilder,
-              vcr: ViewContainerRef) {
+    public toastr: ToastsManager,
+    public formBuilder: FormBuilder,
+    vcr: ViewContainerRef) {
 
     this.toastr.setRootViewContainerRef(vcr);
 
@@ -40,10 +40,10 @@ export class CodeComponent {
   }
 
   addCode() {
-    if(this.codeForm.valid) {
+    if (this.codeForm.valid) {
       let cod: Code = new Code();
-      cod.codeType = this.code.controls['selectedCodeType'].value;
-      cod.code = this.code.controls['code'].value;
+      cod.codeType = this.codeForm.controls['selectedCodeType'].value;
+      cod.code = this.codeForm.controls['code'].value;
       this.codeService.addCode(cod).subscribe(
         response => {
           this.showSuccess();

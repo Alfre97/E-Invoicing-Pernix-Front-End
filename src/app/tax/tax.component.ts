@@ -12,26 +12,26 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class TaxComponent implements OnInit {
 
-  taxeList: any = [{value: 1, name: 'Impuesto General sobre las ventas' },
-                   {value: 2, name: 'Impuesto Selectivo de Consumo' },
-                   {value: 3, name: 'Impuesto ünico a los combustivos' },
-                   {value: 4, name: 'Impuesto especifico de bebidas alcohólicas' },
-                   {value: 5, name: 'Impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador' },
-                   {value: 6, name: 'Impuesto a los productos de tabaco' },
-                   {value: 7, name: 'Servicios' },
-                   {value: 8, name: 'Impuesto General a las Ventas Diplomaticos' },
-                   {value: 9, name: 'Impuesto General sobre Ventas compras autorizadas' },
-                   {value: 10, name: 'Impuesto General sobre las ventas instituciones publicas y otros organismos' },
-                   {value: 11, name: 'Impuesto Selectivo de consumo compras autorizadas' },
-                   {value: 12, name: 'Impuesto Especifico al Cemento' },
-                   {value: 99, name: 'Otros'}];
+  taxeList: any = [{ value: 1, name: 'Impuesto General sobre las ventas' },
+  { value: 2, name: 'Impuesto Selectivo de Consumo' },
+  { value: 3, name: 'Impuesto ünico a los combustivos' },
+  { value: 4, name: 'Impuesto especifico de bebidas alcohólicas' },
+  { value: 5, name: 'Impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador' },
+  { value: 6, name: 'Impuesto a los productos de tabaco' },
+  { value: 7, name: 'Servicios' },
+  { value: 8, name: 'Impuesto General a las Ventas Diplomaticos' },
+  { value: 9, name: 'Impuesto General sobre Ventas compras autorizadas' },
+  { value: 10, name: 'Impuesto General sobre las ventas instituciones publicas y otros organismos' },
+  { value: 11, name: 'Impuesto Selectivo de consumo compras autorizadas' },
+  { value: 12, name: 'Impuesto Especifico al Cemento' },
+  { value: 99, name: 'Otros' }];
 
-  documentType: any = [{value: 1, name: 'Compras Autorizadas'},
-                       {value: 2, name: 'Ventas Exentas a Diplomáticos'},
-                       {value: 3, name: 'Orden de Compra (Instituciones Públicas y Otros Organismos)'},
-                       {value: 4, name: 'Extenciones Dirección General de Hacienda'},
-                       {value: 5, name: 'Zonas Francas'},
-                       {value: 99, name: 'Otros'}];
+  documentType: any = [{ value: 1, name: 'Compras Autorizadas' },
+  { value: 2, name: 'Ventas Exentas a Diplomáticos' },
+  { value: 3, name: 'Orden de Compra (Instituciones Públicas y Otros Organismos)' },
+  { value: 4, name: 'Extenciones Dirección General de Hacienda' },
+  { value: 5, name: 'Zonas Francas' },
+  { value: 99, name: 'Otros' }];
   rate = 0.0;
   purchasePercentage = 0;
   exhonerationAvaible = "";
@@ -40,9 +40,9 @@ export class TaxComponent implements OnInit {
   taxeForm02;
 
   constructor(private taxService: TaxService,
-              public toastr: ToastsManager,
-              public formBuilder: FormBuilder,
-              vcr: ViewContainerRef) {
+    public toastr: ToastsManager,
+    public formBuilder: FormBuilder,
+    vcr: ViewContainerRef) {
 
     this.taxeForm01 = formBuilder.group({
       exhonerationAvaible: new FormControl('', [
@@ -54,7 +54,7 @@ export class TaxComponent implements OnInit {
       ])
     });
 
-    this.taxeForm02= formBuilder.group({
+    this.taxeForm02 = formBuilder.group({
       exhonerationAvaible: new FormControl('', []),
       dateCreated: new FormControl('', [
         Validators.required
@@ -69,7 +69,7 @@ export class TaxComponent implements OnInit {
         Validators.required
       ])
     });
-    this.toastr.setRootViewContainerRef (vcr);
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
@@ -88,13 +88,12 @@ export class TaxComponent implements OnInit {
         tax.documentType = this.taxeForm02.controls['selectedDocumentType'].value;
         this.taxService.addTax(tax).subscribe(
           response => {
-            //Add action whe the Request send a good response
+            this.showSuccess();
           },
           error => {
-            //Add action whe the Request send a bad response
+            this.showError();
           }
         );
-        this.showSuccess();
       } else {
         this.validateAllFormFields(this.taxeForm01);
         this.validateAllFormFields(this.taxeForm02);

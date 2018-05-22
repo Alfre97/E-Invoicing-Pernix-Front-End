@@ -17,6 +17,10 @@
   margin: 0 auto;
   color: black;
   text-align: center;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 @media screen and (max-width: 600px) {
@@ -33,6 +37,7 @@
 .prev {
   float: left;
   margin-left: 10%;
+  margin-bottom: 10%;
 }
 
 .main-value {
