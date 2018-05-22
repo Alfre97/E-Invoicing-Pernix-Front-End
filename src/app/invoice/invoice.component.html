@@ -4,19 +4,19 @@
       <aw-wizard-step stepTitle="General">
         <form [formGroup]="generalForm">
           <div class="form-group">
-            <h3>Fecha de Emisión</h3>
+            <h3>Fecha de Emisión <span style="font-size: 50%" tooltip="Fecha en la que se emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="dateCreated" name="dateCreated" id="dateCreated" type="date" class="form-control" placeholder="Fecha de Emisión">
-            <h3>Emisor</h3>
+            <h3>Emisor <span style="font-size: 50%" tooltip="Persona, previamente agregada, que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <select formControlName="selectedEmitter" name="selectedEmitter" id="selectedEmitter" class="form-control">
               <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Emisor</option>
               <option *ngFor="let emitter of emitters" [ngValue]="emitter"> {{emitter.comercialName}}</option>
             </select>
-            <h3>Receptor</h3>
+            <h3>Receptor <span style="font-size: 50%" tooltip="Persona, previamente agregada, que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <select formControlName="selectedReceiver" name="selectedReceiver" id="selectedReceiver" class="form-control">
               <option disabled  [value]="selectUndefinedOptionValue">Seleccione un Receptor</option>
               <option *ngFor="let receiver of receivers" [ngValue]="receiver"> {{receiver.comercialName}}  </option>
             </select>
-            <h3>Servicio</h3>
+            <h3>Servicio <span style="font-size: 50%" tooltip="Servicio o mercancia previamente agregado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <mat-select formControlName="selectedService" name="selectedService" id="selectedService" placeholder="Seleccione Servicios" class="form-control" multiple>
               <mat-option *ngFor="let service of services" [value]="service">{{service.lineNumber}}-{{service.detail}}</mat-option>
             </mat-select>
@@ -29,18 +29,18 @@
       <aw-wizard-step stepTitle="Pago">
         <form [formGroup]="payForm">
           <div class="form-group">
-            <h3>Condición de Venta</h3>
+            <h3>Condición de Venta <span style="font-size: 50%" tooltip="Tipo de condición en la que se realiza la venta." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <select formControlName="selectedSellTerm" name="selectedSellTerm" id="selectedSellTerm" class="form-control" (change)="enablePaymentLapse()">
               <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Condición de Venta</option>
               <option *ngFor="let term of sellTerms">{{term}}</option>
             </select>
-            <h3>Plazo de Crédito</h3>
+            <h3>Plazo de Crédito <span style="font-size: 50%" tooltip="Plazo, en días, para cancelar la venta si la condición es a crédito." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="paymentLapse" name="paymentLapse" id="paymentLapse" [disabled]=isCredit class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Obligatotio si la condición de venta es a crédito">
-            <h3>Medio de Pago</h3>
+            <h3>Medio de Pago <span style="font-size: 50%" tooltip="Seleccione medios monetarios a utilizar para cancelar la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <mat-select formControlName="selectedPaymentMethods" name="selectedPaymentMethods" id="selectedPaymentMethods" placeholder="Seleccione un Medio de Pago" class=" form-control" [(ngModel)]="paymentMethod" multiple>
               <mat-option *ngFor="let method of paymentMethods" [value]="method">{{method}}</mat-option>
             </mat-select>
-            <h3>Código de Moneda</h3>
+            <h3>Código de Moneda <span style="font-size: 50%" tooltip="Codigo de la moneda en la que se cancela la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <select formControlName="selectedCurrency" name="selectedCurrency" id="selectedCurrency" class="form-control">
               <option disabled  [value]="selectUndefinedOptionValue">Seleccione una Moneda</option>
               <option *ngFor="let currency of currencies" (ngValue)="currency">{{currency}}</option>
@@ -55,13 +55,13 @@
       <aw-wizard-step stepTitle="Resumen">
         <form [formGroup]="resumenForm">
           <div class="form-group">
-            <h3>Tipo de Cambio</h3>
+            <h3>Tipo de Cambio <span style="font-size: 50%" tooltip="Valor, en Colones, de la moneda seleccionada." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="exchangeRate" name="exchangeRate" id="exchangeRate" class="form-control" placeholder="Tipo de Cambio">
-            <h3>Total de Servicios Gravados</h3>
+            <h3>Total de Servicios Gravados <span style="font-size: 50%" tooltip="Total de los servicios gravados con IV." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="recordedServices" name="recordedServices" id="recordedServices" class="form-control" placeholder="Total de Servicios Gravados">
-            <h3>Total de Servicios Exentos</h3>
+            <h3>Total de Servicios Exentos<span style="font-size: 50%" tooltip="Total de los servicios exentos de IV." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="exemptServices" name="exemptServices" id="exemptServices" class="form-control" placeholder="Total de Servicios Exentos">
-            <h3>Total de Mercancias Gravadas</h3>
+            <h3>Total de Mercancias Gravadas <span style="font-size: 50%" tooltip="Total de las mercancias gravadas con IV." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="recordedCommodity" name="recordedCommodity" id="recordedCommodity" class="form-control" placeholder="Total de Mercancias Gravadas">
             <br>
             <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
@@ -73,13 +73,13 @@
       <aw-wizard-step>
         <form [formGroup]="resumenForm01">
           <div class="form-group">
-            <h3>Total de Mercancias Exentas</h3>
+            <h3>Total de Mercancias Exentas <span style="font-size: 50%" tooltip="Total de mercancias exentas de IV." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="exemptCommodity" name="exemptCommodity" id="exemptCommodity" class="form-control" placeholder="Total de Mercancias Exentas">
-            <h3>Total  Gravado</h3>
+            <h3>Total Gravado <span style="font-size: 50%" tooltip="Total de mercacias y servicios gravados con IV." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="recordedTotal" name="recordedTotal" id="recordedTotal" class="form-control" placeholder="Total  Gravado">
-            <h3>Total Exento</h3>
+            <h3>Total Exento <span style="font-size: 50%" tooltip="Total de mercancias y servicios exentos de IV." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="exemptTotal" name="exemptTotal" id="exemptTotal" class="form-control" placeholder="Total Exento">
-            <h3>Total Venta</h3>
+            <h3>Total Venta <span style="font-size: 50%" tooltip="Total venta: Total gravado más Total exento." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="totalSell" name="totalSell" id="totalSell" class="form-control" placeholder="Total Venta">
             <br>
             <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
@@ -91,13 +91,13 @@
       <aw-wizard-step>
         <form [formGroup]="resumenForm02">
           <div class="form-group">
-            <h3>Total Descuento</h3>
+            <h3>Total Descuento <span style="font-size: 50%" tooltip="Total descuento: Suma de todos los descuentos de las mercancias o servicios prestados." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="totalDiscount" name="totalDiscount" id="totalDiscount" class="form-control" placeholder="Total Descuento">
-            <h3>Total de Venta Neta</h3>
+            <h3>Total de Venta Neta <span style="font-size: 50%" tooltip="Total venta neta: Total venta menos total descuento." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="netSell" name="netSell" id="netSell" class="form-control" placeholder="Total de Venta Neta">
-            <h3>Total de Impuesto</h3>
+            <h3>Total de Impuesto <span style="font-size: 50%" tooltip="Total impuesto: Sumo de todos los impuestos de las mercancias o servicios prestados." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="totalTax" name="totalTax" id="totalTax" class="form-control" placeholder="Total de Impuesto">
-            <h3>Total Comprobante</h3>
+            <h3>Total Comprobante <span style="font-size: 50%" tooltip="Total comprobante: Total venta neta mas total impuesto." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="totalVoucher" name="totalVoucher" id="totalVoucher" class="form-control" placeholder="Total Comprobante">
             <br>
             <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
@@ -109,12 +109,12 @@
       <aw-wizard-step stepTitle="Resolución">
         <form [formGroup]="resolutionForm">
           <div class="form-group">
-            <h3>Número de Resolución</h3>
+            <h3>Número de Resolución <span style="font-size: 50%" tooltip="Numero de resolución DGTXXXX." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="resolutionNumber" name="resolutionNumber" id="resolutionNumber" class="form-control" placeholder="Número de resolución DGT XXXX">
-            <h3>Fecha de Resolución</h3>
+            <h3>Fecha de Resolución <span style="font-size: 50%" tooltip="La fecha y hora de resolución. DD-MM-YYYY HH:MM:SS." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="resolutionDate" name="resolutionDate" id="resolutionDate" class="form-control" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Fecha y hora de Resolución">
             <owl-date-time #dt2></owl-date-time>
-            <h3>Otro Texto</h3>
+            <h3>Otro Texto <span style="font-size: 50%" tooltip="Elemento opcional para almacenar texto." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <textarea formControlName="otherText" name="otherText" id="otherText" class="form-control" placeholder="Elemento opcional"></textarea>
             <br>
             <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>

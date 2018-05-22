@@ -11,7 +11,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class EmitterComponent implements OnInit {
 
-  identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
+  public identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
   public provinces = ['San Jose', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'];
   public SJCantons = ['San José', 'Escazú', 'Desamparados', 'Puriscal', 'Tarrazú', 'Aserrí', 'Mora', 'Goicoechea',
     'Santa Ana', 'Alajuelita', 'Vázquez de Coronado', 'Acosta', 'Tibás', 'Moravia', 'Montes de Oca', 'Turrubares', 'Dota', 'Curridabat', 'Pérez Zeledón', 'León Cortés'];
@@ -33,9 +33,9 @@ export class EmitterComponent implements OnInit {
   faxForm;
 
   constructor(private emitterService: EmitterService,
-              public toastr: ToastsManager,
-              public formBuilder: FormBuilder,
-              vcr: ViewContainerRef) {
+    public toastr: ToastsManager,
+    public formBuilder: FormBuilder,
+    vcr: ViewContainerRef) {
 
     this.generalForm = formBuilder.group({
       receiverName: new FormControl('', [

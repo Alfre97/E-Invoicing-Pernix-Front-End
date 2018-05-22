@@ -3,15 +3,15 @@
     <br>
     <aw-wizard>
       <aw-wizard-step stepTitle="General">
-        <h3>Número de línea</h3>
+        <h3>Número de línea <span style="font-size: 50%" tooltip="Número de línea del servicio o mercancia prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input #lineNumber class="form-control" placeholder="Numero de linea">
-        <h3>Codigos</h3>
+        <h3>Códigos <span style="font-size: 50%" tooltip="Seleccione los códigos que previamente creo para el servicio o mercancia." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <mat-select placeholder="Seleccione Codigos" [(ngModel)]="selectedCodes" class="form-control" multiple>
           <mat-option *ngFor="let code of codes" [value]="code">Tipo: {{code.codeType}} Codigo: {{code.code}}</mat-option>
         </mat-select>
-        <h3>Cantidad</h3>
+        <h3>Cantidad <span style="font-size: 50%" tooltip="Cantidad de servicios o mercancias prestadas." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input [(ngModel)]="amount" (change)="lineTotal()" class="form-control noAuto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Cantidad">
-        <h3>Unidad de Medida</h3>
+        <h3>Unidad de Medida <span style="font-size: 50%" tooltip="Unidad de medida de la mercancia o servicio prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <select [(ngModel)]="selectedUnit" class="form-control">
         <option disabled  [value]="selectUndefinedOptionValue">Seleccione una unidad</option>
         <option *ngFor="let unit of units" [ngValue]="unit">{{unit.description}} - {{unit.code}}</option>
@@ -23,15 +23,15 @@
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="Detalle">
-        <h3>Unidad de Medida Comercial</h3>
+        <h3>Unidad de Medida Comercial <span style="font-size: 50%" tooltip="Unidad de medida, usada de forma comercial, de la mercancia o servicio prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input #businessMeasure class="form-control" placeholder="Unidad de Medida Comercial">
-        <h3>Impuesto</h3>
+        <h3>Impuesto <span style="font-size: 50%" tooltip="Seleccione los impuestos que previamente creo para el servicio o mercancia prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <mat-select placeholder="Seleccione Impuestos" (change)="calculateLineTotalAmount()" [(ngModel)]="selectedTaxes" class="form-control noAuto" multiple>
           <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}}% Institucion: {{tax.institutionName}}</mat-option>
         </mat-select>
-        <h3>Detalle</h3>
+        <h3>Detalle <span style="font-size: 50%" tooltip="Descripción de la mercancia o servicio prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input #detail class="form-control noAuto" placeholder="Detalle del Servicio">
-        <h3>Precio Unitario</h3>
+        <h3>Precio Unitario <span style="font-size: 50%" tooltip="Precio por servicio o unidad mercantil prestada." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input [(ngModel)]="unitPrice" (change)="lineTotal()" class="form-control noAuto" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Precio Unitario">
         <br>
         <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
@@ -42,13 +42,13 @@
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="Monto">
-        <h3>Monto</h3>
+        <h3>Monto <span style="font-size: 50%" tooltip="Monto del servicio: Cantidad por Precio Unitario." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input [(ngModel)]="totalAmount" disabled class="form-control" placeholder="Monto Total">
-        <h3>Monto Descuento</h3>
+        <h3>Monto Descuento <span style="font-size: 50%" tooltip="Monto del descuento para el servicio o mercancia prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input [(ngModel)]="discount" (change)="subTotal()" class="form-control " onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Descuento">
-        <h3>Naturaleza del Descuento</h3>
+        <h3>Naturaleza del Descuento <span style="font-size: 50%" tooltip="Razón del descuento." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input #discountNature (change)="calculateLineTotalAmount()" class="form-control " onkeypress='return event.charCode > 57 || event.charCode == 32' placeholder="Descuento">
-        <h3>Subtotal</h3>
+        <h3>Subtotal <span style="font-size: 50%" tooltip="Subtotal: Monto menos Descuento." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input [(ngModel)]="subtotal" disabled (change)="calculateLineTotalAmount()" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Subtotal">
         <br>
         <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
@@ -59,7 +59,7 @@
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="Total">
-        <h3>Monto Total</h3>
+        <h3>Monto Total <span style="font-size: 50%" tooltip="Monto total: Subtotal más Impuestos." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input [(ngModel)]="lineTotalAmount" disabled class="form-control main-value" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Total Línea">
         <br>
         <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
