@@ -1,5 +1,10 @@
 .form-control {
+  height: calc(2.25rem + 11px) !important;
   width: 50%;
   display: block;
   margin: 0 auto;
+}
+
+.error-messages {
+  color: red;
 }

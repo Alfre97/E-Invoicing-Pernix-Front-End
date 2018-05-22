@@ -2,6 +2,7 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Code } from '../models/Code.model';
 import { CodeService } from './code.service';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-code',
@@ -11,17 +12,38 @@ import { CodeService } from './code.service';
 })
 export class CodeComponent {
 
+  codesList: any = [{value: 1, name: 'Código del producto del vendedor'},
+                    {value: 2, name: 'Código del producto del comprador'},
+                    {value: 3, name: 'Código del producto asignado por la industria'},
+                    {value: 4, name: 'Código de uso interno'},
+                    {value: 99, name: 'Otros'}];
+
+  codeForm;
+  selectedCodeType;
+  code;
+
   constructor(private codeService: CodeService,
-    public toastr: ToastsManager,
-    vcr: ViewContainerRef) {
+              public toastr: ToastsManager,
+              public formBuilder: FormBuilder,
+              vcr: ViewContainerRef) {
+
     this.toastr.setRootViewContainerRef(vcr);
+
+    this.codeForm = formBuilder.group({
+      selectedCodeType: new FormControl('', [
+        Validators.required
+      ]),
+      code: new FormControl('', [
+        Validators.required
+      ])
+    });
   }
 
-  addCode(selectedCodeType: String, code: String) {
-    if (selectedCodeType != '' && code != '') {
+  addCode() {
+    if(this.codeForm.valid) {
       let cod: Code = new Code();
-      cod.codeType = selectedCodeType;
-      cod.code = code;
+      cod.codeType = this.code.controls['selectedCodeType'].value;
+      cod.code = this.code.controls['code'].value;
       this.codeService.addCode(cod).subscribe(
         response => {
           this.showSuccess();
@@ -30,9 +52,20 @@ export class CodeComponent {
           this.showError();
         }
       );
-    } else if (selectedCodeType != '' || code != '') {
-      this.showWarning();
+    } else {
+      this.validateAllFormFields();
     }
+  }
+
+  validateAllFormFields() {
+    Object.keys(this.codeForm.controls).forEach(field => {
+      const control = this.codeForm.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields();
+      }
+    });
   }
 
   showSuccess() {

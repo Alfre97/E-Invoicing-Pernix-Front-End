@@ -8,6 +8,7 @@ import { Invoice } from '../models/Invoice.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { EmitterService } from '../emitter/emitter.service';
 import { ReceiverService } from '../receiver/receiver.service';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-invoice',
@@ -36,20 +37,113 @@ export class InvoiceComponent implements OnInit {
   private sellTerms = ['Contado', 'Crédito', 'Consignación', 'Apartado', 'Arrendamiento con opción de compra', 'Arrendamiento en función financiera', 'Otros'];
   private paymentMethods = ['Efectivo', 'Tarjeta', 'Cheque', 'Transferencia - Depósito bancario', 'Recaudado por terceros', 'Otros'];
 
+  generalForm;
+  payForm;
+  resumenForm;
+  resumenForm01;
+  resumenForm02;
+  resolutionForm;
+  
   constructor(private emitterService: EmitterService,
-    private receiverService: ReceiverService,
-    private serviceService: ServiceService,
-    private invoiceService: InvoiceService,
-    public toastr: ToastsManager,
-    vcr: ViewContainerRef) {
+              private receiverService: ReceiverService,
+              private serviceService: ServiceService,
+              private invoiceService: InvoiceService,
+              private formBuilder: FormBuilder,
+              public toastr: ToastsManager,
+              vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
+    this.createForms();
     let services = this.getServices();
     let emitters = this.getEmitters();
     let receivers = this.getReceivers();
     this.isCredit = true;
+  }
+
+  createForms() {
+    this.generalForm = this.formBuilder.group({
+      dateCreated: new FormControl('', [
+        Validators.required
+      ]),
+      selectedEmitter: new FormControl('', [
+        Validators.required
+      ]),
+      selectedReceiver: new FormControl('', [
+        Validators.required
+      ]),
+      selectedService: new FormControl('', [
+        Validators.required
+      ])
+    });
+    this.payForm = this.formBuilder.group({
+      selectedSellTerm: new FormControl('', [
+        Validators.required
+      ]),
+      paymentLapse: new FormControl('', [
+        Validators.required
+      ]),
+      selectedPaymentMethods: new FormControl('', [
+        Validators.required
+      ]),
+      selectedCurrency: new FormControl('', [
+        Validators.required
+      ])
+    });
+    this.resumenForm = this.formBuilder.group({
+      exchangeRate: new FormControl('', [
+        Validators.required
+      ]),
+      recordedServices: new FormControl('', [
+        Validators.required
+      ]),
+      exemptServices: new FormControl('', [
+        Validators.required
+      ]),
+      recordedCommodity: new FormControl('', [
+        Validators.required
+      ])
+    });
+    this.resumenForm01 = this.formBuilder.group({
+      exemptCommodity: new FormControl('', [
+        Validators.required
+      ]),
+      recordedTotal: new FormControl('', [
+        Validators.required
+      ]),
+      exemptTotal: new FormControl('', [
+        Validators.required
+      ]),
+      totalSell: new FormControl('', [
+        Validators.required
+      ])
+    });
+    this.resumenForm02 = this.formBuilder.group({
+      totalDiscount: new FormControl('', [
+        Validators.required
+      ]),
+      netSell: new FormControl('', [
+        Validators.required
+      ]),
+      totalTax: new FormControl('', [
+        Validators.required
+      ]),
+      totalVoucher: new FormControl('', [
+        Validators.required
+      ])
+    });
+    this.resolutionForm = this.formBuilder.group({
+      resolutionNumber: new FormControl('', [
+        Validators.required
+      ]),
+      resolutionDate: new FormControl('', [
+        Validators.required
+      ]),
+      otherText: new FormControl('', [
+        Validators.required
+      ])
+    });
   }
 
   enablePaymentLapse() {
@@ -66,18 +160,6 @@ export class InvoiceComponent implements OnInit {
 
   showError() {
     this.toastr.error('Factura no creada!', 'Oops');
-  }
-
-  showWarning() {
-    this.toastr.warning('Llene todos los campos.', 'Alerta');
-  }
-
-  showInfo() {
-    this.toastr.info('Factura creada pero no enviada.', 'Info');
-  }
-
-  showCustom() {
-    this.toastr.custom('<span style="color: red">Message in red.</span>', null, { enableHTML: true });
   }
 
   getServices() {
@@ -115,32 +197,29 @@ export class InvoiceComponent implements OnInit {
     );
   }
 
-  processInvoice(dateCreated: String, paymentLapse: String, selectedCurrency: String, exchangeRate: String,
-    recordedServices: String, exemptServices: String, recordedCommodity: String, exemptCommodity: String, recordedTotal: String, exemptTotal: String,
-    totalSell: String, totalDiscount: String, netSell: String, totalTax: String, totalVoucher: String, resolutionNumber: String, resolutionDate: String,
-    otherText: String) {
-    if ((resolutionNumber != '' && resolutionNumber != undefined) && (resolutionDate != '' && resolutionDate != undefined) && (otherText != '' && otherText != undefined)) {
+  processInvoice() {
+    if (this.generalForm.valid && this.payForm.valid && this.resumenForm.valid && this.resumenForm01 && this.resumenForm02.valid && this.resolutionForm.valid) {
       let invoice: Invoice = new Invoice();
-      invoice.dateCreated = dateCreated;
-      invoice.sellTerm = this.selectedSellTerm;
-      invoice.paymentLapse = paymentLapse;
-      invoice.paymentMethod = this.selectedPaymentMethods;
-      invoice.selectedCurrency = selectedCurrency;
-      invoice.exchangeRate = exchangeRate;
-      invoice.recordedServices = recordedServices;
-      invoice.exemptServices = exemptServices;
-      invoice.recordedCommodity = recordedCommodity;
-      invoice.exemptCommodity = exemptCommodity;
-      invoice.recordedTotal = recordedTotal;
-      invoice.exemptTotal = exemptTotal;
-      invoice.totalSell = totalSell;
-      invoice.totalDiscount = totalDiscount;
-      invoice.netSell = netSell;
-      invoice.totalTax = totalTax;
-      invoice.totalVoucher = totalVoucher;
-      invoice.resolutionNumber = resolutionNumber;
-      invoice.resolutionDate = resolutionDate;
-      invoice.otherText = otherText;
+      invoice.dateCreated = this.generalForm.controls['dateCreated'].value;
+      invoice.sellTerm = this.payForm.controls['selectedSellTerm'].value;
+      invoice.paymentLapse = this.payForm.controls['paymentLapse'].value;
+      invoice.paymentMethod = this.payForm.controls['selectedPaymentMethods'].value;
+      invoice.selectedCurrency = this.payForm.controls['selectedPaymentMethods'].value;
+      invoice.exchangeRate = this.resumenForm.controls['exchangeRate'].value;
+      invoice.recordedServices = this.resumenForm.controls['recordedServices'].value;
+      invoice.exemptServices = this.resumenForm.controls['exemptServices'].value;
+      invoice.recordedCommodity = this.resumenForm.controls['recordedCommodity'].value;
+      invoice.exemptCommodity = this.resumenForm01.controls['exemptCommodity'].value;
+      invoice.recordedTotal = this.resumenForm01.controls['recordedTotal'].value;
+      invoice.exemptTotal = this.resumenForm01.controls['exemptTotal'].value;
+      invoice.totalSell = this.resumenForm01.controls['totalSell'].value;
+      invoice.totalDiscount = this.resumenForm02.controls['totalDiscount'].value;
+      invoice.netSell = this.resumenForm02.controls['netSell'].value;
+      invoice.totalTax = this.resumenForm02.controls['totalTax'].value;
+      invoice.totalVoucher = this.resumenForm02.controls['totalVoucher'].value;
+      invoice.resolutionNumber = this.resolutionForm.controls['totalVoucher'].value;
+      invoice.resolutionDate = this.resolutionForm.controls['selectedPaymentMethods'].value;
+      invoice.otherText = this.resolutionForm.controls['selectedPaymentMethods'].value;
       invoice.emitter = this.selectedEmitter;
       invoice.receiver = this.selectedReceiver;
       invoice.service = this.selectedService;
@@ -153,10 +232,25 @@ export class InvoiceComponent implements OnInit {
         }
       );
       this.showSuccess();
-    } else if ((resolutionNumber == '' || resolutionNumber == undefined) || (resolutionDate == '' || resolutionDate == undefined) || (otherText == '' || otherText == undefined)) {
-      this.showWarning();
     } else {
       this.showError();
+      this.validateAllFormFields(this.generalForm);
+      this.validateAllFormFields(this.payForm);
+      this.validateAllFormFields(this.resumenForm);
+      this.validateAllFormFields(this.resumenForm01);
+      this.validateAllFormFields(this.resumenForm02);
+      this.validateAllFormFields((this.resolutionForm));
     }
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(formGroup);
+      }
+    });
   }
 }
