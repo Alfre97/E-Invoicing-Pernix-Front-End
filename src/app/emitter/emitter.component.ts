@@ -3,6 +3,14 @@ import { UserEmitterReceiver } from '../models/UserEmitterReceiver.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { EmitterService } from '../emitter/emitter.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Provinces } from "../models/Residences/Province-mock";
+import { Cantons } from "../models/Residences/Canton-mock";
+import { Districts } from "../models/Residences/District-mock";
+import { Neighborhoods } from "../models/Residences/Neighborhood-mock";
+import { Province } from "../models/Residences/Province";
+import { Canton } from "../models/Residences/Canton";
+import { District } from "../models/Residences/District";
+import { Neighborhood } from "../models/Residences/Neighborhood";
 
 @Component({
   selector: 'app-emitter',
@@ -11,21 +19,18 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class EmitterComponent implements OnInit {
 
-  public identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
-  public provinces = ['San Jose', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'];
-  public SJCantons = ['San José', 'Escazú', 'Desamparados', 'Puriscal', 'Tarrazú', 'Aserrí', 'Mora', 'Goicoechea',
-    'Santa Ana', 'Alajuelita', 'Vázquez de Coronado', 'Acosta', 'Tibás', 'Moravia', 'Montes de Oca', 'Turrubares', 'Dota', 'Curridabat', 'Pérez Zeledón', 'León Cortés'];
-  public AlajuelaCantons = ['Alajuela', 'San Ramón', 'Grecia', 'San Mateo', 'Atenas', 'Naranjo', 'Palmares', 'Poás', 'Orotina', 'San Carlos', 'Zarcero', 'Valverde Vega', 'Upala',
-    'Los Chiles', 'Guatuso', 'Río Cuarto'];
-  public cartagoCantons = ['Cartago', 'Paraíso', 'La Unión', 'Jiménez', 'Turrialba', 'Alvarado', 'Oreamuno', 'El Guarco'];
-  public herediaCantons = ['Heredia', 'Barva', 'Santo Domingo', 'Santa Bárbara', 'San Rafael', 'San Isidro', 'Belén', 'Flores', 'San Pablo', 'Sarapiquí'];
-  public guanacasteCantons = ['Liberia', 'Nicoya', 'Santa Cruz', 'Bagaces', 'Carrillo', 'Cañas', 'Abangares', 'Tilarán', 'Nandayure', 'La Cruz', 'Hojancha'];
-  public puntarenasCantons = ['Puntarenas', 'Esparza', 'Buenos Aires', 'Montes de Oro', 'Osa', 'Quepos', 'Golfito', 'Coto Brus', 'Parrita', 'Corredores', 'Garabito'];
-  public limonCantons = ['Limón', 'Pococí', 'Siquirres', 'Talamanca', 'Matina', 'Guácimo'];
-  public cartagoDistricts = ['Tres Ríos', 'San Diego', 'San Juan', 'San Rafael', 'Concepción', 'Dulce Nombre', 'San Ramón', 'Río Azul'];
-  public cantonsOnSelectedProvince = this.SJCantons;
-  public districtsOnSelectedCanton = this.cartagoDistricts;
-  public tresRiosNeighborhoods = ['Eulalia', 'Florencio del Castillo', 'Jirales', 'Mariana', 'Tacora'];
+  identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
+  provinces: Province[] = Provinces;
+  cantons: Canton[] = Cantons;
+  districts: District[] = Districts;
+  neighborhoods: Neighborhood[] = Neighborhoods;
+  cantonsPeerProvince: Canton[] = [];
+  districtsPeerCanton: District[] = [];
+  neighborhoodsPeerDistrict: Neighborhood[] = [];
+  selectedProvince: Province;
+  selectedCanton: Canton;
+  selectedDistrict: District;
+  selectedNeighborhood: Neighborhood;
 
   generalForm;
   addressForm;
@@ -117,37 +122,37 @@ export class EmitterComponent implements OnInit {
   ngOnInit() {
   }
 
-  onProvinceChange(province) {
-    if (province === 'San Jose') {
-      this.cantonsOnSelectedProvince = this.SJCantons;
+  onProvinceChange() {
+    let selectCantons: Canton[] = [];
+    for (let canton of this.cantons) {
+      if (canton.provinceCode == this.selectedProvince.provinceCode) {
+        selectCantons.push(canton);
+      }
     }
-    if (province === 'Alajuela') {
-      this.cantonsOnSelectedProvince = this.AlajuelaCantons;
-    }
-    if (province === 'Cartago') {
-      this.cantonsOnSelectedProvince = this.cartagoCantons;
-    }
-    if (province === 'Heredia') {
-      this.cantonsOnSelectedProvince = this.herediaCantons;
-    }
-    if (province === 'Guanacaste') {
-      this.cantonsOnSelectedProvince = this.guanacasteCantons;
-    }
-    if (province === 'Puntarenas') {
-      this.cantonsOnSelectedProvince = this.puntarenasCantons;
-    }
-    if (province === 'Limón') {
-      this.cantonsOnSelectedProvince = this.limonCantons;
-    }
+    this.cantonsPeerProvince = selectCantons;
+    this.districtsPeerCanton = [];
+    this.neighborhoodsPeerDistrict = [];
   }
 
-  onCantonChange(canton) {
-    if (canton === 'Cartago') {
-      this.districtsOnSelectedCanton = this.cartagoDistricts;
+  onCantonChange() {
+    let selectDistricts: District[] = [];
+    for (let district of this.districts) {
+      if (district.provinceCode == this.selectedCanton.provinceCode && district.cantonCode == this.selectedCanton.cantonCode) {
+        selectDistricts.push(district);
+      }
     }
-    else {
-      this.districtsOnSelectedCanton = [];
+    this.districtsPeerCanton = selectDistricts;
+    this.neighborhoodsPeerDistrict = [];
+  }
+
+  onDistrictChange() {
+    let selectNeighborhoods: Neighborhood[] = [];
+    for (let neighborhood of this.neighborhoods) {
+      if (neighborhood.provinceCode == this.selectedDistrict.provinceCode && neighborhood.cantonCode == this.selectedDistrict.cantonCode && neighborhood.districtCode == this.selectedDistrict.districtCode) {
+        selectNeighborhoods.push(neighborhood);
+      }
     }
+    this.neighborhoodsPeerDistrict = selectNeighborhoods;
   }
 
   addEmitter() {
@@ -158,10 +163,10 @@ export class EmitterComponent implements OnInit {
       emitter.identificationType = this.generalForm.controls['idType'];
       emitter.identificationNumber = this.generalForm.controls['receiverNumber'];
       emitter.comercialName = this.generalForm.controls['receiverBusinessName'];
-      emitter.locationProvinceName = this.addressForm.controls['receiverProvince'];
-      emitter.locationCantonName = this.addressForm.controls['receiverCanton'];
-      emitter.locationDistrictName = this.addressForm.controls['receiverDistrict'];
-      emitter.locationNeighborhoodName = this.addressForm.controls['receiverNeighborhood'];
+      emitter.locationProvinceCode = this.selectedNeighborhood.provinceCode;
+      emitter.locationCantonCode = this.selectedNeighborhood.cantonCode;
+      emitter.locationDistrictCode = this.selectedNeighborhood.districtCode;
+      emitter.locationNeighborhoodCode = this.selectedNeighborhood.neighborhoodCode;
       emitter.otherSignals = this.addressForm.controls['otherSignals'];
       emitter.phoneCountryCode = this.phoneForm.controls['phoneCountryCode'];
       emitter.phoneNumber = this.phoneForm.controls['receiverPhone'];
@@ -169,13 +174,12 @@ export class EmitterComponent implements OnInit {
       emitter.faxNumber = this.faxForm.controls['faxNumber'];
       this.emitterService.addUser(emitter).subscribe(
         response => {
-          //Add action whe the Request send a good response
+          this.showSuccess();
         },
         error => {
-          //Add action whe the Request send a bad response
+          this.showError();
         }
       );
-      this.showSuccess();
     } else {
       this.showError();
     }
