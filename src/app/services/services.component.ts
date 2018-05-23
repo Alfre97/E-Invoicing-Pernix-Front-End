@@ -44,8 +44,9 @@ export class ServicesComponent implements OnInit {
 
   calculateLineTotalAmount() {
     this.lineTotalAmount = this.subtotal;
+    let rate = 0.0;
     for (let tax of this.selectedTaxes) {
-      var rate = +tax.rate;
+      rate += tax.rate;
       this.lineTotalAmount = this.lineTotalAmount + (rate * this.subtotal);
     }
   }
@@ -109,10 +110,6 @@ export class ServicesComponent implements OnInit {
     );
   }
 
-  refresh(): void {
-    window.location.reload();
-  }
-
   createService(lineNumber: string, businessMeasure: string, detail: string, discountNature: string) {
     if (lineNumber != '' && businessMeasure != '' && detail != ''
       && this.selectedTaxes != undefined && this.selectedCodes != undefined
@@ -136,15 +133,13 @@ export class ServicesComponent implements OnInit {
       service.subtotal = this.subtotal;
       service.taxList = this.selectedTaxes;
       service.total = this.lineTotalAmount;
-      this.showSuccess("Servicio creado.");
-      this.refresh();
 
       this.serviceService.addService(service).subscribe(
         response => {
-          //Add action whe the Request send a good response
+          this.showSuccess("Servicio creado.");
         },
         error => {
-          //Add action whe the Request send a bad response
+          this.showError("Servicio no creado.")
         }
       );
     } else if (lineNumber == '' || businessMeasure == '' || detail == ''
