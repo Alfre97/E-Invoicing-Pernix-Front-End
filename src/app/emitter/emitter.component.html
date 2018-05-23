@@ -42,33 +42,37 @@
       <aw-wizard-step stepTitle="Dirección">
         <form [formGroup]="addressForm">
           <div class="form-group">
-            <h3>Provincia <span style="font-size: 50%" tooltip="Provincia donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select formControlName="receiverProvince" name="receiverProvince" id="receiverProvince" class="form-control" (change)="onProvinceChange($event.target.value)">
-              <option *ngFor="let province of provinces" value="{{province}}">{{province}}</option>
+            <h3>Provincia <span style="font-size: 50%" tooltip="Provincia donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <select [(ngModel)]="selectedProvince" formControlName="receiverProvince" name="receiverProvince" id="receiverProvince" class="form-control" (change)="onProvinceChange($event.target.value)">
+              <option value="" hidden disable selected>Seleccione una provincia</option>
+              <option *ngFor="let province of provinces" [ngValue]="province" >{{province.provinceName}}</option>
             </select>
             <label class="error-messages" *ngIf="addressForm.get('receiverProvince').touched && addressForm.get('receiverProvince').hasError('required')">
-                La provincia es requerida
+                La provincia es requerido.
             </label>
-            <h3>Cantón <span style="font-size: 50%" tooltip="Cantón donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select formControlName="receiverCanton" name="receiverCanton" id="receiverCanton" class="form-control" (change)="onCantonChange($event.target.value)">
-              <option *ngFor="let cantons of cantonsOnSelectedProvince" value="{{cantons}}">{{cantons}}</option>
+            <h3>Cantón <span style="font-size: 50%" tooltip="Cantón donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <select [(ngModel)]="selectedCanton" formControlName="receiverCanton" name="receiverCanton" id="receiverCanton" class="form-control" (change)="onCantonChange($event.target.value)">
+              <option value="" hidden disable selected>Seleccione un cantón</option>
+              <option *ngFor="let canton of cantonsPeerProvince" [ngValue]="canton">{{canton.cantonName}}</option>
             </select>
             <label class="error-messages" *ngIf="addressForm.get('receiverCanton').touched && addressForm.get('receiverCanton').hasError('required')">
-                El cantón es requerido
+                El cantón es requerido.
             </label>
-            <h3>Distrito <span style="font-size: 50%" tooltip="Distrito donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select formControlName="receiverDistrict" name="receiverDistrict" id="receiverDistrict" class="form-control">
-              <option *ngFor="let district of cartagoDistricts" value="{{district}}">{{district}}</option>
+            <h3>Distrito <span style="font-size: 50%" tooltip="Distrito donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <select [(ngModel)]="selectedDistrict" formControlName="receiverDistrict" name="receiverDistrict" id="receiverDistrict" class="form-control" (change)="onDistrictChange($event.target.value)">
+                <option value="" hidden disable selected>Seleccione un distrito</option>
+                <option *ngFor="let district of districtsPeerCanton" [ngValue]="district">{{district.districtName}}</option>
             </select>
             <label class="error-messages" *ngIf="addressForm.get('receiverDistrict').touched && addressForm.get('receiverDistrict').hasError('required')">
-                El distrito es requerido
+                El distrito es requerido.
             </label>
-            <h3>Barrio <span style="font-size: 50%" tooltip="Barrio donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select formControlName="receiverNeighborhood" name="receiverNeighborhood" id="receiverNeighborhood" class="form-control">
-              <option *ngFor="let neighborhood of tresRiosNeighborhoods" value="{{neighborhood}}">{{neighborhood}}</option>
+            <h3>Barrio <span style="font-size: 50%" tooltip="Barrio donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <select [(ngModel)]="selectedNeighborhood" formControlName="receiverNeighborhood" name="receiverNeighborhood" id="receiverNeighborhood" class="form-control">
+                <option value="" hidden disable selected>Seleccione un barrio</option>
+                <option *ngFor="let neighborhood of neighborhoodsPeerDistrict" [ngValue]="neighborhood">{{neighborhood.neighborhoodName}}</option>
             </select>
             <label class="error-messages" *ngIf="addressForm.get('receiverNeighborhood').touched && addressForm.get('receiverNeighborhood').hasError('required')">
-                El barrio es requerido
+                El barrio es requerido.
             </label>
             <h3>Otras Señas <span style="font-size: 50%" tooltip="Rasgos de facil distición de donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <textarea formControlName="otherSignals" name="otherSignals" id="otherSignals" class="form-control" placeholder="Señas destacables del lugar"></textarea>

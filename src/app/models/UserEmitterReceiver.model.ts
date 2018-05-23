@@ -4,10 +4,10 @@ export class UserEmitterReceiver {
   public identificationType: String
   public identificationNumber: String
   public comercialName: String
-  public locationProvinceName: String
-  public locationCantonName: String
-  public locationDistrictName: String
-  public locationNeighborhoodName: String
+  public locationProvinceCode: Number
+  public locationCantonCode: Number
+  public locationDistrictCode: Number
+  public locationNeighborhoodCode: Number
   public otherSignals: String
   public phoneCountryCode: String
   public phoneNumber: String
