@@ -27,7 +27,7 @@
         <input #businessMeasure class="form-control" placeholder="Unidad de Medida Comercial">
         <h3>Impuesto <span style="font-size: 50%" tooltip="Seleccione los impuestos que previamente creo para el servicio o mercancia prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <mat-select placeholder="Seleccione Impuestos" (change)="calculateLineTotalAmount()" [(ngModel)]="selectedTaxes" class="form-control noAuto" multiple>
-          <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Porcentaje: {{tax.purchasePercentage}}% Institucion: {{tax.institutionName}}</mat-option>
+          <mat-option *ngFor="let tax of taxes" [value]="tax">Codigo: {{tax.code}} Tarifa: {{tax.rate}}</mat-option>
         </mat-select>
         <h3>Detalle <span style="font-size: 50%" tooltip="Descripción de la mercancia o servicio prestado." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
         <input #detail class="form-control noAuto" placeholder="Detalle del Servicio">

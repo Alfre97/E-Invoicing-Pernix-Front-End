@@ -2,7 +2,7 @@ export class Tax {
   public id: String;
   public code: String;
   public taxTotal: Number;
-  public rate: Number;
+  public rate: number;
   public serviceId: Number;
   public date: String;
   public taxExonarated: Number;

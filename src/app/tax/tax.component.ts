@@ -32,9 +32,9 @@ export class TaxComponent implements OnInit {
   { value: 4, name: 'Extenciones Dirección General de Hacienda' },
   { value: 5, name: 'Zonas Francas' },
   { value: 99, name: 'Otros' }];
-  rate = 0.0;
-  purchasePercentage = 0;
-  exhonerationAvaible = "";
+  //rate = 0.0;
+  //purchasePercentage = 0;
+  //exhonerationAvaible;
 
   taxeForm01;
   taxeForm02;
@@ -45,16 +45,16 @@ export class TaxComponent implements OnInit {
     vcr: ViewContainerRef) {
 
     this.taxeForm01 = formBuilder.group({
-      exhonerationAvaible: new FormControl('', [
+      codeType: new FormControl('', [
         Validators.required
       ]),
-      rate: new FormControl('', []),
-      purchasePercentage: new FormControl('', [
-        Validators.required
-      ])
+      rate: new FormControl('', [Validators.required])
     });
 
     this.taxeForm02 = formBuilder.group({
+      purchasePercentage: new FormControl('', [
+        Validators.required
+      ]),
       exhonerationAvaible: new FormControl('', []),
       dateCreated: new FormControl('', [
         Validators.required
@@ -76,28 +76,32 @@ export class TaxComponent implements OnInit {
   }
 
   addTax() {
-    if (this.exhonerationAvaible == "true") {
-      if (this.taxeForm01.valid || this.taxeForm02.valid) {
-        let tax: Tax = new Tax();
-        tax.code = this.taxeForm01.controls['exhonerationAvaible'].value;
-        tax.rate = this.taxeForm01.controls['rate'].value;
-        tax.purchasePercentage = this.taxeForm01.controls['purchasePercentage'].value;
-        tax.date = this.taxeForm02.controls['dateCreated'].value;
-        tax.institutionName = this.taxeForm02.controls['institutionName'].value;
-        tax.documentNumber = this.taxeForm02.controls['documentNumber'].value;
-        tax.documentType = this.taxeForm02.controls['selectedDocumentType'].value;
-        this.taxService.addTax(tax).subscribe(
-          response => {
-            this.showSuccess();
-          },
-          error => {
-            this.showError();
-          }
-        );
-      } else {
-        this.validateAllFormFields(this.taxeForm01);
-        this.validateAllFormFields(this.taxeForm02);
+    if (this.taxeForm01.valid) {
+      let tax: Tax = new Tax();
+      tax.code = this.taxeForm01.controls['codeType'].value;
+      tax.rate = this.taxeForm01.controls['rate'].value;
+      if (this.taxeForm02.controls['exhonerationAvaible'].value == true) {
+        if (this.taxeForm02.valid) {
+          tax.purchasePercentage = this.taxeForm02.controls['purchasePercentage'].value;
+          tax.date = this.taxeForm02.controls['dateCreated'].value;
+          tax.institutionName = this.taxeForm02.controls['institutionName'].value;
+          tax.documentNumber = this.taxeForm02.controls['documentNumber'].value;
+          tax.documentType = this.taxeForm02.controls['selectedDocumentType'].value;
+        } else {
+          this.validateAllFormFields(this.taxeForm02);
+        }
       }
+      console.log(tax.purchasePercentage);
+      this.taxService.addTax(tax).subscribe(
+        response => {
+          this.showSuccess();
+        },
+        error => {
+          this.showError();
+        }
+      );
+    } else {
+      this.validateAllFormFields(this.taxeForm01);
     }
   }
 
