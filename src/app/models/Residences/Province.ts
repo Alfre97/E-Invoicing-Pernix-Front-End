@@ -1,4 +1,6 @@
 export class Province {
-  provinceCode: Number;
-  provinceName: String;
+  public provinceCode: Number;
+  public provinceName: String;
+
+  constructor() { }
 }

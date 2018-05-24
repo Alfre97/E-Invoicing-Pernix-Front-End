@@ -1,4 +1,4 @@
 export class Unit {
-    code: String;
-    description: String;
+  public code: String;
+  public description: String;
 }

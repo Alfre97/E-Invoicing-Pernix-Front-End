@@ -1,5 +1,7 @@
 export class Canton {
-  provinceCode: Number;
-  cantonCode: Number;
-  cantonName: String;
+  public provinceCode: Number;
+  public cantonCode: Number;
+  public cantonName: String;
+
+  constructor() { }
 }

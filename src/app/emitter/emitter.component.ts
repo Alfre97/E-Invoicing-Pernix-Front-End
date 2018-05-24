@@ -11,6 +11,8 @@ import { Province } from "../models/Residences/Province";
 import { Canton } from "../models/Residences/Canton";
 import { District } from "../models/Residences/District";
 import { Neighborhood } from "../models/Residences/Neighborhood";
+import { Identification } from "../models/Identification/Identification";
+import { Identifications } from "../models/Identification/Identification-mock";
 
 @Component({
   selector: 'app-emitter',
@@ -19,7 +21,7 @@ import { Neighborhood } from "../models/Residences/Neighborhood";
 })
 export class EmitterComponent implements OnInit {
 
-  identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
+  identifications: Identification[] = Identifications;
   provinces: Province[] = Provinces;
   cantons: Canton[] = Cantons;
   districts: District[] = Districts;
@@ -31,6 +33,7 @@ export class EmitterComponent implements OnInit {
   selectedCanton: Canton;
   selectedDistrict: District;
   selectedNeighborhood: Neighborhood;
+  selectedIdentification: Identification;
 
   generalForm;
   addressForm;
@@ -160,7 +163,7 @@ export class EmitterComponent implements OnInit {
       let emitter: UserEmitterReceiver = new UserEmitterReceiver();
       emitter.name = this.generalForm.controls['receiverName'];
       emitter.email = this.generalForm.controls['receiverEmail'];
-      emitter.identificationType = this.generalForm.controls['idType'];
+      emitter.identificationType = this.selectedIdentification.identificationCode;
       emitter.identificationNumber = this.generalForm.controls['receiverNumber'];
       emitter.comercialName = this.generalForm.controls['receiverBusinessName'];
       emitter.locationProvinceCode = this.selectedNeighborhood.provinceCode;

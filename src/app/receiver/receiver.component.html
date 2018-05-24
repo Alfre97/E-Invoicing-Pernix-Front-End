@@ -4,23 +4,23 @@
       <aw-wizard-step stepTitle="General">
         <form [formGroup]="generalForm">
           <div class="form-group">
-            <h3>Nombre <span style="font-size: 50%" tooltip="Nombre de la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
+            <h3>Nombre Receptor <span style="font-size: 50%" tooltip="Nombre de la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="receiverName" name="receiverName" id="receiverName" class="form-control" placeholder="Nombre">
             <label class="error-messages" *ngIf="generalForm.get('receiverName').touched && generalForm.get('receiverName').hasError('required')">
-                EL nombre es requerido.
+                El nombre es requerido.
             </label>
             <h3>Correo <span style="font-size: 50%" tooltip="Correo de la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="receiverEmail" name="receiverEmail" id="receiverEmail" class="form-control" type="email" placeholder="Correo">
             <label class="error-messages" *ngIf="generalForm.get('receiverEmail').touched && generalForm.get('receiverEmail').hasError('required')">
-                EL correo es requerido.
+                El correo es requerido.
             </label>
             <h3>Tipo de Identificación <span style="font-size: 50%" tooltip="Tipo de identificacíon de la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select formControlName="idType" name="idType" id="idType" class="form-control">
+            <select [(ngModel)]="selectedIdentification" formControlName="idType" name="idType" id="idType" class="form-control">
               <option value="" hidden disable selected>Seleccione su identificacion</option>
-              <option *ngFor="let identification of identificationList" value="{{ identification }}">{{ identification }}</option>
+              <option *ngFor="let identification of identifications" [ngValue]="identification">{{identification.identificationName}}</option>
             </select>
             <label class="error-messages" *ngIf="generalForm.get('idType').touched && generalForm.get('idType').hasError('required')">
-                EL tipo de identificación es requerido.
+                El tipo de identificación es requerido.
             </label>
             <h3>Número de Identificación <span style="font-size: 50%" tooltip="Numero identificacíon de la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <input formControlName="receiverNumber" name="receiverNumber" id="receiverNumber" class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
@@ -75,9 +75,6 @@
             </label>
             <h3>Otras Señas <span style="font-size: 50%" tooltip="Rasgos de facil distición de donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
             <textarea formControlName="otherSignals" name="otherSignals" id="otherSignals" class="form-control" placeholder="Señas destacables del lugar"></textarea>
-            <!-- <label class="error-messages" *ngIf="addressForm.get('otherSignals').touched && addressForm.get('otherSignals').hasError('required')">
-                El código del país es requerido
-            </label> -->
             <br>
             <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
             <button class="btn btn-primary nex" type="button" awNextStep>Siguiente ></button>
@@ -95,7 +92,7 @@
                 El código de país es requerido.
             </label>
             <h3>Telefóno <span style="font-size: 50%" tooltip="Numero telefónico del pais donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="receiverPhone" name="receiverPhone" id="receiverPhone" maxlength="15" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <input formControlName="receiverPhone" name="receiverPhone" id="receiverPhone" maxlength="20" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
             <label class="error-messages" *ngIf="phoneForm.get('receiverPhone').touched && phoneForm.get('receiverPhone').hasError('required')">
                 El número de telefóno es requerido.
             </label>
@@ -116,7 +113,7 @@
                 El código del país es requerido.
             </label>
             <h3>Fax <span style="font-size: 50%" tooltip="Numero de fax del pais donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="faxNumber" name="faxNumber" id="faxNumber" maxlength="12" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <input formControlName="faxNumber" name="faxNumber" id="faxNumber" maxlength="20" placeholder="Fax" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
             <label class="error-messages" *ngIf="faxForm.get('faxNumber').touched && faxForm.get('faxNumber').hasError('required')">
                 El número de fax es requerido.
             </label>

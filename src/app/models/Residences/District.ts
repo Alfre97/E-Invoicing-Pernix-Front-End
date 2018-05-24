@@ -1,6 +1,8 @@
 export class District {
-  provinceCode: Number;
-  cantonCode: Number;
-  districtCode: Number;
-  districtName: String;
+  public provinceCode: Number;
+  public cantonCode: Number;
+  public districtCode: Number;
+  public districtName: String;
+
+  constructor() { }
 }
