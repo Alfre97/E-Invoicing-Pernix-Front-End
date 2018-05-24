@@ -1,7 +1,9 @@
 export class Neighborhood {
-  provinceCode: Number;
-  cantonCode: Number;
-  districtCode: Number;
-  neighborhoodCode: Number;
-  neighborhoodName: String;
+  public provinceCode: Number;
+  public cantonCode: Number;
+  public districtCode: Number;
+  public neighborhoodCode: Number;
+  public neighborhoodName: String;
+
+  constructor() { }
 }

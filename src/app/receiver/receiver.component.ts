@@ -11,6 +11,8 @@ import { Province } from "../models/Residences/Province";
 import { Canton } from "../models/Residences/Canton";
 import { District } from "../models/Residences/District";
 import { Neighborhood } from "../models/Residences/Neighborhood";
+import { Identification } from "../models/Identification/Identification";
+import { Identifications } from "../models/Identification/Identification-mock";
 
 @Component({
   selector: 'app-receiver',
@@ -19,7 +21,7 @@ import { Neighborhood } from "../models/Residences/Neighborhood";
 })
 export class ReceiverComponent implements OnInit {
 
-  identificationList = ['Cédula física', 'Cédula juridica', 'DIMEX', 'NITE'];
+  identifications: Identification[] = Identifications;
   provinces: Province[] = Provinces;
   cantons: Canton[] = Cantons;
   districts: District[] = Districts;
@@ -31,6 +33,7 @@ export class ReceiverComponent implements OnInit {
   selectedCanton: Canton;
   selectedDistrict: District;
   selectedNeighborhood: Neighborhood;
+  selectedIdentification: Identification;
 
   generalForm;
   addressForm;
@@ -73,9 +76,7 @@ export class ReceiverComponent implements OnInit {
       receiverNeighborhood: new FormControl('', [
         Validators.required
       ]),
-      otherSignals: new FormControl('', [
-        Validators.required
-      ])
+      otherSignals: new FormControl('', [])
     });
     this.phoneForm = this.formBuilder.group({
       phoneCountryCode: new FormControl('', [
@@ -143,7 +144,7 @@ export class ReceiverComponent implements OnInit {
     if (this.faxForm.valid && this.addressForm.valid && this.generalForm.valid && this.phoneForm.valid) {
       let receiver: UserEmitterReceiver = new UserEmitterReceiver();
       receiver.name = this.generalForm.controls['receiverName'];
-      receiver.identificationType = this.generalForm.controls['idType'];
+      receiver.identificationType = this.selectedIdentification.identificationCode;
       receiver.identificationNumber = this.generalForm.controls['receiverNumber'];
       receiver.comercialName = this.generalForm.controls['receiverBusinessName'];
       receiver.locationProvinceCode = this.selectedNeighborhood.provinceCode;
