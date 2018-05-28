@@ -46,34 +46,34 @@ export class EmitterComponent implements OnInit {
     vcr: ViewContainerRef) {
 
     this.generalForm = formBuilder.group({
-      receiverName: new FormControl('', [
+      emitterName: new FormControl('', [
         Validators.required
       ]),
-      receiverEmail: new FormControl('', [
+      emitterEmail: new FormControl('', [
         Validators.required
       ]),
       idType: new FormControl('', [
         Validators.required
       ]),
-      receiverNumber: new FormControl('', [
+      emitterNumber: new FormControl('', [
         Validators.required
       ]),
-      receiverBusinessName: new FormControl('', [
+      emitterBusinessName: new FormControl('', [
         Validators.required
       ])
     });
 
     this.addressForm = formBuilder.group({
-      receiverProvince: new FormControl('', [
+      emitterProvince: new FormControl('', [
         Validators.required
       ]),
-      receiverCanton: new FormControl('', [
+      emitterCanton: new FormControl('', [
         Validators.required
       ]),
-      receiverDistrict: new FormControl('', [
+      emitterDistrict: new FormControl('', [
         Validators.required
       ]),
-      receiverNeighborhood: new FormControl('', [
+      emitterNeighborhood: new FormControl('', [
         Validators.required
       ]),
       otherSignals: new FormControl('', [
@@ -85,7 +85,7 @@ export class EmitterComponent implements OnInit {
       phoneCountryCode: new FormControl('', [
         Validators.required
       ]),
-      receiverPhone: new FormControl('', [
+      emitterPhone: new FormControl('', [
         Validators.required
       ])
     });
@@ -160,21 +160,22 @@ export class EmitterComponent implements OnInit {
 
   addEmitter() {
     if (this.generalForm.valid && this.addressForm.valid && this.phoneForm.valid && this.faxForm.valid) {
-      let emitter: UserEmitterReceiver = new UserEmitterReceiver();
-      emitter.name = this.generalForm.controls['receiverName'];
-      emitter.email = this.generalForm.controls['receiverEmail'];
+      let emitter = new UserEmitterReceiver();
+      emitter.name = this.generalForm.controls['emitterName'].value;
+      emitter.email = this.generalForm.controls['emitterEmail'].value;
       emitter.identificationType = this.selectedIdentification.identificationCode;
-      emitter.identificationNumber = this.generalForm.controls['receiverNumber'];
-      emitter.comercialName = this.generalForm.controls['receiverBusinessName'];
-      emitter.locationProvinceCode = this.selectedNeighborhood.provinceCode;
-      emitter.locationCantonCode = this.selectedNeighborhood.cantonCode;
-      emitter.locationDistrictCode = this.selectedNeighborhood.districtCode;
-      emitter.locationNeighborhoodCode = this.selectedNeighborhood.neighborhoodCode;
-      emitter.otherSignals = this.addressForm.controls['otherSignals'];
-      emitter.phoneCountryCode = this.phoneForm.controls['phoneCountryCode'];
-      emitter.phoneNumber = this.phoneForm.controls['receiverPhone'];
-      emitter.faxCountryCode = this.faxForm.controls['faxCountryCode'];
-      emitter.faxNumber = this.faxForm.controls['faxNumber'];
+      emitter.identificationNumber = this.generalForm.controls['emitterNumber'].value;
+      emitter.comercialName = this.generalForm.controls['emitterBusinessName'].value;
+      emitter.locationProvinceCode = this.selectedNeighborhood.provinceCode.toString();
+      emitter.locationCantonCode = this.selectedNeighborhood.cantonCode.toString();
+      emitter.locationDistrictCode = this.selectedNeighborhood.districtCode.toString();
+      emitter.locationNeighborhoodCode = this.selectedNeighborhood.neighborhoodCode.toString();
+      emitter.otherSignals = this.addressForm.controls['otherSignals'].value;
+      emitter.phoneCountryCode = this.phoneForm.controls['phoneCountryCode'].value;
+      emitter.phoneNumber = this.phoneForm.controls['emitterPhone'].value;
+      emitter.faxCountryCode = this.faxForm.controls['faxCountryCode'].value;
+      emitter.faxNumber = this.faxForm.controls['faxNumber'].value;
+
       this.emitterService.addUser(emitter).subscribe(
         response => {
           this.showSuccess();

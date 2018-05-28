@@ -6,13 +6,13 @@
         <form [formGroup]="generalForm">
           <div class="form-group">
             <h3>Nombre Emisor <span style="font-size: 50%" tooltip="Nombre de la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="receiverName" name="receiverName" id="receiverName" class="form-control" placeholder="Nombre">
-            <label class="error-messages" *ngIf="generalForm.get('receiverName').touched && generalForm.get('receiverName').hasError('required')">
+            <input formControlName="emitterName" name="emitterName" id="emitterName" class="form-control" placeholder="Nombre">
+            <label class="error-messages" *ngIf="generalForm.get('emitterName').touched && generalForm.get('emitterName').hasError('required')">
                 El nombre de emisor es requerido
             </label>
             <h3>Correo <span style="font-size: 50%" tooltip="Correo de la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="receiverEmail" name="receiverEmail" id="receiverEmail" class="form-control" type="email" placeholder="Correo">
-            <label class="error-messages" *ngIf="generalForm.get('receiverEmail').touched && generalForm.get('receiverEmail').hasError('required')">
+            <input formControlName="emitterEmail" name="emitterEmail" id="emitterEmail" class="form-control" type="email" placeholder="Correo">
+            <label class="error-messages" *ngIf="generalForm.get('emitterEmail').touched && generalForm.get('emitterEmail').hasError('required')">
                 El correo es requerido
             </label>
             <h3>Tipo de Identificación <span style="font-size: 50%" tooltip="Tipo de identificacíon de la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
@@ -24,13 +24,13 @@
                 La identificación es requerido
             </label>
             <h3>Número de Identificación <span style="font-size: 50%" tooltip="Numero identificacíon de la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="receiverNumber" name="receiverNumber" id="receiverNumber" class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-            <label class="error-messages" *ngIf="generalForm.get('receiverNumber').touched && generalForm.get('receiverNumber').hasError('required')">
+            <input formControlName="emitterNumber" name="emitterNumber" id="emitterNumber" class="form-control" maxlength="12" placeholder="Numero" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="generalForm.get('emitterNumber').touched && generalForm.get('emitterNumber').hasError('required')">
                 El número de identificación es requerido
             </label>
             <h3>Nombre Comercial <span style="font-size: 50%" tooltip="Nombre de uso comercial de la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="receiverBusinessName" name="receiverBusinessName" id="receiverBusinessName" class="form-control" placeholder="Nombre Comercial">
-            <label class="error-messages" *ngIf="generalForm.get('receiverBusinessName').touched && generalForm.get('receiverBusinessName').hasError('required')">
+            <input formControlName="emitterBusinessName" name="emitterBusinessName" id="emitterBusinessName" class="form-control" placeholder="Nombre Comercial">
+            <label class="error-messages" *ngIf="generalForm.get('emitterBusinessName').touched && generalForm.get('emitterBusinessName').hasError('required')">
                 El nombre comercial es requerido
             </label>
             <br>
@@ -43,35 +43,35 @@
         <form [formGroup]="addressForm">
           <div class="form-group">
             <h3>Provincia <span style="font-size: 50%" tooltip="Provincia donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select [(ngModel)]="selectedProvince" formControlName="receiverProvince" name="receiverProvince" id="receiverProvince" class="form-control" (change)="onProvinceChange($event.target.value)">
+            <select [(ngModel)]="selectedProvince" formControlName="emitterProvince" name="emitterProvince" id="emitterProvince" class="form-control" (change)="onProvinceChange($event.target.value)">
               <option value="" hidden disable selected>Seleccione una provincia</option>
               <option *ngFor="let province of provinces" [ngValue]="province" >{{province.provinceName}}</option>
             </select>
-            <label class="error-messages" *ngIf="addressForm.get('receiverProvince').touched && addressForm.get('receiverProvince').hasError('required')">
+            <label class="error-messages" *ngIf="addressForm.get('emitterProvince').touched && addressForm.get('emitterProvince').hasError('required')">
                 La provincia es requerido.
             </label>
             <h3>Cantón <span style="font-size: 50%" tooltip="Cantón donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select [(ngModel)]="selectedCanton" formControlName="receiverCanton" name="receiverCanton" id="receiverCanton" class="form-control" (change)="onCantonChange($event.target.value)">
+            <select [(ngModel)]="selectedCanton" formControlName="emitterCanton" name="emitterCanton" id="emitterCanton" class="form-control" (change)="onCantonChange($event.target.value)">
               <option value="" hidden disable selected>Seleccione un cantón</option>
               <option *ngFor="let canton of cantonsPeerProvince" [ngValue]="canton">{{canton.cantonName}}</option>
             </select>
-            <label class="error-messages" *ngIf="addressForm.get('receiverCanton').touched && addressForm.get('receiverCanton').hasError('required')">
+            <label class="error-messages" *ngIf="addressForm.get('emitterCanton').touched && addressForm.get('emitterCanton').hasError('required')">
                 El cantón es requerido.
             </label>
             <h3>Distrito <span style="font-size: 50%" tooltip="Distrito donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select [(ngModel)]="selectedDistrict" formControlName="receiverDistrict" name="receiverDistrict" id="receiverDistrict" class="form-control" (change)="onDistrictChange($event.target.value)">
+            <select [(ngModel)]="selectedDistrict" formControlName="emitterDistrict" name="emitterDistrict" id="emitterDistrict" class="form-control" (change)="onDistrictChange($event.target.value)">
                 <option value="" hidden disable selected>Seleccione un distrito</option>
                 <option *ngFor="let district of districtsPeerCanton" [ngValue]="district">{{district.districtName}}</option>
             </select>
-            <label class="error-messages" *ngIf="addressForm.get('receiverDistrict').touched && addressForm.get('receiverDistrict').hasError('required')">
+            <label class="error-messages" *ngIf="addressForm.get('emitterDistrict').touched && addressForm.get('emitterDistrict').hasError('required')">
                 El distrito es requerido.
             </label>
             <h3>Barrio <span style="font-size: 50%" tooltip="Barrio donde reside la persona física o jurídica que recibe la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <select [(ngModel)]="selectedNeighborhood" formControlName="receiverNeighborhood" name="receiverNeighborhood" id="receiverNeighborhood" class="form-control">
+            <select [(ngModel)]="selectedNeighborhood" formControlName="emitterNeighborhood" name="emitterNeighborhood" id="emitterNeighborhood" class="form-control">
                 <option value="" hidden disable selected>Seleccione un barrio</option>
                 <option *ngFor="let neighborhood of neighborhoodsPeerDistrict" [ngValue]="neighborhood">{{neighborhood.neighborhoodName}}</option>
             </select>
-            <label class="error-messages" *ngIf="addressForm.get('receiverNeighborhood').touched && addressForm.get('receiverNeighborhood').hasError('required')">
+            <label class="error-messages" *ngIf="addressForm.get('emitterNeighborhood').touched && addressForm.get('emitterNeighborhood').hasError('required')">
                 El barrio es requerido.
             </label>
             <h3>Otras Señas <span style="font-size: 50%" tooltip="Rasgos de facil distición de donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
@@ -95,8 +95,8 @@
                 El código de país es requerido
             </label>
             <h3>Telefóno <span style="font-size: 50%" tooltip="Numero telefónico del pais donde reside la persona física o jurídica que emite la factura." [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">ⓘ</span></h3>
-            <input formControlName="receiverPhone" name="receiverPhone" id="receiverPhone" maxlength="20" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-            <label class="error-messages" *ngIf="phoneForm.get('receiverPhone').touched && phoneForm.get('receiverPhone').hasError('required')">
+            <input formControlName="emitterPhone" name="emitterPhone" id="emitterPhone" maxlength="20" placeholder="Telefóno" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+            <label class="error-messages" *ngIf="phoneForm.get('emitterPhone').touched && phoneForm.get('emitterPhone').hasError('required')">
                 El telefóno es requerido
             </label>
             <br>
@@ -121,9 +121,7 @@
             </label>
             <br>
             <button class="btn btn-primary prev" type="button" awPreviousStep>< Anterior</button>
-            <button (click)="addEmitter(name.value, email.value, idType.value, emitterNumber.value, emitterBusinessName.value, emitterProvince.value, emitterCanton.value,
-            emitterDistrict.value, emitterNeighborhood.value, otherSignals.value, phoneCountryCode.value, emitterPhone.value, faxCountryCode.value, faxNumber.value);"
-            class="btn btn-primary nex">Agregar Emisor</button>
+            <button (click)="addEmitter()" class="btn btn-primary nex">Agregar Emisor</button>
           </div>
         </form>
       </aw-wizard-step>

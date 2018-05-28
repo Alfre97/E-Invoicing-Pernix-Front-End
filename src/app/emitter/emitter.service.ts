@@ -20,18 +20,18 @@ export class EmitterService {
 
   constructor(private http: HttpClient) { }
 
-  addUser(emitter: UserEmitterReceiver) {
-    const route = environment.rootURL = environment.addEmitter;
+  addUser(emitter) {
+    const route = environment.rootURL + environment.addEmitter;
 
     const userData = {
       name: emitter.name,
       identificationType: emitter.identificationType,
       identificationNumber: emitter.identificationNumber,
       comercialName: emitter.comercialName,
-      locationProvinceName: emitter.locationProvinceCode,
-      locationCantonName: emitter.locationCantonCode,
-      locationDistrictName: emitter.locationDistrictCode,
-      locationNeighborhoodName: emitter.locationNeighborhoodCode,
+      locationProvinceCode: emitter.locationProvinceCode,
+      locationCantonCode: emitter.locationCantonCode,
+      locationDistrictCode: emitter.locationDistrictCode,
+      locationNeighborhoodCode: emitter.locationNeighborhoodCode,
       otherSignals: emitter.otherSignals,
       phoneCountryCode: emitter.phoneCountryCode,
       phoneNumber: emitter.phoneNumber,
@@ -39,7 +39,7 @@ export class EmitterService {
       faxNumber: emitter.faxNumber,
       email: emitter.email
     };
-
+    console.log(userData);
     return this.http.post(route, userData)
       .map(res => res)
       .catch(error => Observable.throw(error));

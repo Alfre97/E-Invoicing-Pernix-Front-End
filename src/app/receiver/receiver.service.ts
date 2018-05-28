@@ -21,17 +21,17 @@ export class ReceiverService {
   constructor(private http: HttpClient) { }
 
   addUser(receiver: UserEmitterReceiver) {
-    const route = environment.rootURL = environment.addEmitter;
+    const route = environment.rootURL + environment.addReceiver;
 
     const userData = {
       name: receiver.name,
       identificationType: receiver.identificationType,
       identificationNumber: receiver.identificationNumber,
       comercialName: receiver.comercialName,
-      locationProvinceName: receiver.locationProvinceCode,
-      locationCantonName: receiver.locationCantonCode,
-      locationDistrictName: receiver.locationDistrictCode,
-      locationNeighborhoodName: receiver.locationNeighborhoodCode,
+      locationProvinceCode: receiver.locationProvinceCode,
+      locationCantonCode: receiver.locationCantonCode,
+      locationDistrictCode: receiver.locationDistrictCode,
+      locationNeighborhoodCode: receiver.locationNeighborhoodCode,
       otherSignals: receiver.otherSignals,
       phoneCountryCode: receiver.phoneCountryCode,
       phoneNumber: receiver.phoneNumber,

@@ -142,21 +142,22 @@ export class ReceiverComponent implements OnInit {
 
   addReceiver() {
     if (this.faxForm.valid && this.addressForm.valid && this.generalForm.valid && this.phoneForm.valid) {
-      let receiver: UserEmitterReceiver = new UserEmitterReceiver();
-      receiver.name = this.generalForm.controls['receiverName'];
+      let receiver = new UserEmitterReceiver();
+      receiver.name = this.generalForm.controls['receiverName'].value;
       receiver.identificationType = this.selectedIdentification.identificationCode;
-      receiver.identificationNumber = this.generalForm.controls['receiverNumber'];
-      receiver.comercialName = this.generalForm.controls['receiverBusinessName'];
-      receiver.locationProvinceCode = this.selectedNeighborhood.provinceCode;
-      receiver.locationCantonCode = this.selectedNeighborhood.cantonCode;
-      receiver.locationDistrictCode = this.selectedNeighborhood.districtCode;
-      receiver.locationNeighborhoodCode = this.selectedNeighborhood.neighborhoodCode;
-      receiver.otherSignals = this.addressForm.controls['otherSignals'];
-      receiver.phoneCountryCode = this.phoneForm.controls['phoneCountryCode'];
-      receiver.phoneNumber = this.phoneForm.controls['phoneNumber'];
-      receiver.faxCountryCode = this.faxForm.controls['faxCountryCode'];
-      receiver.faxNumber = this.faxForm.controls['faxNumber'];
-      receiver.email = this.generalForm.controls['email'];
+      receiver.identificationNumber = this.generalForm.controls['receiverNumber'].value;
+      receiver.comercialName = this.generalForm.controls['receiverBusinessName'].value;
+      receiver.locationProvinceCode = this.selectedNeighborhood.provinceCode.toString();
+      receiver.locationCantonCode = this.selectedNeighborhood.cantonCode.toString();
+      receiver.locationDistrictCode = this.selectedNeighborhood.districtCode.toString();
+      receiver.locationNeighborhoodCode = this.selectedNeighborhood.neighborhoodCode.toString();
+      receiver.otherSignals = this.addressForm.controls['otherSignals'].value;
+      receiver.phoneCountryCode = this.phoneForm.controls['phoneCountryCode'].value;
+      receiver.phoneNumber = this.phoneForm.controls['receiverPhone'].value;
+      receiver.faxCountryCode = this.faxForm.controls['faxCountryCode'].value;
+      receiver.faxNumber = this.faxForm.controls['faxNumber'].value;
+      receiver.email = this.generalForm.controls['receiverEmail'].value;
+
       this.receiverService.addUser(receiver).subscribe(
         response => {
           this.showSuccess();
@@ -166,10 +167,6 @@ export class ReceiverComponent implements OnInit {
         }
       );
     } else {
-      this.validateAllFormFields(this.faxForm);
-      this.validateAllFormFields(this.addressForm);
-      this.validateAllFormFields(this.generalForm);
-      this.validateAllFormFields(this.phoneForm);
       this.showError();
     }
   }

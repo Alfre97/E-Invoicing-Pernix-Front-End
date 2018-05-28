@@ -10,8 +10,9 @@ export const environment = {
 
   addService: '/addService',
   getServices: '/getServices',
-  addEmitter: '/addUser',
+  addEmitter: '/addEmitter',
   getEmitters: '/getEmitters',
+  addReceiver: '/addReceiver',
   getReceivers: '/getReceivers',
   sendInvoice: '/uploadInvoice',
   addTax: '/addTax',

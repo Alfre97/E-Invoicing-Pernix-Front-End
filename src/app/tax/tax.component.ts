@@ -3,6 +3,10 @@ import { TaxService } from './tax.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Tax } from '../models/Tax.model';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TaxType } from "../models/TaxType/TaxType";
+import { TaxTypes } from "../models/TaxType/TaxType-mock";
+import { DocumentType } from '../models/DocumentType/DocumentType';
+import { DocumentTypes } from '../models/DocumentType/DocumentType-mock';
 
 @Component({
   selector: 'app-tax',
@@ -12,46 +16,26 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class TaxComponent implements OnInit {
 
-  taxeList: any = [{ value: 1, name: 'Impuesto General sobre las ventas' },
-  { value: 2, name: 'Impuesto Selectivo de Consumo' },
-  { value: 3, name: 'Impuesto ünico a los combustivos' },
-  { value: 4, name: 'Impuesto especifico de bebidas alcohólicas' },
-  { value: 5, name: 'Impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador' },
-  { value: 6, name: 'Impuesto a los productos de tabaco' },
-  { value: 7, name: 'Servicios' },
-  { value: 8, name: 'Impuesto General a las Ventas Diplomaticos' },
-  { value: 9, name: 'Impuesto General sobre Ventas compras autorizadas' },
-  { value: 10, name: 'Impuesto General sobre las ventas instituciones publicas y otros organismos' },
-  { value: 11, name: 'Impuesto Selectivo de consumo compras autorizadas' },
-  { value: 12, name: 'Impuesto Especifico al Cemento' },
-  { value: 99, name: 'Otros' }];
-
-  documentType: any = [{ value: 1, name: 'Compras Autorizadas' },
-  { value: 2, name: 'Ventas Exentas a Diplomáticos' },
-  { value: 3, name: 'Orden de Compra (Instituciones Públicas y Otros Organismos)' },
-  { value: 4, name: 'Extenciones Dirección General de Hacienda' },
-  { value: 5, name: 'Zonas Francas' },
-  { value: 99, name: 'Otros' }];
-  //rate = 0.0;
-  //purchasePercentage = 0;
-  //exhonerationAvaible;
-
-  taxeForm01;
-  taxeForm02;
+  private taxTypeList: TaxType[] = TaxTypes;
+  private documentTypesList: DocumentType[] = DocumentTypes;
+  selectedTaxType: TaxType;
+  selectedDocumentType: DocumentType;
+  taxForm01;
+  taxForm02;
 
   constructor(private taxService: TaxService,
     public toastr: ToastsManager,
     public formBuilder: FormBuilder,
     vcr: ViewContainerRef) {
 
-    this.taxeForm01 = formBuilder.group({
+    this.taxForm01 = formBuilder.group({
       codeType: new FormControl('', [
         Validators.required
       ]),
       rate: new FormControl('', [Validators.required])
     });
 
-    this.taxeForm02 = formBuilder.group({
+    this.taxForm02 = formBuilder.group({
       purchasePercentage: new FormControl('', [
         Validators.required
       ]),
@@ -76,22 +60,21 @@ export class TaxComponent implements OnInit {
   }
 
   addTax() {
-    if (this.taxeForm01.valid) {
+    if (this.taxForm01.valid) {
       let tax: Tax = new Tax();
-      tax.code = this.taxeForm01.controls['codeType'].value;
-      tax.rate = this.taxeForm01.controls['rate'].value;
-      if (this.taxeForm02.controls['exhonerationAvaible'].value == true) {
-        if (this.taxeForm02.valid) {
-          tax.purchasePercentage = this.taxeForm02.controls['purchasePercentage'].value;
-          tax.date = this.taxeForm02.controls['dateCreated'].value;
-          tax.institutionName = this.taxeForm02.controls['institutionName'].value;
-          tax.documentNumber = this.taxeForm02.controls['documentNumber'].value;
-          tax.documentType = this.taxeForm02.controls['selectedDocumentType'].value;
+      tax.code = this.selectedTaxType.codeType;
+      tax.rate = this.taxForm01.controls['rate'].value;
+      if (this.taxForm02.controls['exhonerationAvaible'].value == true) {
+        if (this.taxForm02.valid) {
+          tax.purchasePercentage = this.taxForm02.controls['purchasePercentage'].value;
+          tax.date = this.taxForm02.controls['dateCreated'].value;
+          tax.institutionName = this.taxForm02.controls['institutionName'].value;
+          tax.documentNumber = this.taxForm02.controls['documentNumber'].value;
+          tax.documentType = this.selectedDocumentType.documentTypeCode;
         } else {
-          this.validateAllFormFields(this.taxeForm02);
+          this.validateAllFormFields(this.taxForm02);
         }
       }
-      console.log(tax.purchasePercentage);
       this.taxService.addTax(tax).subscribe(
         response => {
           this.showSuccess();
@@ -101,7 +84,7 @@ export class TaxComponent implements OnInit {
         }
       );
     } else {
-      this.validateAllFormFields(this.taxeForm01);
+      this.validateAllFormFields(this.taxForm01);
     }
   }
 
