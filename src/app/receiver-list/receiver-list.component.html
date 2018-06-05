@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="wizard">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Identificador</mat-header-cell>
+        <mat-cell *matCellDef="let receivers">{{receivers.id}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let receivers">{{receivers.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="identificationNumber">
+        <mat-header-cell *matHeaderCellDef>Número Identificación</mat-header-cell>
+        <mat-cell *matCellDef="let receivers"> {{receivers.identificationNumber}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="comercialName">
+        <mat-header-cell *matHeaderCellDef> Nombre Comercial </mat-header-cell>
+        <mat-cell *matCellDef="let receivers">{{receivers.comercialName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button type="button" class="btn btn-info">
+            <span class="glyphicon glyphicon-edit"></span>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="2" [pageSize]="1" [pageSizeOptions]="[1]">
+    </mat-paginator>
+  </div>
+</div>

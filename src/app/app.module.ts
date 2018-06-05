@@ -25,6 +25,15 @@ import { ReceiverService } from "./receiver/receiver.service";
 import { ServiceService } from "./services/services.service";
 import { TaxService } from "./tax/tax.service";
 import { TooltipModule } from "ngx-tooltip";
+import { CodeListComponent } from './code-list/code-list.component';
+import { CommonModule } from '@angular/common';
+import { MatInputModule, MatTableModule, MatToolbarModule, MatPaginatorModule } from '@angular/material';
+import { TaxListComponent } from './tax-list/tax-list.component';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { EmitterListComponent } from './emitter-list/emitter-list.component';
+import { ReceiverListComponent } from './receiver-list/receiver-list.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +44,13 @@ import { TooltipModule } from "ngx-tooltip";
     EmitterComponent,
     ServicesComponent,
     TaxComponent,
-    CodeComponent
+    CodeComponent,
+    CodeListComponent,
+    TaxListComponent,
+    ServiceListComponent,
+    EmitterListComponent,
+    ReceiverListComponent,
+    InvoiceListComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,8 +65,19 @@ import { TooltipModule } from "ngx-tooltip";
     MatSelectModule,
     ReactiveFormsModule,
     ArchwizardModule,
-    TooltipModule
+    TooltipModule,
+    CommonModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
+    exports: [
+      CommonModule,
+      MatToolbarModule,
+      MatInputModule,
+      MatTableModule
+    ],
   providers: [CodeService, EmitterService, InvoiceService, ReceiverService, ServiceService, TaxService],
   bootstrap: [AppComponent]
 })

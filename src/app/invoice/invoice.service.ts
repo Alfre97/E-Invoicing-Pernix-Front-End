@@ -44,4 +44,12 @@ export class InvoiceService {
       .map(res => res)
       .catch(err => Observable.throw(err));
   }
+
+  getInvoice() {
+    const route = environment.rootURL + environment.getInvoices;
+
+    return this.httpClient.get(route)
+      .map(res => res)
+      .catch(error => Observable.throw(error));
+  }
 }

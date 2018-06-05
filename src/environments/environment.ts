@@ -15,6 +15,7 @@ export const environment = {
   addReceiver: '/addReceiver',
   getReceivers: '/getReceivers',
   sendInvoice: '/uploadInvoice',
+  getInvoices: '/getInvoices',
   addTax: '/addTax',
   getTaxes: '/getTaxes',
   getCodes: '/getCodes',

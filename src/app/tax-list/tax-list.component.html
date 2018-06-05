@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="wizard">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Identificador</mat-header-cell>
+        <mat-cell *matCellDef="let tax">{{tax.id}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+        <mat-cell *matCellDef="let tax">{{tax.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="taxTotal">
+        <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+        <mat-cell *matCellDef="let tax"> {{tax.taxTotal}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="rate">
+        <mat-header-cell *matHeaderCellDef> Tarifa </mat-header-cell>
+        <mat-cell *matCellDef="let tax"> {{tax.rate}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button type="button" class="btn btn-info">
+            <span class="glyphicon glyphicon-edit"></span>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+    <mat-paginator [length]="2" [pageSize]="1" [pageSizeOptions]="[1]">
+    </mat-paginator>
+  </div>
+</div>
